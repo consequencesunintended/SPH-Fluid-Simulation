@@ -1,7 +1,5 @@
-The application uses a particle-based solver (Smoothed-particle hydrodynamics) for the Navier-Stokes equation and marching square for rendering purposes. The code is written in C++, was optimised in different stages giving the capability to simulate up to 1000 particles with 110 fps on an AMD Turion X2 Dual-Core Mobile 2.20 GHz.
-
-Main References:
-1. Algorithm. (n.d.). Polytech Nice Sophia: Pages personnelles. Retrieved June 9, 2012, from http://users.polytech.unice.fr/~lingrand/MarchingCubes/algo.html
-2. Auer, S. (2006) Realtime particle-based fluid simulation. Masterthesis in Informatik-Technische Universität München , https://code.google.com/p/fluid-particles/downloads/list
-3. Clavet S. , Beaudoin P., Poulin P. (2005) Particle-based viscoelastic fluid simulation. Proceedings of the 2005 ACM SIGGRAPH/Eurographics symposium on Computer animation, http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.59.9379&rep=rep1&type=pdf, July 29-31, 2005, Los Angeles, California
-4. Mielack, C. (n.d.). Isosurfaces. Isosurfaces. Retrieved January 11, 2011, from www.zib.de/mielack/isosurfaces.pdf
+<p>&nbsp;</p>
+<h3 style="text-align: center;"><strong>SPH Fluid Simulation</strong></h3>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://alexnasser.files.wordpress.com/2013/12/fluid1.gif?w=517" alt="" width="412" height="319" /></p>
+<p>The application uses a particle-based solver (Smoothed-particle hydrodynamics) for the Navier-Stokes equation and marching square for rendering purposes. I've written it all in C++ and I optimised in different stages giving it the ability to simulate up to 1000 particles in 110 fps on an AMD Turion X2 Dual-Core Mobile 2.20 GHz.</p>
+<p>Main References:<br />1. Algorithm. (n.d.). Polytech Nice Sophia: Pages personnelles. Retrieved June 9, 2012, from http://users.polytech.unice.fr/~lingrand/MarchingCubes/algo.html<br />2. Auer, S. (2006) Realtime particle-based fluid simulation. Masterthesis in Informatik-Technische Universit&auml;t M&uuml;nchen , https://code.google.com/p/fluid-particles/downloads/list<br />3. Clavet S. , Beaudoin P., Poulin P. (2005) Particle-based viscoelastic fluid simulation. Proceedings of the 2005 ACM SIGGRAPH/Eurographics symposium on Computer animation, http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.59.9379&amp;rep=rep1&amp;type=pdf, July 29-31, 2005, Los Angeles, California<br />4. Mielack, C. (n.d.). Isosurfaces. Isosurfaces. Retrieved January 11, 2011, from www.zib.de/mielack/isosurfaces.pdf</p>
