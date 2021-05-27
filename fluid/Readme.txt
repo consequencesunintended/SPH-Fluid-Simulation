@@ -1,0 +1,1 @@
+In case of glut32.dll error, copy it from the DEPENDENCIES folder to your windows/system folder
