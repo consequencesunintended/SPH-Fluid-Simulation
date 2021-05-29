@@ -1,8 +1,3 @@
-/*
-Alex Nasser
-http://www.alexnasser.co.uk
-Winter 2011
-*/
 // This class provide the main functions for a Fluid Simulation
 // the main algorithm used here is based on a this paper 
 // "CLAVET, S., BEAUDOIN, P., AND POULIN, P. 2005. Particle-based 

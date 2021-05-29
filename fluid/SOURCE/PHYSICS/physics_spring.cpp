@@ -1,8 +1,3 @@
-/*
-Alex Nasser
-http://www.alexnasser.co.uk
-Winter 2011
-*/
 #include "physics_spring.h"
 
 // -- PUBLIC
