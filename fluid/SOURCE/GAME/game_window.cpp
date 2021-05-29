@@ -1,17 +1,9 @@
-/*
-Alex Nasser
-http://www.alexnasser.co.uk
-Winter 2011
-*/
 // -- LOCAL
 
 // .. REFERENCES
 
 #include <cstdlib>
 #include "graphics_glut_header.h"
-#include <iostream>
-#include <sstream>
-#include <string>
 #include "physics_fluid_neighbour_particle.h"
 #include "physics_fluid_particle.h"
 #include "physics_level_fluid_constants.h"
@@ -19,14 +11,18 @@ Winter 2011
 #include "graphics_marching_squares.h"
 #include "graphics_color.h"
 #include "fundamental_delta_time.h"
+#include <iostream>
+#include <sstream>
+#include <string>
+
 using namespace std;
 
 // .. CONSTANTS
 
-#define   LOCAL_width						600 
-#define   LOCAL_height						600				           					
-#define   LOCAL_number_of_pixels_width       50	
-#define   LOCAL_number_of_pixels_height      50
+constexpr int	LOCAL_width = 600;
+constexpr int   LOCAL_height = 600;				           					
+constexpr int   LOCAL_number_of_pixels_width = 50;
+constexpr int   LOCAL_number_of_pixels_height = 50;
 
 // .. ATTRIBUTES
 

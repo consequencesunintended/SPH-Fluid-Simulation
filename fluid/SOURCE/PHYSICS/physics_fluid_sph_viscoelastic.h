@@ -29,7 +29,7 @@
 // has to be used for delta time,in integration 
 // to get proper results out of the simulation.
 
-#define PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor 100
+constexpr float PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor = 100.0f;
 
 // .. TYPES
 

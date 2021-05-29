@@ -52,19 +52,16 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity(
 	float								powered_three_smoothing_kernel;
 	MATH_VECTOR_2D						vector_between_particle_and_neighbour;
 	PHYSICS_FLUID_NEIGHBOUR_PARTICLE	neighbour_particle;
-
-	particle_index = 0;
-
-	for ( ; particle_index < particles_table.size(); particle_index++  )
+	
+	for ( particle_index = 0; particle_index < particles_table.size(); particle_index++  )
 	{
 		particles_table[particle_index].SetDensity( 0.0f );
 		particles_table[particle_index].SetNearDensity( 0.0f );
 		particles_table[particle_index].GetNeighbours().clear();
 		density = 0;
 		near_density = 0;
-		neighbour_index = particle_index+1;
-
-		for ( ; neighbour_index < particles_table.size(); neighbour_index++ )
+		
+		for ( neighbour_index = particle_index + 1; neighbour_index < particles_table.size(); neighbour_index++ )
 		{
 			vector_between_particle_and_neighbour.SetDifference( particles_table[particle_index].GetPosition(), particles_table[neighbour_index].GetPosition() );
 
@@ -174,13 +171,10 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscosity(
 	MATH_VECTOR_2D						normalised_vector_between_particle_and_neighbour;
 	MATH_VECTOR_2D						impulses;
 
-	prticle_index = 0;
-
-	for ( ; prticle_index < particlesTable.size(); prticle_index++ )
-	{
-		neighbour_table_index = 0;
-
-		for ( ; neighbour_table_index < particlesTable[prticle_index].GetNeighbours().size(); neighbour_table_index++ )
+		
+	for ( prticle_index = 0; prticle_index < particlesTable.size(); prticle_index++ )
+	{		
+		for ( neighbour_table_index = 0; neighbour_table_index < particlesTable[prticle_index].GetNeighbours().size(); neighbour_table_index++ )
 		{
 			neighbour_particle = particlesTable[prticle_index].GetNeighbours()[neighbour_table_index];
 			neighbour_index = neighbour_particle.GetParticleIndex();    
@@ -189,32 +183,20 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscosity(
 			q = length / smoothing_radius;
       
 
-			normalised_vector_between_particle_and_neighbour 
-				= (vector_between_particle_and_neighbour / length);
-			inward_radial_velocity  = (
-				particlesTable[prticle_index].GetVelocity() 
-				- particlesTable[neighbour_index].GetVelocity() 
-				).GetDotProduct( normalised_vector_between_particle_and_neighbour );
+			normalised_vector_between_particle_and_neighbour = (vector_between_particle_and_neighbour / length);
+			inward_radial_velocity  = ( particlesTable[prticle_index].GetVelocity() - particlesTable[neighbour_index].GetVelocity() ).GetDotProduct( normalised_vector_between_particle_and_neighbour );
 
 			if( inward_radial_velocity > 0.0f)
 			{
-				impulses = 
-					(normalised_vector_between_particle_and_neighbour 
+				impulses = (normalised_vector_between_particle_and_neighbour 
 					* (particlesTable[neighbour_index].GetViscositySigma() 
 					* inward_radial_velocity + particlesTable[neighbour_index].GetViscosityBeta() 
 					* inward_radial_velocity * inward_radial_velocity)) 
 					* (1 - q);
-				 impulses 
-					 *= delta_time 
+				 impulses *= delta_time 
 					 * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor;
-				 particlesTable[prticle_index].SetVelocity( 
-					 particlesTable[prticle_index].GetVelocity() 
-					 - impulses 
-					 );
-				 particlesTable[neighbour_index].SetVelocity( 
-					 particlesTable[neighbour_index].GetVelocity()
-					 + impulses 
-					 );
+				 particlesTable[prticle_index].SetVelocity( particlesTable[prticle_index].GetVelocity() - impulses );
+				 particlesTable[neighbour_index].SetVelocity( particlesTable[neighbour_index].GetVelocity()+ impulses );
 			}
 		}
 	}
@@ -244,13 +226,10 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 	MATH_VECTOR_2D 						spring_force;
 	MATH_VECTOR_2D						spring_displacement;
 
-	particle_index = 0;
-
-	for ( ; particle_index < particlesTable.size(); particle_index++ )
-	{
-		neighbour_index = 0;
-
-		for ( ; neighbour_index < particlesTable[particle_index].GetNeighbours().size(); neighbour_index++ )
+	
+	for ( particle_index = 0; particle_index < particlesTable.size(); particle_index++ )
+	{		
+		for ( neighbour_index = 0; neighbour_index < particlesTable[particle_index].GetNeighbours().size(); neighbour_index++ )
 		{
 			neighbour_particle = particlesTable[particle_index].GetNeighbours()[neighbour_index];
       
@@ -265,9 +244,8 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 			}
 		}
 	}
-	spring_index = 0;
-
-	for ( ; spring_index < SpringTable.size(); spring_index++ )
+	
+	for ( spring_index = 0; spring_index < SpringTable.size(); spring_index++ )
 	{
 		spring_point1_index = SpringTable[spring_index].GetPoint1Index();
 		spring_point2_index = SpringTable[spring_index].GetPoint2Index();
@@ -291,10 +269,8 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 			spring_index--;
 		}
 	}
-
-	spring_index = 0;
-
-	for ( ; spring_index < SpringTable.size(); spring_index++ )
+	
+	for ( spring_index = 0; spring_index < SpringTable.size(); spring_index++ )
 	{
 		spring_point1_index = SpringTable[spring_index].GetPoint1Index();
 		spring_point2_index = SpringTable[spring_index].GetPoint2Index();
@@ -341,14 +317,10 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialisePlasticity(
 		vector_between_particle_and_neighbour;
 
 	ResetSprings();
-
-	particle_index_1 = 0;
-
-	for ( ; particle_index_1 < particlesTable.size(); particle_index_1++ )
-	{
-		particle_index_2 = 0;
-
-		for ( ; particle_index_2 < particlesTable.size(); particle_index_2++ )
+	
+	for ( particle_index_1 = 0; particle_index_1 < particlesTable.size(); particle_index_1++ )
+	{		
+		for ( particle_index_2 = 0; particle_index_2 < particlesTable.size(); particle_index_2++ )
 		{
   			vector_between_particle_and_neighbour.SetDifference( particlesTable[ particle_index_1 ].GetPosition(), particlesTable[ particle_index_2 ].GetPosition() );
 			distance_between_particle_and_neighbour = vector_between_particle_and_neighbour.GetLength();
@@ -383,10 +355,8 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePlasticity(
 	MATH_VECTOR_2D 		
 		spring_force,
 		spring_displacement; 
-
-	spring_index = 0;
-
-	for ( ; spring_index < SpringTable.size(); spring_index++ )
+	
+	for ( spring_index = 0; spring_index < SpringTable.size(); spring_index++ )
 	{
 		spring_point1_index = SpringTable[spring_index].GetPoint1Index();
 		spring_point2_index = SpringTable[spring_index].GetPoint2Index();
