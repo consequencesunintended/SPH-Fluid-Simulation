@@ -6,7 +6,6 @@
 // .. REFERENCES
 
 #include "math_vector_2d.h"
-#include "fundamental_data_types.h"
 #include <assert.h>
 
 // -- GLOBAL

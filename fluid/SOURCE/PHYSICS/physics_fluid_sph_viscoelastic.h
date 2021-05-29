@@ -16,7 +16,6 @@
 
 // .. REFERENCES
 
-#include "fundamental_data_types.h"
 #include "physics_fluid_particle.h"
 #include "physics_spring.h"
 #include "physics_spring_array.h"

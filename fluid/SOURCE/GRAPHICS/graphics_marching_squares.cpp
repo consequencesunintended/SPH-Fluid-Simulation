@@ -1,15 +1,9 @@
-/*
-Alex Nasser
-http://www.alexnasser.co.uk
-Winter 2011
-*/
 #include "graphics_marching_squares.h"
 
 // -- LOCAL
 
 // .. REFERENCES
 
-#include "fundamental_data_types.h"
 #include "math_vector_2d.h"
 
 // .. CONSTANTS

@@ -4,7 +4,6 @@
 
 #include <assert.h>
 #include <fstream>
-#include "fundamental_data_types.h"
 using namespace std;
 
 class PLATFORM_FILE_READER

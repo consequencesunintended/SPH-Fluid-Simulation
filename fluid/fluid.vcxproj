@@ -173,7 +173,6 @@
     <ClCompile Include="SOURCE\PHYSICS\physics_spring.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_data_types.h" />
     <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_delta_time.h" />
     <ClInclude Include="SOURCE\GAME\game_core_engine.h" />
     <ClInclude Include="SOURCE\GAME\game_window.h" />

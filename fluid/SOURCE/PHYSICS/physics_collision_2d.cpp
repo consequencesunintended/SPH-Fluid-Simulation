@@ -1,15 +1,9 @@
-/*
-Alex Nasser
-http://www.alexnasser.co.uk
-Winter 2011
-*/
 #include "physics_collision_2d.h"
 
 // -- LOCAL
 
 // .. REFERENCES
 
-#include "fundamental_data_types.h"
 #include "physics_entity.h"
 
 // -- PUBLIC

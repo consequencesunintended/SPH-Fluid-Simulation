@@ -1,15 +1,9 @@
-/*
-Alex Nasser
-http://www.alexnasser.co.uk
-Winter 2011
-*/
 #include "physics_fluid_particle_position_loader.h"
 
 // -- LOCAL
 
 // .. REFERENCES
 
-#include "fundamental_data_types.h"
 #include "math_point_2d.h"
 #include "graphics_image_pixel_loader.h"
 

@@ -1,10 +1,3 @@
-/*
-Alex Nasser
-http://www.alexnasser.co.uk
-Winter 2011
-*/
-#include "fundamental_data_types.h"
-
 // -- LOCAL
 
 // .. REFERENCES

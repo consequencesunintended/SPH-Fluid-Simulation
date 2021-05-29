@@ -1,8 +1,3 @@
-/*
-Alex Nasser
-http://www.alexnasser.co.uk
-Winter 2011
-*/
 #include "graphics_image_pixel_loader.h"
 
 // -- LOCAL
@@ -10,7 +5,6 @@ Winter 2011
 // .. REFERENCES
 
 #include "platform_file_reader.h"
-#include "fundamental_data_types.h"
 
 // -- PUBLIC
 

@@ -6,7 +6,6 @@
 // .. REFERENCES
 
 #include "platform_file_reader.h"
-#include "fundamental_data_types.h"
 
 // -- GLOBAL
 

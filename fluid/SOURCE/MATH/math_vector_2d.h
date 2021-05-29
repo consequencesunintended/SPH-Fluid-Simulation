@@ -5,7 +5,6 @@
 
 // .. REFERENCES
 
-#include "fundamental_data_types.h"
 #include "math_square_root.h"
 #include <assert.h>
 

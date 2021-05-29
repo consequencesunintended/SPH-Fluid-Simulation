@@ -21,7 +21,6 @@ Winter 2011
 
 // .. REFERENCES
 
-#include "fundamental_data_types.h"
 #include "physics_fluid_particle.h"
 #include "physics_fluid_neighbour_particle.h"
 #include "math_vector_2d.h"

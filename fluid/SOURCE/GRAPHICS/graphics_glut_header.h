@@ -1,6 +1,5 @@
 #include "glut.h"
 #include <windows.h>
-#include "fundamental_data_types.h"
 
 namespace GLUT_FUNCTIONS
 {

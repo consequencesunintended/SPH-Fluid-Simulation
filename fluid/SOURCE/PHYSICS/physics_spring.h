@@ -6,7 +6,6 @@
 // .. REFERENCES
 
 #include "physics_entity.h"
-#include "fundamental_data_types.h"
 #include <assert.h>
 
 // -- GLOBAL

@@ -5,7 +5,6 @@
 
 // .. REFERENCES
 
-#include "fundamental_data_types.h"
 #include "math_vector_2d.h"
 #include "physics_entity.h"
 

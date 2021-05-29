@@ -13,7 +13,6 @@
 
 // .. REFERENCES
 
-#include "fundamental_data_types.h"
 #include "physics_integration.h"
 #include "physics_entity.h"
 

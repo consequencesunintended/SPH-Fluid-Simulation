@@ -92,9 +92,6 @@
     <ClInclude Include="SOURCE\GAME\game_window.h">
       <Filter>Header Files\GAME</Filter>
     </ClInclude>
-    <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_data_types.h">
-      <Filter>Header Files\FUNDAMENTAL</Filter>
-    </ClInclude>
     <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_delta_time.h">
       <Filter>Header Files\FUNDAMENTAL</Filter>
     </ClInclude>

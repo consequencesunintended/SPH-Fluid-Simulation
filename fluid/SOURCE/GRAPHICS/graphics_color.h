@@ -5,8 +5,6 @@
 
 // .. REFERENCES
 
-#include "fundamental_data_types.h"
-
 
 // -- GLOBAL
 
