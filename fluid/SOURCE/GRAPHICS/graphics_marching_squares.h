@@ -13,7 +13,7 @@
 
 	// .. CONSTANTS
 
-	#define GRAPHICS_MARCHING_SQUARE_threshold 1.55f
+	constexpr float GRAPHICS_MARCHING_SQUARE_threshold = 1.55f;
 
 	// .. TYPES	
 

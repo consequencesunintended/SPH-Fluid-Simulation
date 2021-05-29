@@ -8,7 +8,7 @@
 
 // -- CONSTANTS
 
-#define LOCAL_Margin_with_bottom_of_the_window 1.0f
+constexpr float LOCAL_Margin_with_bottom_of_the_window = 1.0f;
 
 // -- PUBLIC
 
@@ -70,9 +70,8 @@ void GAME_CORE_ENGINE::Update(
     const bool is_plastic
     )
 {
-	int
-		counter,
-		counter2;
+	int		counter;
+	int		counter2;
 
 	DeltaValue += delta_time;
 	counter = 0;

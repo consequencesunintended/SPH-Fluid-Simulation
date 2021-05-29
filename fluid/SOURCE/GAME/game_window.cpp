@@ -26,15 +26,16 @@ constexpr int   LOCAL_number_of_pixels_height = 50;
 
 // .. ATTRIBUTES
 
-bool attracting = false;
-bool repelling  = false;
-bool Viscoelasticity = false;
-bool Plasticity = true;
-bool Viscosity = false;
-bool PauseSimulation = false;
-int GraphicalMode = 3;
-GAME_CORE_ENGINE GameCoreEngine;
-GRAPHICS_MARCHING_SQUARES GraphicsMarchingSquares;
+bool							attracting = false;
+bool							repelling  = false;
+bool							Viscoelasticity = false;
+bool							Plasticity = true;
+bool							Viscosity = false;
+bool							PauseSimulation = false;
+int								GraphicalMode = 3;
+GAME_CORE_ENGINE				GameCoreEngine;
+GRAPHICS_MARCHING_SQUARES		GraphicsMarchingSquares;
+
 enum RenderModes{ LargeParticleMode = 1, SmallParticleMode = 2, MarchingSquareMode = 3 };
 
 // ..OPERATIONS

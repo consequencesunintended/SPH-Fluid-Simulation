@@ -22,9 +22,9 @@
 
 // .. CONSTANTS
 
-#define    GAME_CORE_ENGINE_visocity_sigma         0.001f           
-#define    GAME_CORE_ENGINE_visocity_beta          0.001f 
-#define    GAME_CORE_ENGINE_delta_time_cap		   0.01f
+constexpr float   GAME_CORE_ENGINE_visocity_sigma = 0.001f;           
+constexpr float   GAME_CORE_ENGINE_visocity_beta = 0.001f; 
+constexpr float   GAME_CORE_ENGINE_delta_time_cap = 0.01f;
 
 // .. TYPES
 

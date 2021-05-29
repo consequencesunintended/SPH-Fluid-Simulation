@@ -52,6 +52,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity(
 	float								powered_three_smoothing_kernel;
 	MATH_VECTOR_2D						vector_between_particle_and_neighbour;
 	PHYSICS_FLUID_NEIGHBOUR_PARTICLE	neighbour_particle;
+
 	
 	for ( particle_index = 0; particle_index < particles_table.size(); particle_index++  )
 	{
@@ -304,17 +305,12 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialisePlasticity(
 	const float coefficient_spring
 	)
 {
-	PHYSICS_FLUID_NEIGHBOUR_PARTICLE 
-		neighbour_particle;
-	PHYSICS_SPRING 
-		spring;
-	unsigned int
-		particle_index_1,
-		particle_index_2;
-	float 
-		distance_between_particle_and_neighbour;
-	MATH_VECTOR_2D 		
-		vector_between_particle_and_neighbour;
+	PHYSICS_FLUID_NEIGHBOUR_PARTICLE	neighbour_particle;
+	PHYSICS_SPRING						spring;
+	unsigned int						particle_index_1;
+	unsigned int						particle_index_2;
+	float								distance_between_particle_and_neighbour;
+	MATH_VECTOR_2D 						vector_between_particle_and_neighbour;
 
 	ResetSprings();
 	
