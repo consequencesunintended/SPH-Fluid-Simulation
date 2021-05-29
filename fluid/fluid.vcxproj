@@ -185,7 +185,6 @@
     <ClInclude Include="SOURCE\MATH\math_vector_2d.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_collision_2d.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_entity.h" />
-    <ClInclude Include="SOURCE\PHYSICS\physics_entity_array.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_fluid_neighbour_particle.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_fluid_neighbour_particle_array.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_fluid_particle.h" />

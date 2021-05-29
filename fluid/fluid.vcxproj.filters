@@ -113,9 +113,6 @@
     <ClInclude Include="SOURCE\PHYSICS\physics_entity.h">
       <Filter>Header Files\PHYSICS</Filter>
     </ClInclude>
-    <ClInclude Include="SOURCE\PHYSICS\physics_entity_array.h">
-      <Filter>Header Files\PHYSICS</Filter>
-    </ClInclude>
     <ClInclude Include="SOURCE\PHYSICS\physics_fluid_neighbour_particle.h">
       <Filter>Header Files\PHYSICS</Filter>
     </ClInclude>
