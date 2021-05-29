@@ -30,13 +30,13 @@ using namespace std;
 
 // .. ATTRIBUTES
 
-BOOL attracting = BOOLEAN_false;
-BOOL repelling  = BOOLEAN_false;
-BOOL Viscoelasticity = BOOLEAN_false;
-BOOL Plasticity = BOOLEAN_true;
-BOOL Viscosity = BOOLEAN_false;
-BOOL PauseSimulation = BOOLEAN_false;
-INT32 GraphicalMode = 3;
+bool attracting = false;
+bool repelling  = false;
+bool Viscoelasticity = false;
+bool Plasticity = true;
+bool Viscosity = false;
+bool PauseSimulation = false;
+int GraphicalMode = 3;
 GAME_CORE_ENGINE GameCoreEngine;
 GRAPHICS_MARCHING_SQUARES GraphicsMarchingSquares;
 enum RenderModes{ LargeParticleMode = 1, SmallParticleMode = 2, MarchingSquareMode = 3 };
@@ -44,10 +44,10 @@ enum RenderModes{ LargeParticleMode = 1, SmallParticleMode = 2, MarchingSquareMo
 // ..OPERATIONS
 
 void CalculateFrameRate(
-	VOID
+	void
 	)
 {
-    static REAL32 
+    static float 
 		frame_per_second = 0.0f,
 		lastTime = 0.0f;
     static ostringstream 
@@ -55,7 +55,7 @@ void CalculateFrameRate(
         convert2;				
 	string 
 		strFrameRate;								
-	REAL32 
+	float 
 		currentTime;
 
 	currentTime = GetTickCount() * 0.001f;
@@ -72,8 +72,8 @@ void CalculateFrameRate(
 
 // ~~
 
-VOID ShowInfo(
-	VOID
+void ShowInfo(
+	void
 	)
 {
 	GLUT_FUNCTIONS::glutPrint( -45.0f, 45.0f, GLUT_FUNCTIONS::GlutFonts[ 1 ], "PRESS P, M or E for Different Modes", 1.0f, 1.0f, 1.0f, 1.0f);
@@ -82,10 +82,10 @@ VOID ShowInfo(
 // ~~
 
 void render(
-	VOID
+	void
 	)
 {
-	INDEX
+	unsigned int
 		temp_index_1,
 		temp_index_2,
 		start_position,
@@ -174,15 +174,15 @@ void render(
 // ~~
 
 void idle(
-	VOID
+	void
 	)
 {
-	INT32
+	int
 		index_1,
 		index_2;
-	INDEX
+	unsigned int
 		particle_index;
-	REAL32
+	float
 		delta_time;
 
 	delta_time = FUNDAMENTAL_DELTA_TIME::GetDeltaTime();
@@ -209,34 +209,34 @@ void idle(
 		{
 			if ( GameCoreEngine.ParticleTable[particle_index].GetPosition().X < 0.0f )
 			{
-				index_1 = INT32( GameCoreEngine.ParticleTable[particle_index].GetPosition().X ) 
+				index_1 = int( GameCoreEngine.ParticleTable[particle_index].GetPosition().X ) 
 					- 1 
 					+ LOCAL_number_of_pixels_width;
 			}
 			else
 			{
-				index_1 = INT32( GameCoreEngine.ParticleTable[particle_index].GetPosition().X ) 
+				index_1 = int( GameCoreEngine.ParticleTable[particle_index].GetPosition().X ) 
 					+ LOCAL_number_of_pixels_width;
 			}
 
 			if ( GameCoreEngine.ParticleTable[particle_index].GetPosition().Y < 0.0f )
 			{
-				index_2 = INT32( GameCoreEngine.ParticleTable[particle_index].GetPosition().Y ) 
+				index_2 = int( GameCoreEngine.ParticleTable[particle_index].GetPosition().Y ) 
 					- 1 
 					- LOCAL_number_of_pixels_height;
 				index_2 *= -1;
 			}
 			else
 			{
-				index_2 = INT32( GameCoreEngine.ParticleTable[particle_index].GetPosition().Y ) 
+				index_2 = int( GameCoreEngine.ParticleTable[particle_index].GetPosition().Y ) 
 					- LOCAL_number_of_pixels_height;
 				index_2 *= -1;
 			}
 
 			GraphicsMarchingSquares.CalculatePoints(
 				GameCoreEngine.ParticleTable[ particle_index ].GetPosition(),
-				INDEX( index_1 ),
-				INDEX( index_2 ),
+				unsigned int( index_1 ),
+				unsigned int( index_2 ),
 				4
 				);
 		}
@@ -247,10 +247,10 @@ void idle(
 
 // ~~
 
-VOID Keyboard( 
-	UCHAR c, 
-	INT32 x, 
-	INT32 y
+void Keyboard( 
+	unsigned char c, 
+	int x, 
+	int y
 	)
 {
     switch(c)
@@ -305,19 +305,19 @@ VOID Keyboard(
 
 // ~~
 
-VOID motion(
-	INT32 x, 
-	INT32 y
+void motion(
+	int x, 
+	int y
 	)
 {
-	REAL32 
+	float 
 		relx,
 		rely;
 	MATH_VECTOR_2D 
 		mouse;
 
-	relx = (REAL32)(x - LOCAL_width/2) / LOCAL_width;
-	rely = -(REAL32)(y - LOCAL_height/2) / LOCAL_height;
+	relx = (float)(x - LOCAL_width/2) / LOCAL_width;
+	rely = -(float)(y - LOCAL_height/2) / LOCAL_height;
 	mouse = MATH_VECTOR_2D(
 		 relx*LOCAL_number_of_pixels_width*2, 
 		 rely*LOCAL_number_of_pixels_height*2);
@@ -328,29 +328,29 @@ VOID motion(
 
 // ~~
 
-VOID mouse(
-	INT32 button, 
-	INT32 state, 
-	INT32 x, 
-	INT32 y)
+void mouse(
+	int button, 
+	int state, 
+	int x, 
+	int y)
 {
   if (button == GLUT_LEFT_BUTTON)
     {
     if(state == GLUT_DOWN) 
 	{
 		{
-			GameCoreEngine.SetMouse( BOOLEAN_true, BOOLEAN_false );
+			GameCoreEngine.SetMouse( true, false );
 		}
 	}
     else
     {
 
 		{
-			GameCoreEngine.SetMouse( BOOLEAN_false , BOOLEAN_false );
+			GameCoreEngine.SetMouse( false , false );
 			GameCoreEngine.SetAttractor(  
 				MATH_VECTOR_2D(
-					REAL32( LOCAL_number_of_pixels_width ) * 99.0f, 
-					REAL32( LOCAL_number_of_pixels_height ) * 99.0f
+					float( LOCAL_number_of_pixels_width ) * 99.0f, 
+					float( LOCAL_number_of_pixels_height ) * 99.0f
 					) 
 				);
 		}
@@ -362,17 +362,17 @@ VOID mouse(
     if(state == GLUT_DOWN)
 	{
 		{
-			GameCoreEngine.SetMouse( BOOLEAN_false, BOOLEAN_true );
+			GameCoreEngine.SetMouse( false, true );
 		}
 	}
     else
     {
 		{
-			GameCoreEngine.SetMouse( BOOLEAN_false , BOOLEAN_false );
+			GameCoreEngine.SetMouse( false , false );
 			GameCoreEngine.SetAttractor(  
 				MATH_VECTOR_2D(
-					REAL32( LOCAL_number_of_pixels_width ) * 99.0f, 
-					REAL32( LOCAL_number_of_pixels_height ) * 99.0f
+					float( LOCAL_number_of_pixels_width ) * 99.0f, 
+					float( LOCAL_number_of_pixels_height ) * 99.0f
 					) 
 				);
 		}
@@ -383,8 +383,8 @@ VOID mouse(
 
 // ~~
 
-VOID init(
-	VOID
+void init(
+	void
 	)
 {
 	glMatrixMode(GL_PROJECTION);

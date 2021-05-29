@@ -17,17 +17,17 @@ Winter 2011
 
 // .. OPERATIONS
 
-VOID PHYSICS_FLUID_PARTICLE_POSITION_LOADER::LoadPositions(
-	const CHAR *bitmap
+void PHYSICS_FLUID_PARTICLE_POSITION_LOADER::LoadPositions(
+	const char *bitmap
 	)
 {
-	UINT32
+	unsigned int
 		width,
 		height,
 		colour;
 	GRAPHICS_IMAGE_PIXEL_LOADER 
 		image;
-	UINT32
+	unsigned int
 		index_x,
 		index_y;
 
@@ -45,8 +45,8 @@ VOID PHYSICS_FLUID_PARTICLE_POSITION_LOADER::LoadPositions(
 			{
 				PointTable.push_back( 
 					MATH_POINT_2D( 
-						REAL32( INT32(index_x - width / 2 ) ), 
-						REAL32( INT32(index_y - height / 2 ) )
+						float( int(index_x - width / 2 ) ), 
+						float( int(index_y - height / 2 ) )
 						) 
 					);
 			}

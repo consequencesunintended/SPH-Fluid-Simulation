@@ -1,160 +1,155 @@
-/*
-Alex Nasser
-http://www.alexnasser.co.uk
-Winter 2011
-*/
 #ifndef __PHYSICS_FLUID_NEIGHBOUR_PARTICLE__
-	#define __PHYSICS_FLUID_NEIGHBOUR_PARTICLE__
+#define __PHYSICS_FLUID_NEIGHBOUR_PARTICLE__
 
-    // -- LOCAL
+// -- LOCAL
 
-    // .. REFERENCES
+// .. REFERENCES
 
-	#include "math_vector_2d.h"
-	#include "fundamental_data_types.h"
-    #include "debug_statements.h"
+#include "math_vector_2d.h"
+#include "fundamental_data_types.h"
+#include <assert.h>
 
-	// -- GLOBAL
+// -- GLOBAL
 
-	// .. TYPES
+// .. TYPES
 
-	class PHYSICS_FLUID_NEIGHBOUR_PARTICLE
+class PHYSICS_FLUID_NEIGHBOUR_PARTICLE
+{
+	// -- PUBLIC
+
+public:
+
+	// .. CONSTRUCTORS
+
+	PHYSICS_FLUID_NEIGHBOUR_PARTICLE(
+		void
+		) : 
+		ParticleIndex( 0 ),
+		SmoothingKernel( 0.0f ),
+		PoweredTwoSmoothingKernel( 0.0f ),
+		Distance( 0.0f )
 	{
-		// -- PUBLIC
+	}
 
-	public:
+	// ~~
 
-		// .. CONSTRUCTORS
+	PHYSICS_FLUID_NEIGHBOUR_PARTICLE(
+		const PHYSICS_FLUID_NEIGHBOUR_PARTICLE & other
+		) : 
+		ParticleIndex( other.ParticleIndex ),
+		SmoothingKernel( other.SmoothingKernel ),
+		PoweredTwoSmoothingKernel( other.PoweredTwoSmoothingKernel ),
+		Distance( other.Distance )
+	{
+	}
 
-		PHYSICS_FLUID_NEIGHBOUR_PARTICLE(
-			VOID
-			) : 
-			ParticleIndex( 0 ),
-			SmoothingKernel( 0.0f ),
-			PoweredTwoSmoothingKernel( 0.0f ),
-			Distance( 0.0f )
-		{
-		}
+	// ~~
 
-		// ~~
+	virtual ~PHYSICS_FLUID_NEIGHBOUR_PARTICLE(
+		void
+		)
+	{
+	}
 
-		PHYSICS_FLUID_NEIGHBOUR_PARTICLE(
-			const PHYSICS_FLUID_NEIGHBOUR_PARTICLE & other
-			) : 
-			ParticleIndex( other.ParticleIndex ),
-			SmoothingKernel( other.SmoothingKernel ),
-			PoweredTwoSmoothingKernel( other.PoweredTwoSmoothingKernel ),
-			Distance( other.Distance )
-		{
-		}
+	// .. OPERATORS
 
-		// ~~
+	PHYSICS_FLUID_NEIGHBOUR_PARTICLE & operator=(
+		const PHYSICS_FLUID_NEIGHBOUR_PARTICLE & other
+		)
+	{
+		assert( this != &other );
 
-		virtual ~PHYSICS_FLUID_NEIGHBOUR_PARTICLE(
-			VOID
-			)
-		{
-		}
+		ParticleIndex = other.ParticleIndex;
+		SmoothingKernel = other.SmoothingKernel;
+		PoweredTwoSmoothingKernel = other.PoweredTwoSmoothingKernel;
+		Distance = other.Distance;
 
-		// .. OPERATORS
+		return *this;
+	}
 
-		PHYSICS_FLUID_NEIGHBOUR_PARTICLE & operator=(
-			const PHYSICS_FLUID_NEIGHBOUR_PARTICLE & other
-			)
-		{
-			DEBUG_check_this_expression( this != &other );
+	// .. ACCESSORS
 
-			ParticleIndex = other.ParticleIndex;
-			SmoothingKernel = other.SmoothingKernel;
-			PoweredTwoSmoothingKernel = other.PoweredTwoSmoothingKernel;
-			Distance = other.Distance;
+	unsigned int GetParticleIndex(
+		void
+		) const
+	{
+		return ParticleIndex;
+	}
 
-			return *this;
-		}
+	// ~~
 
-		// .. ACCESSORS
+	void SetParticleIndex(
+		const unsigned int particle_index
+		)
+	{
+		ParticleIndex = particle_index;
+	}
 
-		INDEX GetParticleIndex(
-			VOID
-			) const
-		{
-			return ParticleIndex;
-		}
+	// ~~
 
-		// ~~
+	float GetSmoothingKernel(
+		void
+		) const
+	{
+		return SmoothingKernel;
+	}
 
-		VOID SetParticleIndex(
-			const INDEX particle_index
-			)
-		{
-			ParticleIndex = particle_index;
-		}
+	// ~~
 
-		// ~~
+	void SetSmoothingKernel(
+		const float smooething_kernel_value
+		)
+	{
+		SmoothingKernel = smooething_kernel_value;
+	}
 
-		REAL32 GetSmoothingKernel(
-			VOID
-			) const
-		{
-			return SmoothingKernel;
-		}
+	// ~~
 
-		// ~~
+	float GetPoweredTwoSmoothingKernel(
+		void
+		) const
+	{
+		return PoweredTwoSmoothingKernel;
+	}
 
-		VOID SetSmoothingKernel(
-			const REAL32 smooething_kernel_value
-			)
-		{
-			SmoothingKernel = smooething_kernel_value;
-		}
+	// ~~
 
-		// ~~
+	void SetPoweredTwoSmoothingKernel(
+		const float powered_two_smooething_kernel_value
+		)
+	{
+		PoweredTwoSmoothingKernel = powered_two_smooething_kernel_value;
+	}
 
-		REAL32 GetPoweredTwoSmoothingKernel(
-			VOID
-			) const
-		{
-			return PoweredTwoSmoothingKernel;
-		}
+	// ~~
 
-		// ~~
+	float GetDistance(
+		void
+		) const
+	{
+		return Distance;
+	}
 
-		VOID SetPoweredTwoSmoothingKernel(
-			const REAL32 powered_two_smooething_kernel_value
-			)
-		{
-			PoweredTwoSmoothingKernel = powered_two_smooething_kernel_value;
-		}
+	// ~~
 
-		// ~~
+	void SetDistance(
+		const float distance_value
+		)
+	{
+		Distance = distance_value;
+	}
 
-		REAL32 GetDistance(
-			VOID
-			) const
-		{
-			return Distance;
-		}
-
-		// ~~
-
-		VOID SetDistance(
-			const REAL32 distance_value
-			)
-		{
-			Distance = distance_value;
-		}
-
-		// -- PRIVATE
+	// -- PRIVATE
 		
-	private:
+private:
 
-		// .. ATTRIBUTES
+	// .. ATTRIBUTES
 			
-		REAL32 
-		  SmoothingKernel,
-		  PoweredTwoSmoothingKernel, 
-		  Distance; 
-		INDEX 
-		  ParticleIndex;
-	};
+	float 
+		SmoothingKernel,
+		PoweredTwoSmoothingKernel, 
+		Distance; 
+	unsigned int 
+		ParticleIndex;
+};
 #endif

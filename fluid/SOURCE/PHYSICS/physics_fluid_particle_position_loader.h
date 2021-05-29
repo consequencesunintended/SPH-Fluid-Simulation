@@ -1,100 +1,96 @@
-/*
-Alex Nasser
-http://www.alexnasser.co.uk
-Winter 2011
-*/
 #ifndef __PHYSICS_FLUID_PARTICLE_POSITION_LOADER__
-	#define __PHYSICS_FLUID_PARTICLE_POSITION_LOADER__
+#define __PHYSICS_FLUID_PARTICLE_POSITION_LOADER__
 
-	// -- LOCAL
+// -- LOCAL
 
-	// .. REFERENCES
+// .. REFERENCES
 
-	#include "fundamental_data_types.h"
-	#include "debug_statements.h"
-	#include "graphics_image_pixel_loader.h"
-	#include "math_point_2d_array.h"
-	#include "math_vector_2d.h"
+#include "fundamental_data_types.h"
+#include "graphics_image_pixel_loader.h"
+#include "math_point_2d.h"
+#include "math_vector_2d.h"
+#include <assert.h>
+#include <vector>
 
-	// -- GLOBAL
+// -- GLOBAL
 
-	// .. TYPES
+// .. TYPES
 
-	class PHYSICS_FLUID_PARTICLE_POSITION_LOADER
-	{
-		// -- PUBLIC
-	public:
+class PHYSICS_FLUID_PARTICLE_POSITION_LOADER
+{
+// -- PUBLIC
+public:
 
-		// .. CONSTRUCTORS
+// .. CONSTRUCTORS
 
-		PHYSICS_FLUID_PARTICLE_POSITION_LOADER(
-			VOID
-			) :
-			PointTable()
-		{
-		}
+PHYSICS_FLUID_PARTICLE_POSITION_LOADER(
+	void
+	) :
+	PointTable()
+{
+}
 
-		// ~~
+// ~~
 
-		virtual ~PHYSICS_FLUID_PARTICLE_POSITION_LOADER(
-			VOID
-			)
-		{
-		}
+virtual ~PHYSICS_FLUID_PARTICLE_POSITION_LOADER(
+	void
+	)
+{
+}
 		
-		// ~~
+// ~~
 
-		PHYSICS_FLUID_PARTICLE_POSITION_LOADER(
-			const PHYSICS_FLUID_PARTICLE_POSITION_LOADER & other
-			) :
-			PointTable( other.PointTable )
-		{
-		}
+PHYSICS_FLUID_PARTICLE_POSITION_LOADER(
+	const PHYSICS_FLUID_PARTICLE_POSITION_LOADER & other
+	) :
+	PointTable( other.PointTable )
+{
+}
 
-		// .. OPERATORS
+// .. OPERATORS
 
-		PHYSICS_FLUID_PARTICLE_POSITION_LOADER & operator=(
-			const PHYSICS_FLUID_PARTICLE_POSITION_LOADER & other
-			)
-		{
-			DEBUG_check_this_expression( this != &other );
+PHYSICS_FLUID_PARTICLE_POSITION_LOADER & operator=(
+	const PHYSICS_FLUID_PARTICLE_POSITION_LOADER & other
+	)
+{
+	assert( this != &other );
 
-			PointTable = other.PointTable;
+	PointTable = other.PointTable;
 
-			return *this;
-		}
+	return *this;
+}
 
-		// .. ACCESSORS
+// .. ACCESSORS
 
-		const MATH_POINT_2D_ARRAY & GetPointTable(
-			VOID
-			) const
-		{
-			return PointTable;
-		}
+const std::vector<MATH_POINT_2D> & GetPointTable(
+	void
+	) const
+{
+	return PointTable;
+}
 
-		// ~~
+// ~~
 
-		VOID SetPointTable(
-			const MATH_POINT_2D_ARRAY &point_table
-			)
-		{
-			PointTable = point_table;
-		}
+void SetPointTable(
+	const std::vector<MATH_POINT_2D> &point_table
+	)
+{
+	PointTable = point_table;
+}
 
-		// .. OPERATIONS
+// .. OPERATIONS
 
-		VOID LoadPositions(
-			const CHAR * bitmap
-			);
+void LoadPositions(
+	const char * bitmap
+	);
 
-		// -- PRIVATE
+// -- PRIVATE
 
-	private:
+private:
 
-		// .. ATTRIBUTES
+// .. ATTRIBUTES
 
-		MATH_POINT_2D_ARRAY
-			PointTable;
-	};
+std::vector<MATH_POINT_2D>
+	PointTable;
+};
 #endif

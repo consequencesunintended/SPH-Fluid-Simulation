@@ -1,187 +1,182 @@
-/*
-Alex Nasser
-http://www.alexnasser.co.uk
-Winter 2011
-*/
 #ifndef __PHYSICS_SPRING__
-	#define __PHYSICS_SPRING__
+#define __PHYSICS_SPRING__
 
-	// -- LOCAL
+// -- LOCAL
 	
-	// .. REFERENCES
+// .. REFERENCES
 
-	#include "physics_entity.h"
-	#include "fundamental_data_types.h"
-    #include "debug_statements.h"
-	
-	// -- GLOBAL
+#include "physics_entity.h"
+#include "fundamental_data_types.h"
+#include <assert.h>
 
-	// .. TYPES
+// -- GLOBAL
 
-	class PHYSICS_SPRING
+// .. TYPES
+
+class PHYSICS_SPRING
+{
+	// -- PUBLIC
+
+public:
+
+	// .. CONSTRUCTORS
+
+	PHYSICS_SPRING(
+		void
+		) :
+		Point1Index( 0 ),
+		Point2Index(0 ),
+		RestLength( 0.0f ),
+		Coefficient( 0.0f )
 	{
-		// -- PUBLIC
+	}
 
-	public:
+	// ~~
 
-		// .. CONSTRUCTORS
+	PHYSICS_SPRING(
+		const PHYSICS_SPRING &other
+		) :
+		Point1Index( other.Point1Index),
+		Point2Index( other.Point2Index),
+		RestLength( other.RestLength ),
+		Coefficient( other.Coefficient )
+	{
+	}
 
-		PHYSICS_SPRING(
-			VOID
-			) :
-			Point1Index( 0 ),
-			Point2Index(0 ),
-			RestLength( 0.0f ),
-			Coefficient( 0.0f )
-		{
-		}
+	// ~~
 
-		// ~~
+	virtual ~PHYSICS_SPRING(
+		void
+		)
+	{
+	}
 
-		PHYSICS_SPRING(
-			const PHYSICS_SPRING &other
-			) :
-			Point1Index( other.Point1Index),
-			Point2Index( other.Point2Index),
-			RestLength( other.RestLength ),
-			Coefficient( other.Coefficient )
-		{
-		}
+	// .. OPERATORS
 
-		// ~~
+	PHYSICS_SPRING & operator=(
+		const PHYSICS_SPRING & other
+		)
+	{
+		assert( this != &other );
 
-		virtual ~PHYSICS_SPRING(
-			VOID
-			)
-		{
-		}
+		Point1Index = other.Point1Index;
+		Point2Index = other.Point2Index;
+		RestLength = other.RestLength;
+		Coefficient = other.Coefficient;
 
-		// .. OPERATORS
+		return *this;
+	}
 
-		PHYSICS_SPRING & operator=(
-			const PHYSICS_SPRING & other
-			)
-		{
-            DEBUG_check_this_expression( this != &other );
+	// .. ACCESSORS
 
-			Point1Index = other.Point1Index;
-			Point2Index = other.Point2Index;
-			RestLength = other.RestLength;
-			Coefficient = other.Coefficient;
+	int GetPoint1Index(
+		void
+		) const
+	{
+		return Point1Index;
+	}
 
-			return *this;
-		}
+	// ~~
 
-		// .. ACCESSORS
+	void SetPoint1Index(
+		int point1_index
+		)
+	{
+		Point1Index = point1_index;
+	}
 
-		INT32 GetPoint1Index(
-			VOID
-			) const
-		{
-			return Point1Index;
-		}
+	// ~~
 
-		// ~~
+	int GetPoint2Index(
+		void
+		) const
+	{
+		return Point2Index;
+	}
 
-		VOID SetPoint1Index(
-			INT32 point1_index
-			)
-		{
-			Point1Index = point1_index;
-		}
+	// ~~
 
-		// ~~
+	void SetPoint2Index(
+		int point2_index
+		)
+	{
+		Point2Index = point2_index;
+	}
 
-		INT32 GetPoint2Index(
-			VOID
-			) const
-		{
-			return Point2Index;
-		}
+	// ~~
 
-		// ~~
+	float GetRestLength(
+		void
+		) const
+	{
+		return RestLength;
+	}
 
-		VOID SetPoint2Index(
-			INT32 point2_index
-			)
-		{
-			Point2Index = point2_index;
-		}
+	// ~~
 
-		// ~~
+	void SetCoefficient(
+		const float coefficient
+		)
+	{
+		Coefficient = coefficient;
+	}
 
-		REAL32 GetRestLength(
-			VOID
-			) const
-		{
-			return RestLength;
-		}
+	// ~~
 
-		// ~~
+	float GetCoefficient(
+		void
+		) const
+	{
+		return Coefficient;
+	}
 
-		VOID SetCoefficient(
-			const REAL32 coefficient
-			)
-		{
-			Coefficient = coefficient;
-		}
+	// ~~
 
-		// ~~
+	void SetCoefficientOfDamping(
+		const float coefficientOfDamping
+		)
+	{
+		CoefficientOfDamping = CoefficientOfDamping;
+	}
 
-		REAL32 GetCoefficient(
-			VOID
-			) const
-		{
-			return Coefficient;
-		}
+	// ~~
 
-		// ~~
+	float GetCoefficientOfDamping(
+		void
+		) const
+	{
+		return CoefficientOfDamping;
+	}
 
-		VOID SetCoefficientOfDamping(
-			const REAL32 coefficientOfDamping
-			)
-		{
-			CoefficientOfDamping = CoefficientOfDamping;
-		}
+	// ~~
 
-		// ~~
+	void SetRestLength(
+		const float rest_length
+		)
+	{
+		RestLength = rest_length;
+	}
 
-		REAL32 GetCoefficientOfDamping(
-			VOID
-			) const
-		{
-			return CoefficientOfDamping;
-		}
+	// .. FUNCTIONS
 
-		// ~~
+	static 	void CalculateForce(
+		MATH_VECTOR_2D & force,
+		const PHYSICS_SPRING & spring,
+		const PHYSICS_ENTITY & point1,
+		const PHYSICS_ENTITY & point2
+		);
 
-		VOID SetRestLength(
-			const REAL32 rest_length
-			)
-		{
-			RestLength = rest_length;
-		}
+	// -- PRIVATE
 
-		// .. FUNCTIONS
+private:
 
-		static 	VOID CalculateForce(
-			MATH_VECTOR_2D & force,
-			const PHYSICS_SPRING & spring,
-			const PHYSICS_ENTITY & point1,
-			const PHYSICS_ENTITY & point2
-			);
-
-		// -- PRIVATE
-
-	private:
-
-		// .. ATTRIBUTES
-		INT32
-			Point1Index,
-			Point2Index;
-		REAL32
-			RestLength,
-			Coefficient,
-			CoefficientOfDamping;
-	};
+	// .. ATTRIBUTES
+	int
+		Point1Index,
+		Point2Index;
+	float
+		RestLength,
+		Coefficient,
+		CoefficientOfDamping;
+};
 #endif

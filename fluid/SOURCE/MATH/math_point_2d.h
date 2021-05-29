@@ -1,21 +1,16 @@
-/*
-Alex Nasser
-http://www.alexnasser.co.uk
-Winter 2011
-*/
 #ifndef __MATH_POINT_2D__
-	#define __MATH_POINT_2D__
+#define __MATH_POINT_2D__
 
-	// -- LOCAL
+// -- LOCAL
 
-	// .. REFERENCES
+// .. REFERENCES
 
-	#include "math_vector_2d.h"
+#include "math_vector_2d.h"
 	
-	// -- GLOBAL
+// -- GLOBAL
 
-	// .. TYPES
+// .. TYPES
 	
-	typedef MATH_VECTOR_2D
-		MATH_POINT_2D;
+typedef MATH_VECTOR_2D
+	MATH_POINT_2D;
 #endif

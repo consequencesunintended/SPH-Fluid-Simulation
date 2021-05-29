@@ -1,10 +1,5 @@
-/*
-Alex Nasser
-http://www.alexnasser.co.uk
-Winter 2011
-*/
 #ifndef __GRAPHICS_MARCHING_SQUARES__
-	#define __GRAPHICS_MARCHING_SQUARES__
+#define __GRAPHICS_MARCHING_SQUARES__
 
 	// -- LOCAL
 
@@ -13,9 +8,7 @@ Winter 2011
 	#include "fundamental_data_types.h"
 	#include "math_vector_2d.h"
 	#include "math_point_2d.h"
-	#include "math_point_2d_array.h"
-    #include "math_point_2d_array_array.h"
-	#include "fundamental_index_array.h"
+	#include <vector>
 
 	// -- GLOBAL
 
@@ -34,7 +27,7 @@ Winter 2011
 		// .. CONSTRUCTORS
 
 		GRAPHICS_MARCHING_SQUARES(
-			VOID
+			void
 			) :
 			IsInsideSurface( 0 ),
 			SurfaceValueTable( 0 ),
@@ -49,17 +42,17 @@ Winter 2011
 		// ~~
 
 		virtual ~GRAPHICS_MARCHING_SQUARES(
-			VOID
+			void
 			)
 		{
-			INDEX
+			unsigned int
 				temp_index;
 
-			FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index, 0 , INDEX( Width ) * 2 )
+			FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index, 0 , unsigned int( Width ) * 2 )
 			{
 				delete [] SurfaceValueTable[ temp_index ];
 			}
-			FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index, 0 , INDEX( Width ) * 2 - 1 )
+			FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index, 0 , unsigned int( Width ) * 2 - 1 )
 			{
 				delete [] IsInsideSurface[ temp_index ];
 			}
@@ -78,7 +71,7 @@ Winter 2011
 			PointTable1( other.PointTable1 ),
 			PolygonVertexCountTable( other.PolygonVertexCountTable )
 		{
-			INDEX
+			unsigned int
 				temp_index_1,
 				temp_index_2;
 
@@ -117,8 +110,8 @@ Winter 2011
 
 		// .. ACCESSORS
 
-		const MATH_POINT_2D_ARRAY & GetPointTable(
-			VOID
+		const std::vector<MATH_POINT_2D> & GetPointTable(
+			void
 			) const
 		{
 			return PointTable2;
@@ -126,8 +119,8 @@ Winter 2011
 
 		// ~~
 
-		VOID SetPointTable(
-			const MATH_POINT_2D_ARRAY & point_table
+		void SetPointTable(
+			const std::vector<MATH_POINT_2D> & point_table
 			)
 		{
 			PointTable2 = point_table;
@@ -135,8 +128,8 @@ Winter 2011
 
 		// ~~
 
-		const FUNDAMENTAL_INDEX_ARRAY & GetPolygonVertexCountTable(
-			VOID
+		const std::vector<unsigned int> & GetPolygonVertexCountTable(
+			void
 			) const
 		{
 			return PolygonVertexCountTable;
@@ -144,8 +137,8 @@ Winter 2011
 
 		// ~~
 
-		VOID SetPolygonVertexCountTable(
-			const FUNDAMENTAL_INDEX_ARRAY & polygon_vertex_count_table
+		void SetPolygonVertexCountTable(
+			const std::vector<unsigned int> & polygon_vertex_count_table
 			)
 		{
 			PolygonVertexCountTable = polygon_vertex_count_table;
@@ -158,42 +151,42 @@ Winter 2011
 		// and PointB( inside the IsoSurface ) through a linear
 		// interpolation.
 
-		VOID InterpolateBetweenPoints(
+		void InterpolateBetweenPoints(
 			MATH_POINT_2D & point,
 			const MATH_POINT_2D & a,
 			const MATH_POINT_2D & b, 
-			const REAL32 value1, 
-			const REAL32 value2 
+			const float value1, 
+			const float value2 
 			) const;
 
 		// .. OPERATIONS
 	
-		VOID Reset(
-			VOID
+		void Reset(
+			void
 			);
 
 		// ~~
 
-		VOID Initialise(
-			const REAL32 width,
-			const REAL32 height
+		void Initialise(
+			const float width,
+			const float height
 			);
 
 		// ~~
 
-		VOID CalculatePoint( 
+		void CalculatePoint( 
 			const MATH_VECTOR_2D & point,
-			const INDEX square_starting_index_x_value,
-			const INDEX square_starting_index_y_value
+			const unsigned int square_starting_index_x_value,
+			const unsigned int square_starting_index_y_value
 			);
 
 		// ~~
 
-		VOID CalculatePoints( 
+		void CalculatePoints( 
 			const MATH_VECTOR_2D & point,
-			const INDEX x_value,
-			const INDEX y_value,
-			const INT32 range
+			const unsigned int x_value,
+			const unsigned int y_value,
+			const int range
 			);
 
 		// ~~
@@ -210,8 +203,8 @@ Winter 2011
 		// is been stored in IsInssideSurface to realise which point
 		// is in and which one is not.
 
-		VOID GeneratePoints(
-			VOID
+		void GeneratePoints(
+			void
 			);
 
 		// -- PUBLIC
@@ -220,17 +213,17 @@ Winter 2011
 
 		// .. ATTRIBUTES
 
-		INT32
+		int
 			**IsInsideSurface;
-		REAL32 
+		float 
 			**SurfaceValueTable,
 			Width,
 			Height;
-		MATH_POINT_2D_ARRAY
+		std::vector<MATH_POINT_2D>
 			PointTable2;
-		MATH_POINT_2D_ARRAY_ARRAY
+		std::vector < std::vector<MATH_POINT_2D>>
 			PointTable1;
-		FUNDAMENTAL_INDEX_ARRAY
+		std::vector<unsigned int>
 			PolygonVertexCountTable;
 	};
 #endif

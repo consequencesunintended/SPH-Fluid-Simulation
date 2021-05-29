@@ -21,9 +21,9 @@ Winter 2011
 
 // .. OPERATIONS
 
-VOID GAME_CORE_ENGINE::Initialize( 
-    const REAL32 fluid_max_width,
-    const REAL32 fluid_max_height
+void GAME_CORE_ENGINE::Initialize( 
+    const float fluid_max_width,
+    const float fluid_max_height
     )
 {
 	PhysicsIntegrationEngine = new PHSYICS_INTEGRATION_PREDICTION_RELAXATION();
@@ -34,15 +34,15 @@ VOID GAME_CORE_ENGINE::Initialize(
 
 // ~~
 
-VOID GAME_CORE_ENGINE::InitialiseParticles(
-	VOID
+void GAME_CORE_ENGINE::InitialiseParticles(
+	void
     )
 {
     MATH_VECTOR_2D 
         position;
     PHYSICS_FLUID_PARTICLE 
         particle;
-    INDEX
+    unsigned int
         particle_index;
 
 	FluidPositionLoader.LoadPositions(
@@ -70,14 +70,14 @@ VOID GAME_CORE_ENGINE::InitialiseParticles(
 
 // ~~
 
-VOID GAME_CORE_ENGINE::Update(
-    const REAL32 delta_time,
-    const BOOL do_viscosity,
-    const BOOL is_viscoelastic,
-    const BOOL is_plastic
+void GAME_CORE_ENGINE::Update(
+    const float delta_time,
+    const bool do_viscosity,
+    const bool is_viscoelastic,
+    const bool is_plastic
     )
 {
-	COUNTER
+	int
 		counter,
 		counter2;
 
@@ -86,7 +86,7 @@ VOID GAME_CORE_ENGINE::Update(
 
 	if ( delta_time / GAME_CORE_ENGINE_delta_time_cap > 5.0f )
 	{
-		counter = INT32( delta_time / GAME_CORE_ENGINE_delta_time_cap - 5.0f );
+		counter = int( delta_time / GAME_CORE_ENGINE_delta_time_cap - 5.0f );
 	}
 
 	if ( DeltaValue > GAME_CORE_ENGINE_delta_time_cap )
@@ -111,15 +111,15 @@ VOID GAME_CORE_ENGINE::Update(
 
 // ~~
 
-VOID GAME_CORE_ENGINE::ResetViscoelasticity(
-    VOID
+void GAME_CORE_ENGINE::ResetViscoelasticity(
+    void
     )
 {
     PhysicsFluidEngine.ResetSprings();
 }
 
-VOID GAME_CORE_ENGINE::InitialisePlasticity(
-	VOID
+void GAME_CORE_ENGINE::InitialisePlasticity(
+	void
 	)
 {
 	PhysicsFluidEngine.InitialisePlasticity(
@@ -133,8 +133,8 @@ VOID GAME_CORE_ENGINE::InitialisePlasticity(
 
 // .. OPERATIONS
 
-VOID GAME_CORE_ENGINE::CalculateDensity( 
-	const REAL32 delta_time  
+void GAME_CORE_ENGINE::CalculateDensity( 
+	const float delta_time  
 	)
 {
 
@@ -146,8 +146,8 @@ VOID GAME_CORE_ENGINE::CalculateDensity(
 
 // ~~
 
-VOID GAME_CORE_ENGINE::CalculatePressureForce( 
-    const REAL32 delta_time  
+void GAME_CORE_ENGINE::CalculatePressureForce( 
+    const float delta_time  
     )
 {
 	PhysicsFluidEngine.CalculatePressure(
@@ -161,13 +161,13 @@ VOID GAME_CORE_ENGINE::CalculatePressureForce(
 
 // ~~
 
-VOID GAME_CORE_ENGINE::UpdateParticlesVelocityAndPosition( 
-    const REAL32 delta_time  
+void GAME_CORE_ENGINE::UpdateParticlesVelocityAndPosition( 
+    const float delta_time  
     )
 {
-	INDEX 
+	unsigned int 
 		particle_index;
-	REAL32
+	float
 		attraction_radius;
 
 	particle_index = 0;
@@ -208,12 +208,12 @@ VOID GAME_CORE_ENGINE::UpdateParticlesVelocityAndPosition(
 
 // ~~
 
-VOID GAME_CORE_ENGINE::DetectCollision( 
-    const REAL32 widht, 
-    const REAL32 height  
+void GAME_CORE_ENGINE::DetectCollision( 
+    const float widht, 
+    const float height  
     )
 {
-	INDEX
+	unsigned int
 		particle_index;
 	MATH_POINT_2D
 		position;
@@ -237,8 +237,8 @@ VOID GAME_CORE_ENGINE::DetectCollision(
 
 // ~~
 
-VOID GAME_CORE_ENGINE::CalculateViscosity( 
-    const REAL32 delta_time  
+void GAME_CORE_ENGINE::CalculateViscosity( 
+    const float delta_time  
 	)
 {
 	PhysicsFluidEngine.CalculateViscosity(
@@ -250,8 +250,8 @@ VOID GAME_CORE_ENGINE::CalculateViscosity(
 
 // ~~
 
-VOID GAME_CORE_ENGINE::CalculateSpringsForViscoelasticity(
-    const REAL32 delta_time 
+void GAME_CORE_ENGINE::CalculateSpringsForViscoelasticity(
+    const float delta_time 
     )
 {
 	PhysicsFluidEngine.CalculateViscoElasticity(
@@ -266,8 +266,8 @@ VOID GAME_CORE_ENGINE::CalculateSpringsForViscoelasticity(
 
 // ~~
 
-VOID GAME_CORE_ENGINE::CalculatePlasticity(
-	const REAL32 delta_time
+void GAME_CORE_ENGINE::CalculatePlasticity(
+	const float delta_time
 	)
 {
 	PhysicsFluidEngine.CalculatePlasticity(

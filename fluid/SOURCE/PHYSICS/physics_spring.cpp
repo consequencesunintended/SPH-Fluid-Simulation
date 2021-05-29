@@ -9,7 +9,7 @@ Winter 2011
 
 // .. OPERATIONS
 
-VOID PHYSICS_SPRING::CalculateForce(
+void PHYSICS_SPRING::CalculateForce(
 	MATH_VECTOR_2D & force,
 	const PHYSICS_SPRING & spring,
 	const PHYSICS_ENTITY & point1,
@@ -18,7 +18,7 @@ VOID PHYSICS_SPRING::CalculateForce(
 {
 	MATH_VECTOR_2D
 		vector_between_point1_and_point2;
-	REAL32
+	float
 		current_length;
 
 	vector_between_point1_and_point2.SetDifference(

@@ -1,39 +1,34 @@
-/*
-Alex Nasser
-http://www.alexnasser.co.uk
-Winter 2011
-*/
 #ifndef __PHYSICS_COLLISION_2D__
-	#define __PHYSICS_COLLISION_2D__
+#define __PHYSICS_COLLISION_2D__
 
-	// -- LOCAL
+// -- LOCAL
 	
-	// .. REFERENCES
+// .. REFERENCES
 
-	#include "physics_entity.h"
-	#include "fundamental_data_types.h"
-	#include "math_point_2d.h"
+#include "physics_entity.h"
+#include "fundamental_data_types.h"
+#include "math_point_2d.h"
 	
-	// -- GLOBAL
+// -- GLOBAL
 
-	// .. TYPES
+// .. TYPES
 
-	class PHYSICS_COLLISION_2D
-	{
-		// -- PUBLIC
+class PHYSICS_COLLISION_2D
+{
+	// -- PUBLIC
 
-	public:
+public:
 
-		// .. OPERATIONS
+	// .. OPERATIONS
 
-		VOID CheckForWall(
-			PHYSICS_ENTITY &entity,
-			const REAL32 wall_spring_coefficient,
-			const MATH_POINT_2D & position,
-			const REAL32 min_x_value,
-			const REAL32 max_x_value,
-			const REAL32 min_y_value,
-			const REAL32 max_y_value
-			);
-	};
+	void CheckForWall(
+		PHYSICS_ENTITY &entity,
+		const float wall_spring_coefficient,
+		const MATH_POINT_2D & position,
+		const float min_x_value,
+		const float max_x_value,
+		const float min_y_value,
+		const float max_y_value
+		);
+};
 #endif

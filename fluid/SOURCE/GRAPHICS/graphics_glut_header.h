@@ -1,8 +1,3 @@
-/*
-Alex Nasser
-http://www.alexnasser.co.uk
-Winter 2011
-*/
 #include "glut.h"
 #include <windows.h>
 #include "fundamental_data_types.h"
@@ -20,15 +15,15 @@ namespace GLUT_FUNCTIONS
 		GLUT_BITMAP_HELVETICA_18 
 		}; 
 
-	VOID glutPrint(
-		REAL32 x, 
-		REAL32 y, 
+	void glutPrint(
+		float x, 
+		float y, 
 		LPVOID font, 
-		CHAR * text, 
-		REAL32 r, 
-		REAL32 g, 
-		REAL32 b, 
-		REAL32 a
+		char * text, 
+		float r, 
+		float g, 
+		float b, 
+		float a
 		) 
 	{ 
 		glColor4f(r,g,b,a); 

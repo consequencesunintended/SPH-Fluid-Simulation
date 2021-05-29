@@ -16,14 +16,14 @@ Winter 2011
 
 // .. OPERATIONS
 
-VOID PHYSICS_COLLISION_2D::CheckForWall(
+void PHYSICS_COLLISION_2D::CheckForWall(
 			PHYSICS_ENTITY &entity,
-			const REAL32 wall_spring_coefficient,
+			const float wall_spring_coefficient,
 			const MATH_POINT_2D & position,
-			const REAL32 min_x_value,
-			const REAL32 max_x_value,
-			const REAL32 min_y_value,
-			const REAL32 max_y_value
+			const float min_x_value,
+			const float max_x_value,
+			const float min_y_value,
+			const float max_y_value
 			)
 {
 	if( entity.GetPosition().X < min_x_value + position.X ) 

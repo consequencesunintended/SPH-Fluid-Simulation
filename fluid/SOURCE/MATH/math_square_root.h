@@ -22,7 +22,7 @@
 		// .. CONSTRUCTORS
 
 		MATH_SQUARE_ROOT(
-			VOID
+			void
 			)
 		{
 		}
@@ -38,7 +38,7 @@
 		// ~~
 
 		virtual ~MATH_SQUARE_ROOT(
-			VOID
+			void
 			)
 		{
 		}
@@ -60,14 +60,14 @@
 		// this method is faster than the normal square root
 		// used in the standard library.
 
-		static REAL32 GetSquareRoot(
-			const REAL32 value
+		static float GetSquareRoot(
+			const float value
 			)
 		{
 			union
 			{
-				INT32 i;
-				REAL32 value;
+				int i;
+				float value;
 			} u;
 			u.value = value;
 			u.i = ( 1 << 29 ) + ( u.i >> 1 ) - ( 1 << 22 ); 

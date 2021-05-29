@@ -5,9 +5,17 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -22,7 +30,18 @@
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -33,7 +52,13 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -45,9 +70,15 @@
     <IntDir>$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -67,6 +98,24 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>.\DEPENDENCIES\Glut ; .\SOURCE\DEBUG; .\SOURCE\MATH; .\SOURCE\GRAPHICS; .\SOURCE\FUNDAMENTAL; .\SOURCE\PHYSICS; .\SOURCE\THIRD_PARTY; .\SOURCE\GAME; .\SOURCE\PLATFORM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>.\Dependencies\Glut ; .\Dependencies\GxBase\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -90,6 +139,27 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>.\DEPENDENCIES\Glut ; .\SOURCE\DEBUG; .\SOURCE\MATH; .\SOURCE\GRAPHICS; .\SOURCE\FUNDAMENTAL; .\SOURCE\PHYSICS; .\SOURCE\THIRD_PARTY; .\SOURCE\GAME; .\SOURCE\PLATFORM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>.\Dependencies\Glut ;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="SOURCE\GAME\game_core_engine.cpp" />
     <ClCompile Include="SOURCE\GAME\game_window.cpp" />
@@ -103,14 +173,8 @@
     <ClCompile Include="SOURCE\PHYSICS\physics_spring.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SOURCE\DEBUG\debug_statements.h" />
-    <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_array_type.h" />
-    <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_bool_array.h" />
-    <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_bool_array_array.h" />
     <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_data_types.h" />
     <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_delta_time.h" />
-    <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_index_array.h" />
-    <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_real_array_array.h" />
     <ClInclude Include="SOURCE\GAME\game_core_engine.h" />
     <ClInclude Include="SOURCE\GAME\game_window.h" />
     <ClInclude Include="SOURCE\GRAPHICS\graphics_color.h" />
@@ -118,8 +182,6 @@
     <ClInclude Include="SOURCE\GRAPHICS\graphics_image_pixel_loader.h" />
     <ClInclude Include="SOURCE\GRAPHICS\graphics_marching_squares.h" />
     <ClInclude Include="SOURCE\MATH\math_point_2d.h" />
-    <ClInclude Include="SOURCE\MATH\math_point_2d_array.h" />
-    <ClInclude Include="SOURCE\MATH\math_point_2d_array_array.h" />
     <ClInclude Include="SOURCE\MATH\math_square_root.h" />
     <ClInclude Include="SOURCE\MATH\math_vector_2d.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_collision_2d.h" />
@@ -128,7 +190,6 @@
     <ClInclude Include="SOURCE\PHYSICS\physics_fluid_neighbour_particle.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_fluid_neighbour_particle_array.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_fluid_particle.h" />
-    <ClInclude Include="SOURCE\PHYSICS\physics_fluid_particle_array.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_fluid_particle_position_loader.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_fluid_sph_viscoelastic.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_integration.h" />

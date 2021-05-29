@@ -16,22 +16,22 @@ Winter 2011
 
 // .. FUNCTIONS
 
-VOID GRAPHICS_IMAGE_PIXEL_LOADER::LoadBMP(
+void GRAPHICS_IMAGE_PIXEL_LOADER::LoadBMP(
 	GRAPHICS_IMAGE_PIXEL_LOADER & image,
-	const CHAR * filename
+	const char * filename
 	) 
 {
-	INT32 
+	int 
 		dataOffset,
 		headerSize,
 		width,
 		height,
 		bytesPerRow,
 		size;
-	CHAR 
+	char 
 		* pixels3,
 		* pixels2;
-	INT32
+	int
 		index_x,
 		index_y,
 		index_c;
@@ -57,10 +57,10 @@ VOID GRAPHICS_IMAGE_PIXEL_LOADER::LoadBMP(
 	}
 	bytesPerRow = ((width * 3 + 3) / 4) * 4 - (width * 3 % 4);
 	size = bytesPerRow * height;
-	pixels3 = new CHAR[ size ];
+	pixels3 = new char[ size ];
 	file_reader_engine.SeekInBeginning(dataOffset);
 	file_reader_engine.ReadCharacters( pixels3 , size);
-	pixels2 = new CHAR[ width * height * 3 ];
+	pixels2 = new char[ width * height * 3 ];
 
 	FUNDAMENTAL_DATA_TYPES_loop_through_index( index_y, 0, height - 1 ) 
 	{

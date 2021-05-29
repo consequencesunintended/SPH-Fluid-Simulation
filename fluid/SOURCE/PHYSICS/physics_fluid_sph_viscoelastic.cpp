@@ -23,7 +23,6 @@ Winter 2011
 
 #include "fundamental_data_types.h"
 #include "physics_fluid_particle.h"
-#include "physics_fluid_particle_array.h"
 #include "physics_fluid_neighbour_particle.h"
 #include "math_vector_2d.h"
 #include "physics_spring.h"
@@ -34,8 +33,8 @@ Winter 2011
 
 // .. OPERATIONS
 
-VOID PHSYICS_FLUID_SPH_VISCOELASTIC::InitialiseSpringTable(
-	const INT32 number_of_particles
+void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialiseSpringTable(
+	const int number_of_particles
 	)
 {
 	SpringTable.SetMaxNumberOfPoints( number_of_particles );
@@ -43,15 +42,15 @@ VOID PHSYICS_FLUID_SPH_VISCOELASTIC::InitialiseSpringTable(
 
 // ~~
 
-VOID PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity(
-	PHYSICS_FLUID_PARTICLE_ARRAY & particles_table, 
-	const REAL32 smoothing_radius
+void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity(
+	std::vector<PHYSICS_FLUID_PARTICLE> & particles_table, 
+	const float smoothing_radius
 	)
 {
-	INDEX 
+	unsigned int 
 		particle_index,
 		neighbour_index;
-	REAL32 
+	float 
 		density,
 		near_density,
 		squared_distance_between_particle_and_neighbour,
@@ -119,15 +118,15 @@ VOID PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity(
 
 // ~~
 
-VOID PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePressure(
-	PHYSICS_FLUID_PARTICLE_ARRAY & particlesTable,
-	const REAL32 stifness_parameter,
-	const REAL32 near_stifness_parameter,
-	const REAL32 rest_density,
-	const REAL32 delta_time
+void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePressure(
+	std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable,
+	const float stifness_parameter,
+	const float near_stifness_parameter,
+	const float rest_density,
+	const float delta_time
 	)
 {
-	INDEX 
+	unsigned int 
 		prticle_index,
 		neighbour_table_index,
 		neighbour_index;
@@ -136,7 +135,7 @@ VOID PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePressure(
 		vector_between_particle_and_neighbour,
 		neighbour_pressure_force;
 	PHYSICS_FLUID_NEIGHBOUR_PARTICLE neigbour_particle;
-	REAL32 
+	float 
 		pressure,
 		near_pressure,
 		smoothing_kernel,
@@ -196,19 +195,19 @@ VOID PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePressure(
 
 // ~~
 
-VOID PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscosity(
-	PHYSICS_FLUID_PARTICLE_ARRAY & particlesTable,
-	const REAL32 smoothing_radius,
-	const REAL32 delta_time
+void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscosity(
+	std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable,
+	const float smoothing_radius,
+	const float delta_time
 	)
 {
-	INDEX 
+	unsigned int 
 		prticle_index,
 		neighbour_table_index,
 		neighbour_index;
 	PHYSICS_FLUID_NEIGHBOUR_PARTICLE 
 		neighbour_particle;
-	REAL32 
+	float 
 		length,
 		q,
 		inward_radial_velocity;
@@ -268,26 +267,26 @@ VOID PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscosity(
 
 // ~~
 
-VOID PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
-	PHYSICS_FLUID_PARTICLE_ARRAY & particlesTable,
-	const REAL32 smoothing_radius,
-	const REAL32 coefficient_spring,
-	const REAL32 yeild_ratio,
-	const REAL32 plasticity_constant,
-	const REAL32 delta_time
+void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
+	std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable,
+	const float smoothing_radius,
+	const float coefficient_spring,
+	const float yeild_ratio,
+	const float plasticity_constant,
+	const float delta_time
 	)
 {
 	PHYSICS_FLUID_NEIGHBOUR_PARTICLE 
 		neighbour_particle;
 	PHYSICS_SPRING 
 		spring;
-	INDEX
+	unsigned int
 		particle_index,
 		neighbour_index,
 		spring_index,
 		spring_point1_index,
 		spring_point2_index;
-	REAL32 
+	float 
 		restLength,
 		tolerable_deformation,
 		distance_between_particle_and_neighbour;
@@ -310,7 +309,7 @@ VOID PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 				SpringTable.SetItemInExistenceTable( 
 					particle_index, 
 					neighbour_particle.GetParticleIndex(), 
-					BOOLEAN_true 
+					true 
 					);
 				spring.SetPoint1Index( particle_index );
 				spring.SetPoint2Index( neighbour_particle.GetParticleIndex() );
@@ -354,9 +353,9 @@ VOID PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 			SpringTable.SetItemInExistenceTable( 
 				SpringTable[spring_index].GetPoint1Index(), 
 				SpringTable[spring_index].GetPoint2Index(), 
-				BOOLEAN_false 
+				false 
 				);
-			SpringTable.erase( spring_index );
+			SpringTable.erase( SpringTable.begin() + spring_index );
 			spring_index--;
 		}
 	}
@@ -392,8 +391,8 @@ VOID PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 
 // ~~
 
-VOID PHSYICS_FLUID_SPH_VISCOELASTIC::ResetSprings(
-	VOID
+void PHSYICS_FLUID_SPH_VISCOELASTIC::ResetSprings(
+	void
 	)
 {
 	SpringTable.clear();
@@ -402,20 +401,20 @@ VOID PHSYICS_FLUID_SPH_VISCOELASTIC::ResetSprings(
 
 // ~~
 
-VOID PHSYICS_FLUID_SPH_VISCOELASTIC::InitialisePlasticity(
-	PHYSICS_FLUID_PARTICLE_ARRAY & particlesTable,
-	const REAL32 smoothing_radius,
-	const REAL32 coefficient_spring
+void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialisePlasticity(
+	std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable,
+	const float smoothing_radius,
+	const float coefficient_spring
 	)
 {
 	PHYSICS_FLUID_NEIGHBOUR_PARTICLE 
 		neighbour_particle;
 	PHYSICS_SPRING 
 		spring;
-	INDEX
+	unsigned int
 		particle_index_1,
 		particle_index_2;
-	REAL32 
+	float 
 		distance_between_particle_and_neighbour;
 	MATH_VECTOR_2D 		
 		vector_between_particle_and_neighbour;
@@ -451,18 +450,18 @@ VOID PHSYICS_FLUID_SPH_VISCOELASTIC::InitialisePlasticity(
 
 // ~~
 
-VOID PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePlasticity(
-	PHYSICS_FLUID_PARTICLE_ARRAY & particlesTable,
-	const REAL32 delta_time
+void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePlasticity(
+	std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable,
+	const float delta_time
 	)
 {
 	PHYSICS_SPRING 
 		spring;
-	INDEX
+	unsigned int
 		spring_index,
 		spring_point1_index,
 		spring_point2_index;
-	REAL32 
+	float 
 		restLength;
 	MATH_VECTOR_2D 		
 		spring_force,

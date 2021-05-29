@@ -1,96 +1,91 @@
-/*
-Alex Nasser
-www.alexnasser.co.uk
-14-2-2011 18:59:23
-*/
 // This class is the base interface of all integration classes
 // It is a self explenatory class, the only thing that is worth
 // mentioning is that some classes come with a scale factor for
 // their delta time that should be passed to the delta time of
 // their integration to get the desired results.
 #ifndef __PHYSICS_INTEGRATION__
-	#define __PHYSICS_INTEGRATION__
+#define __PHYSICS_INTEGRATION__
 
-	// -- LOCAL
+// -- LOCAL
 
-	// .. REFERENCES
+// .. REFERENCES
 
-	#include "debug_statements.h"
-	#include "fundamental_data_types.h"
-	#include "physics_entity.h"
+#include "fundamental_data_types.h"
+#include "physics_entity.h"
+#include <assert.h>
 
-	// -- GLOBAL
+// -- GLOBAL
 
-	// .. CONSTANTS
+// .. CONSTANTS
 
-	// .. TYPES
+// .. TYPES
 
-	class PHYSICS_INTEGRATION
+class PHYSICS_INTEGRATION
+{
+	// -- PUBLIC
+
+public:
+
+	// .. CONSTRUCTORS
+
+	PHYSICS_INTEGRATION(
+		void
+		)
 	{
-		// -- PUBLIC
+	}
 
-	public:
+	// ~~
 
-		// .. CONSTRUCTORS
+	PHYSICS_INTEGRATION(
+		const PHYSICS_INTEGRATION & other
+		)
+	{
+	}
 
-		PHYSICS_INTEGRATION(
-			VOID
-			)
-		{
-		}
+	// ~~
 
-		// ~~
+	virtual ~PHYSICS_INTEGRATION(
+		void
+		)
+	{
+	}
 
-		PHYSICS_INTEGRATION(
-			const PHYSICS_INTEGRATION & other
-			)
-		{
-		}
+	// .. OPERATORS
 
-		// ~~
+	PHYSICS_INTEGRATION & operator=(
+		const PHYSICS_INTEGRATION & other
+		)
+	{
+		return *this;
+	}
 
-		virtual ~PHYSICS_INTEGRATION(
-			VOID
-			)
-		{
-		}
+	// .. ACCESSORS
 
-		// .. OPERATORS
+	// .. INQUERIES
 
-		PHYSICS_INTEGRATION & operator=(
-			const PHYSICS_INTEGRATION & other
-			)
-		{
-			return *this;
-		}
+	// .. OPERATIONS
 
-		// .. ACCESSORS
+	virtual void UpdateVelocity(
+		PHYSICS_ENTITY & game_entity,
+		const float delta_time
+		) = 0;
 
-		// .. INQUERIES
+	// ~~
 
-		// .. OPERATIONS
+	virtual void UpdatePosition(
+		PHYSICS_ENTITY & game_entity,
+		const float delta_time
+		) = 0;
 
-		virtual VOID UpdateVelocity(
-			PHYSICS_ENTITY & game_entity,
-			const REAL32 delta_time
-			) = 0;
+	// .. FUNCTIONS
 
-		// ~~
+	// -- PRIVATE
 
-		virtual VOID UpdatePosition(
-			PHYSICS_ENTITY & game_entity,
-			const REAL32 delta_time
-			) = 0;
+private:
 
-		// .. FUNCTIONS
+	// .. ATTRIBUTES
 
-		// -- PRIVATE
+	// .. VARIABLES
 
-	private:
-
-		// .. ATTRIBUTES
-
-		// .. VARIABLES
-
-	};
+};
 #endif

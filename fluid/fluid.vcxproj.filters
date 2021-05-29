@@ -80,12 +80,6 @@
     <ClInclude Include="SOURCE\MATH\math_point_2d.h">
       <Filter>Header Files\MATH</Filter>
     </ClInclude>
-    <ClInclude Include="SOURCE\MATH\math_point_2d_array.h">
-      <Filter>Header Files\MATH</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\MATH\math_point_2d_array_array.h">
-      <Filter>Header Files\MATH</Filter>
-    </ClInclude>
     <ClInclude Include="SOURCE\MATH\math_square_root.h">
       <Filter>Header Files\MATH</Filter>
     </ClInclude>
@@ -98,28 +92,10 @@
     <ClInclude Include="SOURCE\GAME\game_window.h">
       <Filter>Header Files\GAME</Filter>
     </ClInclude>
-    <ClInclude Include="SOURCE\DEBUG\debug_statements.h">
-      <Filter>Header Files\DEBUG</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_array_type.h">
-      <Filter>Header Files\FUNDAMENTAL</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_bool_array.h">
-      <Filter>Header Files\FUNDAMENTAL</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_bool_array_array.h">
-      <Filter>Header Files\FUNDAMENTAL</Filter>
-    </ClInclude>
     <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_data_types.h">
       <Filter>Header Files\FUNDAMENTAL</Filter>
     </ClInclude>
     <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_delta_time.h">
-      <Filter>Header Files\FUNDAMENTAL</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_index_array.h">
-      <Filter>Header Files\FUNDAMENTAL</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_real_array_array.h">
       <Filter>Header Files\FUNDAMENTAL</Filter>
     </ClInclude>
     <ClInclude Include="SOURCE\GRAPHICS\graphics_color.h">
@@ -150,9 +126,6 @@
       <Filter>Header Files\PHYSICS</Filter>
     </ClInclude>
     <ClInclude Include="SOURCE\PHYSICS\physics_fluid_particle.h">
-      <Filter>Header Files\PHYSICS</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\PHYSICS\physics_fluid_particle_array.h">
       <Filter>Header Files\PHYSICS</Filter>
     </ClInclude>
     <ClInclude Include="SOURCE\PHYSICS\physics_fluid_particle_position_loader.h">

@@ -32,12 +32,12 @@ Winter 2011
 // and PointB( inside the IsoSurface ) through a linear
 // interpolation.
 
-VOID GRAPHICS_MARCHING_SQUARES::InterpolateBetweenPoints(
+void GRAPHICS_MARCHING_SQUARES::InterpolateBetweenPoints(
 	MATH_POINT_2D & point,
 	const MATH_POINT_2D &a,
 	const MATH_POINT_2D &b, 
-	const REAL32 value1, 
-	const REAL32 value2 
+	const float value1, 
+	const float value2 
 	) const
 {
 	if ( ( value2 - value1 ) != 0.0f )
@@ -52,17 +52,17 @@ VOID GRAPHICS_MARCHING_SQUARES::InterpolateBetweenPoints(
 
 // .. OPERATIONS
 
-VOID GRAPHICS_MARCHING_SQUARES::Initialise(
-	const REAL32 width,
-	const REAL32 height
+void GRAPHICS_MARCHING_SQUARES::Initialise(
+	const float width,
+	const float height
 	)
 {
-	INDEX
+	unsigned int
 		temp_index_1,
 		temp_index_2;
 	MATH_POINT_2D
 		point;
-	REAL32
+	float
 		initial_position_x,
 		initial_position_y;
 
@@ -70,11 +70,11 @@ VOID GRAPHICS_MARCHING_SQUARES::Initialise(
 	Height = height;
 	initial_position_x = -width;
 	initial_position_y = height;
-	PointTable1.Allocate( COUNTER( width * 2 + 1 ) );
+	PointTable1.resize( int( width * 2 + 1 ) );
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_2, 0, INDEX( height * 2 ) )
+	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_2, 0, unsigned int( height * 2 ) )
 	{
-		FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, INDEX( width * 2 ) )
+		FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, unsigned int( width * 2 ) )
 		{
 			point.Assign( initial_position_x , initial_position_y ); 
 			PointTable1[ temp_index_1 ].push_back( point );
@@ -86,31 +86,31 @@ VOID GRAPHICS_MARCHING_SQUARES::Initialise(
 			}
 		}
 	}
-	IsInsideSurface = new INT32*[ INDEX( width ) * 2 ] ;
-	SurfaceValueTable = new REAL32*[ INDEX( width ) * 2 + 1 ];
+	IsInsideSurface = new int*[ unsigned int( width ) * 2 ] ;
+	SurfaceValueTable = new float*[ unsigned int( width ) * 2 + 1 ];
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, INDEX( width ) * 2 - 1 )
+	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, unsigned int( width ) * 2 - 1 )
 	{
-		IsInsideSurface[ temp_index_1 ] = new INT32[ INDEX( width ) * 2 ];
+		IsInsideSurface[ temp_index_1 ] = new int[ unsigned int( width ) * 2 ];
 	}
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, INDEX( width ) * 2 )
+	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, unsigned int( width ) * 2 )
 	{
-		SurfaceValueTable[ temp_index_1 ] = new REAL32[ INDEX( width ) * 2 + 1 ];
+		SurfaceValueTable[ temp_index_1 ] = new float[ unsigned int( width ) * 2 + 1 ];
 	}
 	Reset();
 }
 
 // ~~
 
-VOID GRAPHICS_MARCHING_SQUARES::CalculatePoint( 
+void GRAPHICS_MARCHING_SQUARES::CalculatePoint( 
 	const MATH_VECTOR_2D & point,
-	const INDEX square_starting_index_x_value,
-	const INDEX square_starting_index_y_value
+	const unsigned int square_starting_index_x_value,
+	const unsigned int square_starting_index_y_value
 	)
 {
-	REAL32 value;
-	REAL32 h;
+	float value;
+	float h;
 	
 	h = ( point 
 		- PointTable1[ square_starting_index_x_value ][ square_starting_index_y_value ] 
@@ -133,14 +133,14 @@ VOID GRAPHICS_MARCHING_SQUARES::CalculatePoint(
 
 // ~~
 
-VOID GRAPHICS_MARCHING_SQUARES::CalculatePoints( 
+void GRAPHICS_MARCHING_SQUARES::CalculatePoints( 
 	const MATH_VECTOR_2D & point,
-	const INDEX x_value,
-	const INDEX y_value,
-	const INT32 range
+	const unsigned int x_value,
+	const unsigned int y_value,
+	const int range
 	)
 {
-	COUNTER
+	int
 		counter_value_1,
 		counter_value_2;
 
@@ -201,24 +201,24 @@ VOID GRAPHICS_MARCHING_SQUARES::CalculatePoints(
 
 // ~~
 
-VOID GRAPHICS_MARCHING_SQUARES::Reset(
-	VOID
+void GRAPHICS_MARCHING_SQUARES::Reset(
+	void
 	)
 {
-	INDEX
+	unsigned int
 		temp_index_1,
 		temp_index_2;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, INDEX( Width ) * 2 )
+	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, unsigned int( Width ) * 2 )
 	{
-		FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_2, 0, INDEX( Height ) * 2 )
+		FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_2, 0, unsigned int( Height ) * 2 )
 		{
 			SurfaceValueTable[temp_index_1][temp_index_2] = 0.0f;
 		}
 	}
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, INDEX( Width ) * 2 - 1 )
+	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, unsigned int( Width ) * 2 - 1 )
 	{
-		FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_2, 0, INDEX( Height ) * 2 - 1 )
+		FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_2, 0, unsigned int( Height ) * 2 - 1 )
 		{
 			IsInsideSurface[temp_index_1][temp_index_2] = 0;
 		}
@@ -242,11 +242,11 @@ VOID GRAPHICS_MARCHING_SQUARES::Reset(
 // is been stored in IsInssideSurface to realise which point
 // is in and which one is not.
 
-VOID GRAPHICS_MARCHING_SQUARES::GeneratePoints(
-	VOID
+void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
+	void
 	)
 {
-	INDEX
+	unsigned int
 		temp_index_1,
 		temp_index_2,
 		index_x,

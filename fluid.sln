@@ -20,9 +20,9 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaProjectFile = C:\Users\Alexander Nasser\Hull\thesis\Backup\6 January\fluid-2d\CodeAnalyst\fluid.caw
-		AMDCaPersistentStartup = fluid
-		AMDCaPersistentConfig = Release|Win32
 		SolutionGuid = {CFB81566-9816-4A5B-A0EF-C3D215500B9C}
+		AMDCaPersistentConfig = Release|Win32
+		AMDCaPersistentStartup = fluid
+		AMDCaProjectFile = C:\Users\Alexander Nasser\Hull\thesis\Backup\6 January\fluid-2d\CodeAnalyst\fluid.caw
 	EndGlobalSection
 EndGlobal

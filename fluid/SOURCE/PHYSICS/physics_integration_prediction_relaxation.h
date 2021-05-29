@@ -5,85 +5,78 @@
 // view the paper  is avaiable here 
 // http://www.iro.umontreal.ca/labs/infographie/papers/Clavet-2005-PVFS/pvfs.pdf
 
-//----------------------------------
-//|          Alex Nasser           |
-//| MSc Computer Games Programming |
-//|          Winter 2011           |
-//|      www.alexnasser.co.uk      |
-//----------------------------------
-
 
 #ifndef __PHSYICS_INTEGRATION_PREDICTION_RELAXATION__
-	#define __PHSYICS_INTEGRATION_PREDICTION_RELAXATION__
+#define __PHSYICS_INTEGRATION_PREDICTION_RELAXATION__
 
-	// -- LOCAL
+// -- LOCAL
 
-	// .. REFERENCES
+// .. REFERENCES
 
-	#include "fundamental_data_types.h"
-	#include "physics_integration.h"
-	#include "physics_entity.h"
+#include "fundamental_data_types.h"
+#include "physics_integration.h"
+#include "physics_entity.h"
 
-	// -- GLOBAL
+// -- GLOBAL
 
-	// .. TYPES
+// .. TYPES
 
-	class PHSYICS_INTEGRATION_PREDICTION_RELAXATION
-		: public PHYSICS_INTEGRATION
+class PHSYICS_INTEGRATION_PREDICTION_RELAXATION
+	: public PHYSICS_INTEGRATION
+{
+	// -- PUBLIC
+public:
+
+	// .. CONSTRUCTORS
+
+	PHSYICS_INTEGRATION_PREDICTION_RELAXATION(
+		void
+		) :
+		PHYSICS_INTEGRATION()
 	{
-		// -- PUBLIC
-	public:
+	}
 
-		// .. CONSTRUCTORS
+	// ~~
 
-		PHSYICS_INTEGRATION_PREDICTION_RELAXATION(
-			VOID
-			) :
-			PHYSICS_INTEGRATION()
-		{
-		}
+	PHSYICS_INTEGRATION_PREDICTION_RELAXATION(
+		const PHSYICS_INTEGRATION_PREDICTION_RELAXATION & other
+		) :
+		PHYSICS_INTEGRATION( other )
+	{
+	}
 
-		// ~~
+	// ~~
 
-		PHSYICS_INTEGRATION_PREDICTION_RELAXATION(
-			const PHSYICS_INTEGRATION_PREDICTION_RELAXATION & other
-			) :
-			PHYSICS_INTEGRATION( other )
-		{
-		}
+	virtual ~PHSYICS_INTEGRATION_PREDICTION_RELAXATION(
+		void
+		)
+	{
+	}
 
-		// ~~
+	// .. OPERATORS
 
-		virtual ~PHSYICS_INTEGRATION_PREDICTION_RELAXATION(
-			VOID
-			)
-		{
-		}
+	PHSYICS_INTEGRATION_PREDICTION_RELAXATION & operator=(
+		const PHSYICS_INTEGRATION_PREDICTION_RELAXATION & other
+		)
+	{
+		assert( this != &other );
 
-		// .. OPERATORS
-
-		PHSYICS_INTEGRATION_PREDICTION_RELAXATION & operator=(
-			const PHSYICS_INTEGRATION_PREDICTION_RELAXATION & other
-			)
-		{
-			DEBUG_check_this_expression( this != &other );
-
-			return *this;
-		}
+		return *this;
+	}
 
 
-		// .. OPERATIONS
+	// .. OPERATIONS
 
-		virtual VOID UpdateVelocity(
-			PHYSICS_ENTITY & game_entit,
-			const REAL32 delta_time
-			);
+	virtual void UpdateVelocity(
+		PHYSICS_ENTITY & game_entit,
+		const float delta_time
+		);
 
-		// ~~
+	// ~~
 
-		virtual VOID UpdatePosition(
-			PHYSICS_ENTITY & game_entity,
-			const REAL32 delta_time
-			);
-	};
+	virtual void UpdatePosition(
+		PHYSICS_ENTITY & game_entity,
+		const float delta_time
+		);
+};
 #endif
