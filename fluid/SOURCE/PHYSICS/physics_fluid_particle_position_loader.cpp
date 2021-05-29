@@ -35,9 +35,9 @@ void PHYSICS_FLUID_PARTICLE_POSITION_LOADER::LoadPositions(
 	width = image.GetWidth();
 	height = image.GetHeight();
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( index_y, 0, height - 1 )
+	for ( index_y = 0; index_y <= height - 1; index_y++ )
 	{
-        FUNDAMENTAL_DATA_TYPES_loop_through_index( index_x, 0, width - 1 )
+		for ( index_x = 0; index_x <= width - 1; index_x++ )
 		{
 			colour = image.GetPixels()[3 * (index_y * width + index_x)];
 

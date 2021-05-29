@@ -51,16 +51,16 @@ void GAME_CORE_ENGINE::InitialiseParticles(
 
     particle_index = 0;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_table( particle_index, FluidPositionLoader.GetPointTable() )
+	for( auto &p_tb: FluidPositionLoader.GetPointTable() )
 	{
-		particle.SetPosition( FluidPositionLoader.GetPointTable()[ particle_index ] );
+		particle.SetPosition( p_tb );
 		particle.SetOldPosition( particle.GetPosition() );
 		ParticleTable.push_back( particle );
 	}
 
     particle_index = 0;
 
-    FUNDAMENTAL_DATA_TYPES_loop_through_table( particle_index, ParticleTable )
+	for ( auto& p_tb : ParticleTable )
     {
 	    ParticleTable[ particle_index ].SetViscosityBeta( GAME_CORE_ENGINE_visocity_beta );
 	    ParticleTable[ particle_index ].SetViscositySigma( GAME_CORE_ENGINE_visocity_sigma );
@@ -91,7 +91,7 @@ void GAME_CORE_ENGINE::Update(
 
 	if ( DeltaValue > GAME_CORE_ENGINE_delta_time_cap )
 	{
-		FUNDAMENTAL_DATA_TYPES_loop_through_index( counter2, 0, counter )
+		for ( counter2 = 0; counter2 <= counter; counter2++ )
 		{
 			if ( is_viscoelastic )
 			{
@@ -172,10 +172,10 @@ void GAME_CORE_ENGINE::UpdateParticlesVelocityAndPosition(
 
 	particle_index = 0;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_table( particle_index, ParticleTable )
+	for ( auto& p_tb : ParticleTable )
 	{
 		PhysicsIntegrationEngine->UpdateVelocity(
-			ParticleTable[particle_index],
+			p_tb,
 			delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor
 			);
 	}
@@ -186,23 +186,23 @@ void GAME_CORE_ENGINE::UpdateParticlesVelocityAndPosition(
 
 	particle_index = 0;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_table( particle_index, ParticleTable )
+	for ( auto& p_tb : ParticleTable )
 	{
 		PhysicsIntegrationEngine->UpdatePosition(
-			ParticleTable[particle_index],
+			p_tb,
 			delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor
 			);
 
-		ParticleTable[particle_index].SetForce( PHYSICS_LEVEL_CONSTANTS_Gravity );	
+		p_tb.SetForce( PHYSICS_LEVEL_CONSTANTS_Gravity );
 	}
 	DetectCollision( FluidMaxWidth, FluidMaxHeight );
 
 	particle_index = 0;
 	attraction_radius = FluidMaxWidth / 4.0f;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_table( particle_index, ParticleTable )
+	for ( auto& p_tb : ParticleTable )
 	{
-		PhysicsMouseInteraction.ApplyMouseBehaviour( ParticleTable[ particle_index ], attraction_radius );
+		PhysicsMouseInteraction.ApplyMouseBehaviour( p_tb, attraction_radius );
 	}
 }
 
@@ -221,10 +221,10 @@ void GAME_CORE_ENGINE::DetectCollision(
 	particle_index = 0;
 	position.Assign( 0.0f, 0.0f );
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_table( particle_index, ParticleTable )
+	for ( auto& p_tb : ParticleTable )
 	{
 			PhysicsCollision2DEngine.CheckForWall( 
-				ParticleTable[particle_index],
+				p_tb,
 				PHYSICS_LEVEL_CONSTANTS_Wall_Spring_Coefficient,
 				position,
 				-widht,

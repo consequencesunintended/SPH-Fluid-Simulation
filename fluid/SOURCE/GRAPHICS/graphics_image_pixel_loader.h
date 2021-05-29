@@ -53,11 +53,11 @@ class GRAPHICS_IMAGE_PIXEL_LOADER
 
 			pixels = new char[width * height * 3];
 
-			FUNDAMENTAL_DATA_TYPES_loop_through_index( index_y, 0, height - 1 )
+			for ( index_y = 0; index_y <= height - 1; index_y++ )
 			{
-				FUNDAMENTAL_DATA_TYPES_loop_through_index( index_x, 0, width - 1 )
+				for ( index_x = 0; index_x <= width - 1; index_x++ )
 				{
-					FUNDAMENTAL_DATA_TYPES_loop_through_index( index_c, 0, 2 )
+					for ( index_c = 0; index_c <= 2; index_c++ )
 					{
 						pixels[3 * (width * index_y + index_x) + index_c ] =
 							other.pixels[ 3 * (width * index_y + index_x) + index_c ];
@@ -83,11 +83,11 @@ class GRAPHICS_IMAGE_PIXEL_LOADER
 
 			pixels = new char[width * height * 3];
 
-			FUNDAMENTAL_DATA_TYPES_loop_through_index( index_y, 0, height - 1 )
+			for ( index_y = 0; index_y <= height - 1; index_y++ )
 			{
-				FUNDAMENTAL_DATA_TYPES_loop_through_index( index_x, 0, width - 1 )
+				for ( index_x = 0; index_x <= width - 1; index_x++ )
 				{
-					FUNDAMENTAL_DATA_TYPES_loop_through_index( index_c, 0, 2 )
+					for ( index_c = 0; index_c <= 2; index_c++ )
 					{
 						pixels[3 * (width * index_y + index_x) + index_c ] =
 							other_pixels[ 3 * (width * index_y + index_x) + index_c ];
@@ -111,11 +111,11 @@ class GRAPHICS_IMAGE_PIXEL_LOADER
 			height = other.height;
 			pixels = new char[width * height * 3];
 
-			FUNDAMENTAL_DATA_TYPES_loop_through_index( index_y, 0, height - 1 )
+			for ( index_y = 0; index_y <= height - 1; index_y++ )
 			{
-				FUNDAMENTAL_DATA_TYPES_loop_through_index( index_x, 0, width - 1 )
+				for ( index_x = 0; index_x <= width - 1; index_x++ )
 				{
-					FUNDAMENTAL_DATA_TYPES_loop_through_index( index_c, 0, 2 )
+					for ( index_c = 0; index_c <= 2; index_c++ )
 					{
 						pixels[ 3 * ( width * index_y + index_x ) + index_c ] =
 							other.pixels[ 3 * ( width * index_y + index_x ) + index_c ];

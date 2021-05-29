@@ -48,11 +48,11 @@
 			unsigned int
 				temp_index;
 
-			FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index, 0 , unsigned int( Width ) * 2 )
+			for ( temp_index = 0; temp_index <= unsigned int( Width ) * 2; temp_index++ )
 			{
 				delete [] SurfaceValueTable[ temp_index ];
 			}
-			FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index, 0 , unsigned int( Width ) * 2 - 1 )
+			for ( temp_index = 0; temp_index <= unsigned int( Width ) * 2 - 1; temp_index++ )
 			{
 				delete [] IsInsideSurface[ temp_index ];
 			}
@@ -75,17 +75,17 @@
 				temp_index_1,
 				temp_index_2;
 
-			FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, Width * 2 )
+			for ( temp_index_1 = 0; temp_index_1 <= Width * 2; temp_index_1++ )
 			{
-				FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_2, 0, Height * 2 )
+				for ( temp_index_2 = 0; temp_index_2 <= Height * 2; temp_index_2++ )
 				{
 					SurfaceValueTable[temp_index_1][temp_index_2] 
 						= other.SurfaceValueTable[temp_index_1][temp_index_2];
 				}
 			}
-			FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, Width * 2 - 1 )
+			for ( temp_index_1 = 0; temp_index_1 <= Width * 2 - 1; temp_index_1++ )
 			{
-				FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_2, 0, Height * 2 - 1 )
+				for ( temp_index_2 = 0; temp_index_2 <= Height * 2 - 1; temp_index_2++ )
 				{
 					IsInsideSurface[temp_index_1][temp_index_2] 
 						= other.IsInsideSurface[temp_index_1][temp_index_2]; 

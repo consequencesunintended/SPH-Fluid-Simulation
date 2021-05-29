@@ -72,9 +72,9 @@ void GRAPHICS_MARCHING_SQUARES::Initialise(
 	initial_position_y = height;
 	PointTable1.resize( int( width * 2 + 1 ) );
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_2, 0, unsigned int( height * 2 ) )
+	for ( temp_index_2 = 0; temp_index_2 <= unsigned int( height * 2 ); temp_index_2++ )
 	{
-		FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, unsigned int( width * 2 ) )
+		for ( temp_index_1 = 0; temp_index_1 <= unsigned int( width * 2 ); temp_index_1++ )
 		{
 			point.Assign( initial_position_x , initial_position_y ); 
 			PointTable1[ temp_index_1 ].push_back( point );
@@ -89,12 +89,12 @@ void GRAPHICS_MARCHING_SQUARES::Initialise(
 	IsInsideSurface = new int*[ unsigned int( width ) * 2 ] ;
 	SurfaceValueTable = new float*[ unsigned int( width ) * 2 + 1 ];
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, unsigned int( width ) * 2 - 1 )
+	for ( temp_index_1 = 0; temp_index_1 <= unsigned int( width ) * 2 - 1; temp_index_1++ )
 	{
 		IsInsideSurface[ temp_index_1 ] = new int[ unsigned int( width ) * 2 ];
 	}
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, unsigned int( width ) * 2 )
+	for ( temp_index_1 = 0; temp_index_1 <= unsigned int( width ) * 2; temp_index_1++ )
 	{
 		SurfaceValueTable[ temp_index_1 ] = new float[ unsigned int( width ) * 2 + 1 ];
 	}
@@ -144,9 +144,9 @@ void GRAPHICS_MARCHING_SQUARES::CalculatePoints(
 		counter_value_1,
 		counter_value_2;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( counter_value_1, -range, 0 )
+	for ( counter_value_1 = -range; counter_value_1 <= 0; counter_value_1++ )
 	{
-		FUNDAMENTAL_DATA_TYPES_loop_through_index( counter_value_2, 0, range )
+		for ( counter_value_2 = 0; counter_value_2 <= range; counter_value_2++ )
 		{
 			if ( ( x_value + counter_value_1 ) < ( Width * 2 + 1 ) && ( x_value + counter_value_1 ) >= 0 )
 			{
@@ -157,9 +157,9 @@ void GRAPHICS_MARCHING_SQUARES::CalculatePoints(
 			}
 		}
 	}
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( counter_value_1, -range, 0 )
+	for ( counter_value_1 = -range; counter_value_1 <= 0; counter_value_1++ )
 	{
-		FUNDAMENTAL_DATA_TYPES_loop_through_index( counter_value_2, -range, 0 )
+		for ( counter_value_2 = -range; counter_value_2 <= 0; counter_value_2++ )
 		{
 			if ( ( x_value + counter_value_1 ) < ( Width * 2 + 1  ) && ( x_value + counter_value_1 ) >= 0 )
 			{
@@ -170,9 +170,9 @@ void GRAPHICS_MARCHING_SQUARES::CalculatePoints(
 			}
 		}
 	}
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( counter_value_1, 0, range )
+	for ( counter_value_1 = 0; counter_value_1 <= range; counter_value_1++ )
 	{
-		FUNDAMENTAL_DATA_TYPES_loop_through_index( counter_value_2, -range, 0 )
+		for ( counter_value_2 = -range; counter_value_2 <= 0; counter_value_2++ )
 		{
 			if ( ( x_value + 1 + counter_value_1 ) < ( Width * 2 + 1  ) && ( x_value + 1 + counter_value_1 ) >= 0 )
 			{
@@ -183,9 +183,9 @@ void GRAPHICS_MARCHING_SQUARES::CalculatePoints(
 			}
 		}
 	}
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( counter_value_1, 0, range )
+	for ( counter_value_1 = 0; counter_value_1 <= range; counter_value_1++ )
 	{
-		FUNDAMENTAL_DATA_TYPES_loop_through_index( counter_value_2, 0, range )
+		for ( counter_value_2 = 0; counter_value_2 <= range; counter_value_2++ )
 		{
 			if ( ( x_value + 1 + counter_value_1 ) < ( Width * 2 + 1  ) && ( x_value + 1 + counter_value_1 ) >= 0 )
 			{
@@ -209,16 +209,16 @@ void GRAPHICS_MARCHING_SQUARES::Reset(
 		temp_index_1,
 		temp_index_2;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, unsigned int( Width ) * 2 )
+	for ( temp_index_1 = 0; temp_index_1 <= unsigned int( Width ) * 2; temp_index_1++ )
 	{
-		FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_2, 0, unsigned int( Height ) * 2 )
+		for ( temp_index_2 = 0; temp_index_2 <= unsigned int( Height ) * 2; temp_index_2++ )
 		{
 			SurfaceValueTable[temp_index_1][temp_index_2] = 0.0f;
 		}
 	}
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, unsigned int( Width ) * 2 - 1 )
+	for ( temp_index_1 = 0; temp_index_1 <= unsigned int( Width ) * 2 - 1; temp_index_1++ )
 	{
-		FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_2, 0, unsigned int( Height ) * 2 - 1 )
+		for ( temp_index_2 = 0; temp_index_2 <= unsigned int( Height ) * 2 - 1; temp_index_2++ )
 		{
 			IsInsideSurface[temp_index_1][temp_index_2] = 0;
 		}
@@ -254,11 +254,11 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 	MATH_VECTOR_2D 
 		result;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, Width * 2 - 1 )
+	for ( temp_index_1 = 0; temp_index_1 <= unsigned int( Width ) * 2 - 1; temp_index_1++ )
 	{
 		index_x = temp_index_1;
 
-		FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_2, 0, Height * 2 - 1 )
+		for ( temp_index_2 = 0; temp_index_2 <= unsigned int( Height ) * 2 - 1; temp_index_2++ )
 		{
 			index_y = temp_index_2;
 
@@ -308,12 +308,11 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 			}
 		}
 	}
-
-	FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_1, 0, Width * 2 - 1 )
+	for ( temp_index_1 = 0; temp_index_1 <= unsigned int( Width ) * 2 - 1; temp_index_1++ )
 	{
 		index_x = temp_index_1;
 
-		FUNDAMENTAL_DATA_TYPES_loop_through_index( temp_index_2, 0, Height * 2 - 1 )
+		for ( temp_index_2 = 0; temp_index_2 <= unsigned int( Height ) * 2 - 1; temp_index_2++ )
 		{
 			index_y = temp_index_2;
 

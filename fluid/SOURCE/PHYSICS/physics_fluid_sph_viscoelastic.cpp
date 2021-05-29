@@ -63,7 +63,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity(
 
 	particle_index = 0;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_table( particle_index, particles_table )
+	for ( ; particle_index < particles_table.size(); particle_index++  )
 	{
 		particles_table[particle_index].SetDensity( 0.0f );
 		particles_table[particle_index].SetNearDensity( 0.0f );
@@ -72,8 +72,8 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity(
 		near_density = 0;
 		neighbour_index = particle_index+1;
 
-		FUNDAMENTAL_DATA_TYPES_loop_through_table( neighbour_index, particles_table )
-		{		
+		for ( ; neighbour_index < particles_table.size(); neighbour_index++ )
+		{
 			vector_between_particle_and_neighbour.SetDifference( 
 				particles_table[particle_index].GetPosition(), 
 				particles_table[neighbour_index].GetPosition() 
@@ -144,7 +144,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePressure(
 
 	prticle_index = 0;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_table( prticle_index, particlesTable )
+	for ( ; prticle_index < particlesTable.size(); prticle_index++ )
 	{
 		pressure = 
 			stifness_parameter 
@@ -155,10 +155,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePressure(
 		particle_pressure_force.Reset();
 		neighbour_table_index = 0;
 
-		FUNDAMENTAL_DATA_TYPES_loop_through_table( 
-			neighbour_table_index, 
-			particlesTable[prticle_index].GetNeighbours() 
-			)
+		for ( ; neighbour_table_index < particlesTable[prticle_index].GetNeighbours().size(); neighbour_table_index++ )
 		{
 			neigbour_particle 
 				= particlesTable[prticle_index].GetNeighbours()[neighbour_table_index];
@@ -218,14 +215,11 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscosity(
 
 	prticle_index = 0;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_table( prticle_index, particlesTable )
+	for ( ; prticle_index < particlesTable.size(); prticle_index++ )
 	{
 		neighbour_table_index = 0;
 
-		FUNDAMENTAL_DATA_TYPES_loop_through_table( 
-			neighbour_table_index, 
-			particlesTable[prticle_index].GetNeighbours() 
-			)
+		for ( ; neighbour_table_index < particlesTable[prticle_index].GetNeighbours().size(); neighbour_table_index++ )
 		{
 			neighbour_particle = particlesTable[prticle_index].GetNeighbours()[neighbour_table_index];
 			neighbour_index = neighbour_particle.GetParticleIndex();    
@@ -296,11 +290,11 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 
 	particle_index = 0;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_table( particle_index, particlesTable )
+	for ( ; particle_index < particlesTable.size(); particle_index++ )
 	{
 		neighbour_index = 0;
 
-		FUNDAMENTAL_DATA_TYPES_loop_through_table( neighbour_index, particlesTable[particle_index].GetNeighbours()  )
+		for ( ; neighbour_index < particlesTable[particle_index].GetNeighbours().size(); neighbour_index++ )
 		{
 			neighbour_particle = particlesTable[particle_index].GetNeighbours()[neighbour_index];
       
@@ -321,7 +315,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 	}
 	spring_index = 0;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_table( spring_index, SpringTable )
+	for ( ; spring_index < SpringTable.size(); spring_index++ )
 	{
 		spring_point1_index = SpringTable[spring_index].GetPoint1Index();
 		spring_point2_index = SpringTable[spring_index].GetPoint2Index();
@@ -362,7 +356,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 
 	spring_index = 0;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_table( spring_index, SpringTable )
+	for ( ; spring_index < SpringTable.size(); spring_index++ )
 	{
 		spring_point1_index = SpringTable[spring_index].GetPoint1Index();
 		spring_point2_index = SpringTable[spring_index].GetPoint2Index();
@@ -423,11 +417,11 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialisePlasticity(
 
 	particle_index_1 = 0;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_table( particle_index_1, particlesTable )
+	for ( ; particle_index_1 < particlesTable.size(); particle_index_1++ )
 	{
 		particle_index_2 = 0;
 
-		FUNDAMENTAL_DATA_TYPES_loop_through_table( particle_index_2, particlesTable  )
+		for ( ; particle_index_2 < particlesTable.size(); particle_index_2++ )
 		{
   			vector_between_particle_and_neighbour.SetDifference( 
 				particlesTable[ particle_index_1 ].GetPosition(),
@@ -469,7 +463,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePlasticity(
 
 	spring_index = 0;
 
-	FUNDAMENTAL_DATA_TYPES_loop_through_table( spring_index, SpringTable )
+	for ( ; spring_index < SpringTable.size(); spring_index++ )
 	{
 		spring_point1_index = SpringTable[spring_index].GetPoint1Index();
 		spring_point2_index = SpringTable[spring_index].GetPoint2Index();

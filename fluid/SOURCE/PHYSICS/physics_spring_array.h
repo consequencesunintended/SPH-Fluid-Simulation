@@ -96,7 +96,7 @@ public:
 			counter;
 		ExistenceTable.resize( size );
 
-        FUNDAMENTAL_DATA_TYPES_loop_through_index( counter, 0, size - 1 )
+		for ( counter = 0; counter <= size - 1; counter++ )
         {
 			ExistenceTable[ counter ].resize( size );
         }

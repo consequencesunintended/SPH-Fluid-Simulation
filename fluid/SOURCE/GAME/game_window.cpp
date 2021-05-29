@@ -119,13 +119,10 @@ void render(
 			temp_index_2 = 0;
 
 			glBegin(GL_POINTS);
-			FUNDAMENTAL_DATA_TYPES_loop_through_table(
-				temp_index_2,
-				GameCoreEngine.ParticleTable
-				)
+			for ( auto& p_tb : GameCoreEngine.ParticleTable )
 			{
 				glColor4fv( GRAPHICS_COLOR::Red().GetRGBA() );
-				glVertex2f( GameCoreEngine.ParticleTable[temp_index_2].GetPosition().X , GameCoreEngine.ParticleTable[temp_index_2].GetPosition().Y);
+				glVertex2f( p_tb.GetPosition().X , p_tb.GetPosition().Y);
 			}	
 			glEnd();
 			break;
@@ -138,28 +135,21 @@ void render(
 			end_position = 0;
 			glColor4fv( GRAPHICS_COLOR::Green().GetRGBA() );
 
-			FUNDAMENTAL_DATA_TYPES_loop_through_table( 
-				temp_index_2, 
-				GraphicsMarchingSquares.GetPolygonVertexCountTable()
-				)
+			for ( auto& p_tb : GraphicsMarchingSquares.GetPolygonVertexCountTable() )
 			{
 					end_position 
 						= start_position 
-						+ GraphicsMarchingSquares.GetPolygonVertexCountTable()[ temp_index_2 ] - 1;
+						+ p_tb - 1;
 					glBegin(GL_POLYGON);
 
-					FUNDAMENTAL_DATA_TYPES_loop_through_index( 
-						temp_index_1, 
-						start_position,
-						end_position
-						)
+					for ( temp_index_1 = start_position; temp_index_1 <= end_position; temp_index_1++ )
 					{
 						glVertex2f(GraphicsMarchingSquares.GetPointTable()[temp_index_1].X , 
 							GraphicsMarchingSquares.GetPointTable()[temp_index_1].Y );
 					}
 					glEnd();
 					start_position 
-						+= GraphicsMarchingSquares.GetPolygonVertexCountTable()[ temp_index_2 ];
+						+= p_tb;
 			}
 			GraphicsMarchingSquares.Reset();
 			break;
@@ -202,39 +192,36 @@ void idle(
 	{
 		particle_index = 0;
 
-		FUNDAMENTAL_DATA_TYPES_loop_through_table( 
-			particle_index, 
-			GameCoreEngine.ParticleTable
-			)
+		for ( auto& p_tb : GameCoreEngine.ParticleTable )
 		{
-			if ( GameCoreEngine.ParticleTable[particle_index].GetPosition().X < 0.0f )
+			if ( p_tb.GetPosition().X < 0.0f )
 			{
-				index_1 = int( GameCoreEngine.ParticleTable[particle_index].GetPosition().X ) 
+				index_1 = int( p_tb.GetPosition().X )
 					- 1 
 					+ LOCAL_number_of_pixels_width;
 			}
 			else
 			{
-				index_1 = int( GameCoreEngine.ParticleTable[particle_index].GetPosition().X ) 
+				index_1 = int( p_tb.GetPosition().X )
 					+ LOCAL_number_of_pixels_width;
 			}
 
-			if ( GameCoreEngine.ParticleTable[particle_index].GetPosition().Y < 0.0f )
+			if ( p_tb.GetPosition().Y < 0.0f )
 			{
-				index_2 = int( GameCoreEngine.ParticleTable[particle_index].GetPosition().Y ) 
+				index_2 = int( p_tb.GetPosition().Y )
 					- 1 
 					- LOCAL_number_of_pixels_height;
 				index_2 *= -1;
 			}
 			else
 			{
-				index_2 = int( GameCoreEngine.ParticleTable[particle_index].GetPosition().Y ) 
+				index_2 = int( p_tb.GetPosition().Y )
 					- LOCAL_number_of_pixels_height;
 				index_2 *= -1;
 			}
 
 			GraphicsMarchingSquares.CalculatePoints(
-				GameCoreEngine.ParticleTable[ particle_index ].GetPosition(),
+				p_tb.GetPosition(),
 				unsigned int( index_1 ),
 				unsigned int( index_2 ),
 				4
