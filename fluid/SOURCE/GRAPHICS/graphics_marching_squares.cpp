@@ -51,14 +51,11 @@ void GRAPHICS_MARCHING_SQUARES::Initialise(
 	const float height
 	)
 {
-	unsigned int
-		temp_index_1,
-		temp_index_2;
-	MATH_POINT_2D
-		point;
-	float
-		initial_position_x,
-		initial_position_y;
+	unsigned int	temp_index_1;
+	unsigned int	temp_index_2;
+	MATH_POINT_2D	point;
+	float			initial_position_x;
+	float			initial_position_y;
 
 	Width = width;
 	Height = height;
@@ -134,20 +131,28 @@ void GRAPHICS_MARCHING_SQUARES::CalculatePoints(
 	const int range
 	)
 {
-	int
-		counter_value_1,
-		counter_value_2;
+	int counter_value_1;
+	int counter_value_2;
+
+	auto check_range = [&]( const int new_x, const int new_y )
+	{
+		if ( (new_x) < (Width * 2 + 1) && (new_x) >= 0 )
+		{
+			if ( (new_y) < (Height * 2 + 1) && (new_y) >= 0 )
+			{
+				return true;
+			}
+		}
+		return false;
+	};
 
 	for ( counter_value_1 = -range; counter_value_1 <= 0; counter_value_1++ )
 	{
 		for ( counter_value_2 = 0; counter_value_2 <= range; counter_value_2++ )
 		{
-			if ( ( x_value + counter_value_1 ) < ( Width * 2 + 1 ) && ( x_value + counter_value_1 ) >= 0 )
+			if ( check_range( x_value + counter_value_1, y_value + counter_value_2 ) )
 			{
-				if ( ( y_value + counter_value_2 ) < ( Height * 2 + 1 ) && ( y_value + counter_value_2 ) >= 0 )
-				{
-				CalculatePoint( point, x_value + counter_value_1, y_value + counter_value_2);
-				}
+				CalculatePoint( point, x_value + counter_value_1, y_value + counter_value_2 );
 			}
 		}
 	}
@@ -155,12 +160,9 @@ void GRAPHICS_MARCHING_SQUARES::CalculatePoints(
 	{
 		for ( counter_value_2 = -range; counter_value_2 <= 0; counter_value_2++ )
 		{
-			if ( ( x_value + counter_value_1 ) < ( Width * 2 + 1  ) && ( x_value + counter_value_1 ) >= 0 )
+			if ( check_range( x_value + counter_value_1, y_value - 1 + counter_value_2 ) )
 			{
-				if ( ( y_value - 1 + counter_value_2 ) < ( Height * 2 + 1 ) && ( y_value - 1 + counter_value_2 ) >= 0 )
-				{
-					CalculatePoint( point, x_value + counter_value_1, y_value - 1 + counter_value_2);
-				}
+				CalculatePoint( point, x_value + counter_value_1, y_value - 1 + counter_value_2 );
 			}
 		}
 	}
@@ -168,12 +170,9 @@ void GRAPHICS_MARCHING_SQUARES::CalculatePoints(
 	{
 		for ( counter_value_2 = -range; counter_value_2 <= 0; counter_value_2++ )
 		{
-			if ( ( x_value + 1 + counter_value_1 ) < ( Width * 2 + 1  ) && ( x_value + 1 + counter_value_1 ) >= 0 )
+			if ( check_range( x_value + 1 + counter_value_1, y_value - 1 + counter_value_2 ) )
 			{
-				if ( ( y_value - 1 + counter_value_2 ) < ( Height * 2 + 1 ) && ( y_value - 1 + counter_value_2 ) >= 0 )
-				{
-					CalculatePoint( point, x_value + 1 + counter_value_1, y_value - 1 + counter_value_2);
-				}
+				CalculatePoint( point, x_value + 1 + counter_value_1, y_value - 1 + counter_value_2 );
 			}
 		}
 	}
@@ -181,13 +180,9 @@ void GRAPHICS_MARCHING_SQUARES::CalculatePoints(
 	{
 		for ( counter_value_2 = 0; counter_value_2 <= range; counter_value_2++ )
 		{
-			if ( ( x_value + 1 + counter_value_1 ) < ( Width * 2 + 1  ) && ( x_value + 1 + counter_value_1 ) >= 0 )
+			if ( check_range( x_value + 1 + counter_value_1, y_value + counter_value_2 ) )
 			{
-				if ( ( y_value + counter_value_2 ) < ( Height * 2 + 1 ) && ( y_value + counter_value_2 ) >= 0 )
-				{
-					CalculatePoint( point, x_value + 1 + counter_value_1, y_value + counter_value_2);
-				}
-
+				CalculatePoint( point, x_value + 1 + counter_value_1, y_value + counter_value_2 );
 			}
 		}
 	}

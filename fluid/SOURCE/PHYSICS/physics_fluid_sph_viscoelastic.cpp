@@ -27,7 +27,9 @@
 
 // .. OPERATIONS
 
-void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialiseSpringTable( const int number_of_particles )
+void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialiseSpringTable(
+	const int number_of_particles
+	)
 {
 	SpringTable.SetMaxNumberOfPoints( number_of_particles );
 }
@@ -338,17 +340,13 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePlasticity(
 	const float delta_time
 	)
 {
-	PHYSICS_SPRING 
-		spring;
-	unsigned int
-		spring_index,
-		spring_point1_index,
-		spring_point2_index;
-	float 
-		restLength;
-	MATH_VECTOR_2D 		
-		spring_force,
-		spring_displacement; 
+	PHYSICS_SPRING	spring;
+	unsigned int	spring_index;
+	unsigned int	spring_point1_index;
+	unsigned int	spring_point2_index;
+	float			restLength;
+	MATH_VECTOR_2D 	spring_force;
+	MATH_VECTOR_2D	spring_displacement;
 	
 	for ( spring_index = 0; spring_index < SpringTable.size(); spring_index++ )
 	{
@@ -358,8 +356,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePlasticity(
 
 		PHYSICS_SPRING::CalculateForce( spring_force, SpringTable[spring_index], particlesTable[spring_point1_index], particlesTable[spring_point2_index]);
 
-		spring_displacement = spring_force 
-			* delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor;
+		spring_displacement = spring_force * delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor;
 
 		particlesTable[spring_point1_index].SetPosition( particlesTable[spring_point1_index].GetPosition() - spring_displacement );
 		particlesTable[spring_point2_index].SetPosition( particlesTable[spring_point2_index].GetPosition() + spring_displacement );

@@ -153,37 +153,25 @@ void GAME_CORE_ENGINE::CalculatePressureForce(
 
 // ~~
 
-void GAME_CORE_ENGINE::UpdateParticlesVelocityAndPosition( 
-    const float delta_time  
-    )
+void GAME_CORE_ENGINE::UpdateParticlesVelocityAndPosition( const float delta_time )
 {
-	unsigned int 
-		particle_index;
-	float
-		attraction_radius;
+	unsigned int	particle_index;
+	float			attraction_radius;
 
 	particle_index = 0;
 
 	for ( auto& p_tb : ParticleTable )
 	{
-		PhysicsIntegrationEngine->UpdateVelocity(
-			p_tb,
-			delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor
-			);
+		PhysicsIntegrationEngine->UpdateVelocity( p_tb, delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor );
 	}
 
-	CalculateViscosity(
-		delta_time
-		);
+	CalculateViscosity( delta_time );
 
 	particle_index = 0;
 
 	for ( auto& p_tb : ParticleTable )
 	{
-		PhysicsIntegrationEngine->UpdatePosition(
-			p_tb,
-			delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor
-			);
+		PhysicsIntegrationEngine->UpdatePosition( p_tb, delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor );
 
 		p_tb.SetForce( PHYSICS_LEVEL_CONSTANTS_Gravity );
 	}
@@ -200,10 +188,7 @@ void GAME_CORE_ENGINE::UpdateParticlesVelocityAndPosition(
 
 // ~~
 
-void GAME_CORE_ENGINE::DetectCollision( 
-    const float widht, 
-    const float height  
-    )
+void GAME_CORE_ENGINE::DetectCollision( const float widht, const float height )
 {
 	unsigned int
 		particle_index;
@@ -233,21 +218,14 @@ void GAME_CORE_ENGINE::CalculateViscosity(
     const float delta_time  
 	)
 {
-	PhysicsFluidEngine.CalculateViscosity(
-		ParticleTable,
-		PHSYICS_LEVEL_FLUID_CONSTANTS_Smoothing_Radius,
-		delta_time
-		);
+	PhysicsFluidEngine.CalculateViscosity(ParticleTable, PHSYICS_LEVEL_FLUID_CONSTANTS_Smoothing_Radius, delta_time );
 }
 
 // ~~
 
-void GAME_CORE_ENGINE::CalculateSpringsForViscoelasticity(
-    const float delta_time 
-    )
+void GAME_CORE_ENGINE::CalculateSpringsForViscoelasticity( const float delta_time )
 {
-	PhysicsFluidEngine.CalculateViscoElasticity(
-		ParticleTable,
+	PhysicsFluidEngine.CalculateViscoElasticity( ParticleTable,
 		PHSYICS_LEVEL_FLUID_CONSTANTS_Smoothing_Radius,
 		PHSYICS_LEVEL_FLUID_Spring_Coefficient,
 		PHSYICS_LEVEL_FLUID_Yield_Ratio,
@@ -258,12 +236,7 @@ void GAME_CORE_ENGINE::CalculateSpringsForViscoelasticity(
 
 // ~~
 
-void GAME_CORE_ENGINE::CalculatePlasticity(
-	const float delta_time
-	)
+void GAME_CORE_ENGINE::CalculatePlasticity( const float delta_time )
 {
-	PhysicsFluidEngine.CalculatePlasticity(
-		ParticleTable,
-		delta_time
-		);
+	PhysicsFluidEngine.CalculatePlasticity( ParticleTable, delta_time );
 }

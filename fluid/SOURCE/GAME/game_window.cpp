@@ -87,12 +87,7 @@ void render( GLFWwindow* window )
 		start_position,
 		end_position;
 
-	glClearColor( 
-		GRAPHICS_COLOR::Black().GetRGBA()[0],
-		GRAPHICS_COLOR::Black().GetRGBA()[1],
-		GRAPHICS_COLOR::Black().GetRGBA()[2],
-		1.0f
-		);
+	glClearColor( GRAPHICS_COLOR::Black().GetRGBA()[0], GRAPHICS_COLOR::Black().GetRGBA()[1], GRAPHICS_COLOR::Black().GetRGBA()[2], 1.0f );
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	if ( GraphicalMode == LargeParticleMode )
@@ -110,6 +105,7 @@ void render( GLFWwindow* window )
 	temp_index_2 = 0;
 	start_position = 0;
 	end_position = 0;
+
 	glColor4fv( GRAPHICS_COLOR::Green().GetRGBA() );
 
 	switch( GraphicalMode )
@@ -169,7 +165,6 @@ void idle( GLFWwindow* window )
 
 	if ( !PauseSimulation )
 	{
-
 		GameCoreEngine.Update( delta_time, Viscosity, Viscoelasticity, Plasticity );
 	}
 
@@ -219,6 +214,7 @@ void key_callback( GLFWwindow* window, int key, int scancode, int action, int mo
 		if ( !Viscoelasticity )
 		{
 			Plasticity = !Plasticity;
+
 			if ( Plasticity )
 			{
 				GameCoreEngine.InitialisePlasticity();
@@ -251,9 +247,7 @@ void motion( double x, double y )
 	relx = (float)(x - LOCAL_width/2) / LOCAL_width;
 	rely = -(float)(y - LOCAL_height/2) / LOCAL_height;
 	mouse = MATH_VECTOR_2D( relx*LOCAL_number_of_pixels_width*2, rely*LOCAL_number_of_pixels_height*2 );
-	 {
-		 GameCoreEngine.SetAttractor( mouse );
-	 }
+	GameCoreEngine.SetAttractor( mouse );
 }
 
 // ~~
@@ -302,10 +296,7 @@ void init(
 	{
 		GameCoreEngine.InitialisePlasticity();
 	}
-	GraphicsMarchingSquares.Initialise(
-		LOCAL_number_of_pixels_width,
-		LOCAL_number_of_pixels_height
-		);
+	GraphicsMarchingSquares.Initialise( LOCAL_number_of_pixels_width, LOCAL_number_of_pixels_height );
 }
 
 // ~~
