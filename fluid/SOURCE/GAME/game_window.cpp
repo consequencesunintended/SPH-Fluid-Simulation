@@ -242,7 +242,7 @@ void key_callback( GLFWwindow* window, int key, int scancode, int action, int mo
 //
 //// ~~
 //
-void motion( int x, int y )
+void motion( double x, double y )
 {
 	float relx;
 	float rely;
@@ -317,6 +317,7 @@ int main(int argc, char **argv)
 	if ( !glfwInit() )
 		return -1;
 
+	glfwWindowHint( GLFW_RESIZABLE, GL_FALSE );
 	window = glfwCreateWindow( LOCAL_width, LOCAL_height, "SPH Fluid Simulation", NULL, NULL );
 
 	if ( !window )

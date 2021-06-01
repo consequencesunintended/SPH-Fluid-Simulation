@@ -58,7 +58,7 @@ void GAME_CORE_ENGINE::InitialiseParticles(
 	    ParticleTable[ particle_index ].SetViscosityBeta( GAME_CORE_ENGINE_visocity_beta );
 	    ParticleTable[ particle_index ].SetViscositySigma( GAME_CORE_ENGINE_visocity_sigma );
     }
-	PhysicsFluidEngine.InitialiseSpringTable( ParticleTable.size() );
+	PhysicsFluidEngine.InitialiseSpringTable( ( int ) ParticleTable.size() );
 }
 
 // ~~

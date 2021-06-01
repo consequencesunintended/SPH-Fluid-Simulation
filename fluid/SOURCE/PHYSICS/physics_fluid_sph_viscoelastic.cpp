@@ -27,9 +27,7 @@
 
 // .. OPERATIONS
 
-void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialiseSpringTable(
-	const int number_of_particles
-	)
+void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialiseSpringTable( const int number_of_particles )
 {
 	SpringTable.SetMaxNumberOfPoints( number_of_particles );
 }
