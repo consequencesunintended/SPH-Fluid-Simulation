@@ -36,10 +36,10 @@ public:
 	// ~~
 
 	GRAPHICS_COLOR(
-		const FLOAT r, 
-		const FLOAT g, 
-		const FLOAT b, 
-		const FLOAT a
+		const float r, 
+		const float g,
+		const float b,
+		const float a
 		) 
 	{
 		Assign(r, g, b, a);
@@ -48,7 +48,7 @@ public:
 	// ~~
 
 	GRAPHICS_COLOR( 
-		const FLOAT * rgba 
+		const float* rgba
 		) 
 	{
 		Assign( rgba[0], rgba[1], rgba[2], rgba[3] );
@@ -84,7 +84,7 @@ public:
 
 	// ~~
 
-	const FLOAT & operator[](
+	const float& operator[](
 		unsigned int index 
 		) const
 	{
@@ -93,7 +93,7 @@ public:
 
 	// ~~
 
-	FLOAT & operator [](
+	float& operator [](
 		unsigned int index 
 		)
 	{
@@ -102,7 +102,7 @@ public:
 
 	// .. ACCESSORS
 
-	const FLOAT * GetRGBA(
+	const float* GetRGBA(
 		void
 		) const 
 	{
@@ -112,10 +112,10 @@ public:
 	// .. OPERATIONS
 
 	void Assign( 
-		const FLOAT r, 
-		const FLOAT g, 
-		const FLOAT b, 
-		const FLOAT a 
+		const float r, 
+		const float g, 
+		const float b, 
+		const float a 
 		) 
 	{
 		RGBA[ 0 ] = r;
@@ -211,7 +211,7 @@ private:
 
 	// .. ATTRIBUTES
 
-	FLOAT RGBA[ 4 ];
+	float RGBA[ 4 ];
 };
 #endif
 

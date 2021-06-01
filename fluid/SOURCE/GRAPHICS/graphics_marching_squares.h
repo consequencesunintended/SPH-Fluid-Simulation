@@ -46,17 +46,24 @@
 		{
 			unsigned int
 				temp_index;
+			
+			if ( SurfaceValueTable )
+			{
+				for ( temp_index = 0; temp_index <= unsigned int( Width ) * 2; temp_index++ )
+				{
+					delete[] SurfaceValueTable[temp_index];
+				}
+				delete SurfaceValueTable;
+			}
+			if ( IsInsideSurface )
+			{
 
-			for ( temp_index = 0; temp_index <= unsigned int( Width ) * 2; temp_index++ )
-			{
-				delete [] SurfaceValueTable[ temp_index ];
+				for ( temp_index = 0; temp_index <= unsigned int( Width ) * 2 - 1; temp_index++ )
+				{
+					delete[] IsInsideSurface[temp_index];
+				}
+				delete IsInsideSurface;
 			}
-			for ( temp_index = 0; temp_index <= unsigned int( Width ) * 2 - 1; temp_index++ )
-			{
-				delete [] IsInsideSurface[ temp_index ];
-			}
-			delete SurfaceValueTable;
-			delete IsInsideSurface;
 		}
 
 		// ~~

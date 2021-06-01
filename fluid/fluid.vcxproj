@@ -84,7 +84,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.\DEPENDENCIES\Glut ; .\SOURCE\DEBUG; .\SOURCE\MATH; .\SOURCE\GRAPHICS; .\SOURCE\FUNDAMENTAL; .\SOURCE\PHYSICS; .\SOURCE\THIRD_PARTY; .\SOURCE\GAME; .\SOURCE\PLATFORM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\DEPENDENCIES\GLFW\include;.\SOURCE\DEBUG;.\SOURCE\MATH;.\SOURCE\GRAPHICS;.\SOURCE\FUNDAMENTAL;.\SOURCE\PHYSICS;.\SOURCE\THIRD_PARTY;.\SOURCE\GAME;.\SOURCE\PLATFORM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -94,16 +94,17 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>.\Dependencies\Glut ; .\Dependencies\GxBase\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>.\DEPENDENCIES\GLFW\lib\x86; .\Dependencies\GxBase\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.\DEPENDENCIES\Glut ; .\SOURCE\DEBUG; .\SOURCE\MATH; .\SOURCE\GRAPHICS; .\SOURCE\FUNDAMENTAL; .\SOURCE\PHYSICS; .\SOURCE\THIRD_PARTY; .\SOURCE\GAME; .\SOURCE\PLATFORM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\DEPENDENCIES\GLFW\include;.\SOURCE\DEBUG;.\SOURCE\MATH;.\SOURCE\GRAPHICS;.\SOURCE\FUNDAMENTAL;.\SOURCE\PHYSICS;.\SOURCE\THIRD_PARTY;.\SOURCE\GAME;.\SOURCE\PLATFORM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -113,16 +114,17 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>.\Dependencies\Glut ; .\Dependencies\GxBase\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>.\DEPENDENCIES\GLFW\lib\x64; .\Dependencies\GxBase\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>.\DEPENDENCIES\Glut ; .\SOURCE\DEBUG; .\SOURCE\MATH; .\SOURCE\GRAPHICS; .\SOURCE\FUNDAMENTAL; .\SOURCE\PHYSICS; .\SOURCE\THIRD_PARTY; .\SOURCE\GAME; .\SOURCE\PLATFORM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\DEPENDENCIES\GLFW\include;.\SOURCE\DEBUG;.\SOURCE\MATH;.\SOURCE\GRAPHICS;.\SOURCE\FUNDAMENTAL;.\SOURCE\PHYSICS;.\SOURCE\THIRD_PARTY;.\SOURCE\GAME;.\SOURCE\PLATFORM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -131,19 +133,20 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>.\Dependencies\Glut ;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>.\DEPENDENCIES\GLFW\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>.\DEPENDENCIES\Glut ; .\SOURCE\DEBUG; .\SOURCE\MATH; .\SOURCE\GRAPHICS; .\SOURCE\FUNDAMENTAL; .\SOURCE\PHYSICS; .\SOURCE\THIRD_PARTY; .\SOURCE\GAME; .\SOURCE\PLATFORM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\DEPENDENCIES\GLFW\include;.\SOURCE\DEBUG;.\SOURCE\MATH;.\SOURCE\GRAPHICS;.\SOURCE\FUNDAMENTAL;.\SOURCE\PHYSICS;.\SOURCE\THIRD_PARTY;.\SOURCE\GAME;.\SOURCE\PLATFORM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -153,11 +156,12 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>.\Dependencies\Glut ;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>.\DEPENDENCIES\GLFW\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -177,7 +181,6 @@
     <ClInclude Include="SOURCE\GAME\game_core_engine.h" />
     <ClInclude Include="SOURCE\GAME\game_window.h" />
     <ClInclude Include="SOURCE\GRAPHICS\graphics_color.h" />
-    <ClInclude Include="SOURCE\GRAPHICS\graphics_glut_header.h" />
     <ClInclude Include="SOURCE\GRAPHICS\graphics_image_pixel_loader.h" />
     <ClInclude Include="SOURCE\GRAPHICS\graphics_marching_squares.h" />
     <ClInclude Include="SOURCE\MATH\math_point_2d.h" />

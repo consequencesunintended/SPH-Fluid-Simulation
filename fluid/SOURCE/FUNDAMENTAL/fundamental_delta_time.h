@@ -1,6 +1,8 @@
 #ifndef __FUNDAMENTAL_DELTA_TIME__
 #define __FUNDAMENTAL_DELTA_TIME__
 
+
+#include <Windows.h>
 // -- LOCAL
 
 // .. REFERENCES
@@ -17,25 +19,19 @@ class FUNDAMENTAL_DELTA_TIME
 
 		// .. CONSTRUCTORS
 
-		FUNDAMENTAL_DELTA_TIME(
-			void
-			)
+		FUNDAMENTAL_DELTA_TIME( void )
 		{
 		}
 
 		// ~~
 
-		virtual ~FUNDAMENTAL_DELTA_TIME(
-			void
-			)
+		virtual ~FUNDAMENTAL_DELTA_TIME( void )
 		{
 		}
 
 		// .. FUNCTIONS
 
-		static const float GetDeltaTime(
-			void
-			)
+		static const float GetDeltaTime( void )
 		{
 			QueryPerformanceCounter( &EndTime );
 			DeltaTime = float( EndTime.QuadPart - StartTime.QuadPart ) 

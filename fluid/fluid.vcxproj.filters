@@ -98,9 +98,6 @@
     <ClInclude Include="SOURCE\GRAPHICS\graphics_color.h">
       <Filter>Header Files\GRAPHICS</Filter>
     </ClInclude>
-    <ClInclude Include="SOURCE\GRAPHICS\graphics_glut_header.h">
-      <Filter>Header Files\GRAPHICS</Filter>
-    </ClInclude>
     <ClInclude Include="SOURCE\GRAPHICS\graphics_image_pixel_loader.h">
       <Filter>Header Files\GRAPHICS</Filter>
     </ClInclude>

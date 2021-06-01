@@ -8,21 +8,27 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
 		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{1D967EBA-60C1-4053-8B6A-F5A72173703A}.Debug|Win32.ActiveCfg = Debug|Win32
 		{1D967EBA-60C1-4053-8B6A-F5A72173703A}.Debug|Win32.Build.0 = Debug|Win32
+		{1D967EBA-60C1-4053-8B6A-F5A72173703A}.Debug|x64.ActiveCfg = Debug|x64
+		{1D967EBA-60C1-4053-8B6A-F5A72173703A}.Debug|x64.Build.0 = Debug|x64
 		{1D967EBA-60C1-4053-8B6A-F5A72173703A}.Release|Win32.ActiveCfg = Release|Win32
 		{1D967EBA-60C1-4053-8B6A-F5A72173703A}.Release|Win32.Build.0 = Release|Win32
+		{1D967EBA-60C1-4053-8B6A-F5A72173703A}.Release|x64.ActiveCfg = Release|x64
+		{1D967EBA-60C1-4053-8B6A-F5A72173703A}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {CFB81566-9816-4A5B-A0EF-C3D215500B9C}
-		AMDCaPersistentConfig = Release|Win32
-		AMDCaPersistentStartup = fluid
 		AMDCaProjectFile = C:\Users\Alexander Nasser\Hull\thesis\Backup\6 January\fluid-2d\CodeAnalyst\fluid.caw
+		AMDCaPersistentStartup = fluid
+		AMDCaPersistentConfig = Release|Win32
+		SolutionGuid = {CFB81566-9816-4A5B-A0EF-C3D215500B9C}
 	EndGlobalSection
 EndGlobal

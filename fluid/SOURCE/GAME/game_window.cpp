@@ -2,8 +2,7 @@
 
 // .. REFERENCES
 
-#include <cstdlib>
-#include "graphics_glut_header.h"
+#include "glfw3.h"
 #include "physics_fluid_neighbour_particle.h"
 #include "physics_fluid_particle.h"
 #include "physics_level_fluid_constants.h"
@@ -14,6 +13,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <cstdlib>
 
 using namespace std;
 
@@ -35,14 +35,13 @@ bool							PauseSimulation = false;
 int								GraphicalMode = 3;
 GAME_CORE_ENGINE				GameCoreEngine;
 GRAPHICS_MARCHING_SQUARES		GraphicsMarchingSquares;
+bool							displayed_info = false;
 
 enum RenderModes{ LargeParticleMode = 1, SmallParticleMode = 2, MarchingSquareMode = 3 };
 
 // ..OPERATIONS
 
-void CalculateFrameRate(
-	void
-	)
+void CalculateFrameRate( void )
 {
     static float 
 		frame_per_second = 0.0f,
@@ -55,32 +54,32 @@ void CalculateFrameRate(
 	float 
 		currentTime;
 
-	currentTime = GetTickCount() * 0.001f;
+	//currentTime = GetTickCount() * 0.001f;
     ++frame_per_second;
     if( currentTime - lastTime > 1.0f )
     {
 		convert.str( " " );
 	    lastTime = currentTime;
 		convert << "Mouse Left/Right to Interact with Fluid - FPS:"  << frame_per_second;
-		glutSetWindowTitle( convert.str().c_str() );
+		//glutSetWindowTitle( convert.str().c_str() );
 	    frame_per_second = 0;
     }
 }
 
 // ~~
 
-void ShowInfo(
-	void
-	)
+void ShowInfo( void )
 {
-	GLUT_FUNCTIONS::glutPrint( -45.0f, 45.0f, GLUT_FUNCTIONS::GlutFonts[ 1 ], "PRESS P, M or E for Different Modes", 1.0f, 1.0f, 1.0f, 1.0f);
+	if ( !displayed_info )
+	{
+		cout << "PRESS P, M or E for Different Modes" << endl;
+		displayed_info = true;
+	}
 }
 
 // ~~
 
-void render(
-	void
-	)
+void render( GLFWwindow* window )
 {
 	unsigned int
 		temp_index_1,
@@ -96,22 +95,27 @@ void render(
 		);
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	if( GraphicalMode == LargeParticleMode )
+	if ( GraphicalMode == LargeParticleMode )
 	{
-		glPointSize(
-			PHSYICS_LEVEL_FLUID_Particle_Size
-			*PHSYICS_LEVEL_FLUID_Particle_Size
-			);
+		glPointSize( PHSYICS_LEVEL_FLUID_Particle_Size * PHSYICS_LEVEL_FLUID_Particle_Size );
 	}
 	else if ( GraphicalMode == SmallParticleMode )
 	{
 		glPointSize( PHSYICS_LEVEL_FLUID_Particle_Size );
 	}
 
+	constexpr float ratio_w = ((float)LOCAL_width / ( LOCAL_width / LOCAL_number_of_pixels_width ) );
+	constexpr float ratio_h = ((float)LOCAL_height / (LOCAL_height / LOCAL_number_of_pixels_height));
+
+	temp_index_2 = 0;
+	start_position = 0;
+	end_position = 0;
+	glColor4fv( GRAPHICS_COLOR::Green().GetRGBA() );
+
 	switch( GraphicalMode )
 	{
-		case 1:
-		case 2:
+		case LargeParticleMode:
+		case SmallParticleMode:
 		{
 			temp_index_2 = 0;
 
@@ -119,7 +123,7 @@ void render(
 			for ( auto& p_tb : GameCoreEngine.ParticleTable )
 			{
 				glColor4fv( GRAPHICS_COLOR::Red().GetRGBA() );
-				glVertex2f( p_tb.GetPosition().X , p_tb.GetPosition().Y);
+				glVertex2f( p_tb.GetPosition().X / ratio_w, p_tb.GetPosition().Y / ratio_h );
 			}	
 			glEnd();
 			break;
@@ -134,55 +138,39 @@ void render(
 
 			for ( auto& p_tb : GraphicsMarchingSquares.GetPolygonVertexCountTable() )
 			{
-					end_position 
-						= start_position 
-						+ p_tb - 1;
+					end_position = start_position + p_tb - 1;
 					glBegin(GL_POLYGON);
 
 					for ( temp_index_1 = start_position; temp_index_1 <= end_position; temp_index_1++ )
 					{
-						glVertex2f(GraphicsMarchingSquares.GetPointTable()[temp_index_1].X , 
-							GraphicsMarchingSquares.GetPointTable()[temp_index_1].Y );
+						glVertex2f( GraphicsMarchingSquares.GetPointTable()[temp_index_1].X / ratio_w, GraphicsMarchingSquares.GetPointTable()[temp_index_1].Y / ratio_h );
 					}
 					glEnd();
-					start_position 
-						+= p_tb;
+					start_position += p_tb;
 			}
 			GraphicsMarchingSquares.Reset();
 			break;
 		}
 	}
 	ShowInfo();
-	CalculateFrameRate();
-	glutSwapBuffers();
-
+	glfwSwapBuffers( window );
 }
 
 // ~~
 
-void idle(
-	void
-	)
+void idle( GLFWwindow* window )
 {
-	int
-		index_1,
-		index_2;
-	unsigned int
-		particle_index;
-	float
-		delta_time;
+	int				index_1;
+	int				index_2;
+	unsigned int	particle_index;
+	float			delta_time;
 
 	delta_time = FUNDAMENTAL_DELTA_TIME::GetDeltaTime();
 
 	if ( !PauseSimulation )
 	{
 
-		GameCoreEngine.Update( 
-			delta_time, 
-			Viscosity, 
-			Viscoelasticity, 
-			Plasticity 
-			);
+		GameCoreEngine.Update( delta_time, Viscosity, Viscoelasticity, Plasticity );
 	}
 
 	if ( GraphicalMode == MarchingSquareMode )
@@ -193,118 +181,76 @@ void idle(
 		{
 			if ( p_tb.GetPosition().X < 0.0f )
 			{
-				index_1 = int( p_tb.GetPosition().X )
-					- 1 
-					+ LOCAL_number_of_pixels_width;
+				index_1 = int( p_tb.GetPosition().X ) - 1 + LOCAL_number_of_pixels_width;
 			}
 			else
 			{
-				index_1 = int( p_tb.GetPosition().X )
-					+ LOCAL_number_of_pixels_width;
+				index_1 = int( p_tb.GetPosition().X ) + LOCAL_number_of_pixels_width;
 			}
 
 			if ( p_tb.GetPosition().Y < 0.0f )
 			{
-				index_2 = int( p_tb.GetPosition().Y )
-					- 1 
-					- LOCAL_number_of_pixels_height;
+				index_2 = int( p_tb.GetPosition().Y ) - 1 - LOCAL_number_of_pixels_height;
 				index_2 *= -1;
 			}
 			else
 			{
-				index_2 = int( p_tb.GetPosition().Y )
-					- LOCAL_number_of_pixels_height;
+				index_2 = int( p_tb.GetPosition().Y ) - LOCAL_number_of_pixels_height;
 				index_2 *= -1;
 			}
 
-			GraphicsMarchingSquares.CalculatePoints(
-				p_tb.GetPosition(),
-				unsigned int( index_1 ),
-				unsigned int( index_2 ),
-				4
-				);
+			GraphicsMarchingSquares.CalculatePoints( p_tb.GetPosition(), unsigned int( index_1 ), unsigned int( index_2 ), 4 );
 		}
 		GraphicsMarchingSquares.GeneratePoints();
 	}	
-	render();
+	render( window );
 }
 
 // ~~
 
-void Keyboard( 
-	unsigned char c, 
-	int x, 
-	int y
-	)
+void key_callback( GLFWwindow* window, int key, int scancode, int action, int mode )
 {
-    switch(c)
-    {
-        case VK_ESCAPE:
-        case 'q':
-        case 'Q':
-	    {
-           exit(0);
-           break;
-        }
-
-		case 'E':
-        case 'e':
-	    {
-			if ( !Plasticity )
+	if ( glfwGetKey( window, GLFW_KEY_ESCAPE ) == GLFW_PRESS )
+	{
+		glfwSetWindowShouldClose( window, true );
+	}
+	else if (glfwGetKey( window, GLFW_KEY_P ) == GLFW_PRESS )
+	{
+		if ( !Viscoelasticity )
+		{
+			Plasticity = !Plasticity;
+			if ( Plasticity )
 			{
-				GameCoreEngine.ResetViscoelasticity();
-				Viscoelasticity = !Viscoelasticity;
+				GameCoreEngine.InitialisePlasticity();
 			}
-			break;
-        }
-
-		case 'P':
-		case 'p':
-		{
-			if ( !Viscoelasticity )
-			{
-				Plasticity = !Plasticity;
-				if ( Plasticity )
-				{
-					GameCoreEngine.InitialisePlasticity();
-				}
-			}
-			break;
 		}
-
-		case 'm':
-		case 'M':
-		{
-			GraphicalMode = ( GraphicalMode + 1 > 3 ) ? 1 : GraphicalMode + 1;  
-		break;
-		}
-
-		case VK_SPACE:
-		{
-			PauseSimulation = !PauseSimulation;
-			break;
-		}
-    }
+	}
+	else if ( glfwGetKey( window, GLFW_KEY_E ) == GLFW_PRESS )
+	{
+		GameCoreEngine.ResetViscoelasticity();
+		Viscoelasticity = !Viscoelasticity;
+	}
+	else if ( glfwGetKey( window, GLFW_KEY_M ) == GLFW_PRESS )
+	{
+		GraphicalMode = (GraphicalMode + 1 > 3) ? 1 : GraphicalMode + 1;
+	}
+	else if ( glfwGetKey( window, GLFW_KEY_SPACE ) == GLFW_PRESS )
+	{
+		PauseSimulation = !PauseSimulation;
+	}
 }
-
-// ~~
-
-void motion(
-	int x, 
-	int y
-	)
+//
+//// ~~
+//
+void motion( int x, int y )
 {
-	float 
-		relx,
-		rely;
-	MATH_VECTOR_2D 
-		mouse;
+	float relx;
+	float rely;
+	MATH_VECTOR_2D mouse;
 
 	relx = (float)(x - LOCAL_width/2) / LOCAL_width;
 	rely = -(float)(y - LOCAL_height/2) / LOCAL_height;
-	mouse = MATH_VECTOR_2D(
-		 relx*LOCAL_number_of_pixels_width*2, 
-		 rely*LOCAL_number_of_pixels_height*2);
+	mouse = MATH_VECTOR_2D( relx*LOCAL_number_of_pixels_width*2, rely*LOCAL_number_of_pixels_height*2 );
 	 {
 		 GameCoreEngine.SetAttractor( mouse );
 	 }
@@ -312,56 +258,22 @@ void motion(
 
 // ~~
 
-void mouse(
-	int button, 
-	int state, 
-	int x, 
-	int y)
+void mouse_callback( GLFWwindow* window, double xpos, double ypos )
 {
-  if (button == GLUT_LEFT_BUTTON)
-    {
-    if(state == GLUT_DOWN) 
-	{
-		{
-			GameCoreEngine.SetMouse( true, false );
-		}
-	}
-    else
-    {
 
-		{
-			GameCoreEngine.SetMouse( false , false );
-			GameCoreEngine.SetAttractor(  
-				MATH_VECTOR_2D(
-					float( LOCAL_number_of_pixels_width ) * 99.0f, 
-					float( LOCAL_number_of_pixels_height ) * 99.0f
-					) 
-				);
-		}
-
-    }
-  }
-  else if (button == GLUT_RIGHT_BUTTON)
-  {
-    if(state == GLUT_DOWN)
-	{
-		{
-			GameCoreEngine.SetMouse( false, true );
-		}
-	}
-    else
+    if ( glfwGetMouseButton( window, GLFW_MOUSE_BUTTON_LEFT ) == GLFW_TRUE )
     {
-		{
-			GameCoreEngine.SetMouse( false , false );
-			GameCoreEngine.SetAttractor(  
-				MATH_VECTOR_2D(
-					float( LOCAL_number_of_pixels_width ) * 99.0f, 
-					float( LOCAL_number_of_pixels_height ) * 99.0f
-					) 
-				);
-		}
+		GameCoreEngine.SetMouse( true, false );
     }
-  }
+	else if ( glfwGetMouseButton( window, GLFW_MOUSE_BUTTON_RIGHT ) == GLFW_TRUE )
+	{
+		GameCoreEngine.SetMouse( false, true );
+	}
+	else
+	{
+		GameCoreEngine.SetMouse( false, false );
+	}
+	motion( xpos, ypos );
 }
 
 
@@ -373,11 +285,11 @@ void init(
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(
+	glOrtho(
 		-LOCAL_number_of_pixels_width,
 		LOCAL_number_of_pixels_width,
 		-LOCAL_number_of_pixels_height, 
-		LOCAL_number_of_pixels_height);
+		LOCAL_number_of_pixels_height, -1.0, 1.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
     glEnable(GL_POINT_SMOOTH);
@@ -400,20 +312,32 @@ void init(
 
 int main(int argc, char **argv)
 {
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGBA|GLUT_DOUBLE);
-	glutInitWindowSize(LOCAL_width, LOCAL_height);
-	glutCreateWindow("SPH Fluid Simulation");
+	GLFWwindow* window;
 
-	glutDisplayFunc(render);
-	glutKeyboardFunc(Keyboard);
-	glutIdleFunc(idle);
-	glutMotionFunc(motion);
-	glutMouseFunc(mouse);
+	if ( !glfwInit() )
+		return -1;
 
+	window = glfwCreateWindow( LOCAL_width, LOCAL_height, "SPH Fluid Simulation", NULL, NULL );
+
+	if ( !window )
+	{
+		glfwTerminate();
+		return -1;
+	}
 	init();
 
-	glutMainLoop();	
+
+	glfwMakeContextCurrent( window );
+	glfwSetKeyCallback( window, key_callback );
+	glfwSetCursorPosCallback( window, mouse_callback );
+
+	while ( !glfwWindowShouldClose( window ) )
+	{
+		idle( window );
+		glfwPollEvents();
+	}
+
+	glfwTerminate();
 }
 
 
