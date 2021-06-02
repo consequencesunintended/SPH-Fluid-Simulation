@@ -25,14 +25,12 @@
 
 		// .. CONSTRUCTORS
 
-		GRAPHICS_MARCHING_SQUARES(
-			void
-			) :
+		GRAPHICS_MARCHING_SQUARES( void ) :
 			IsInsideSurface( 0 ),
 			SurfaceValueTable( 0 ),
 			Width( 0.0f ),
 			Height( 0.0f ),
-			PointTable2(),
+			MainTable(),
 			PointTable1(),
 			PolygonVertexCountTable()
 		{
@@ -40,9 +38,7 @@
 
 		// ~~
 
-		virtual ~GRAPHICS_MARCHING_SQUARES(
-			void
-			)
+		virtual ~GRAPHICS_MARCHING_SQUARES( void )
 		{
 			unsigned int
 				temp_index;
@@ -73,7 +69,7 @@
 			) :
 			Width( other.Width ),
 			Height( other.Height ),
-			PointTable2( other.PointTable2 ),
+			MainTable( other.MainTable ),
 			PointTable1( other.PointTable1 ),
 			PolygonVertexCountTable( other.PolygonVertexCountTable )
 		{
@@ -101,51 +97,41 @@
 
 		// .. OPERATORS
 
-		GRAPHICS_MARCHING_SQUARES & operator=(
-			const GRAPHICS_MARCHING_SQUARES & other
-			)
+		GRAPHICS_MARCHING_SQUARES & operator=( const GRAPHICS_MARCHING_SQUARES & other )
 		{
 			IsInsideSurface = other.IsInsideSurface;
 			SurfaceValueTable = other.SurfaceValueTable;
 			Width = other.Width;
 			Height = other.Height;
-			PointTable2 = other.PointTable2;
+			MainTable = other.MainTable;
 			PointTable1 = other.PointTable1;
 			PolygonVertexCountTable = other.PolygonVertexCountTable;
 		}
 
 		// .. ACCESSORS
 
-		const std::vector<MATH_POINT_2D> & GetPointTable(
-			void
-			) const
+		const std::vector<MATH_POINT_2D> & GetPointTable( void ) const
 		{
-			return PointTable2;
+			return MainTable;
 		}
 
 		// ~~
 
-		void SetPointTable(
-			const std::vector<MATH_POINT_2D> & point_table
-			)
+		void SetPointTable( const std::vector<MATH_POINT_2D> & point_table )
 		{
-			PointTable2 = point_table;
+			MainTable = point_table;
 		}
 
 		// ~~
 
-		const std::vector<unsigned int> & GetPolygonVertexCountTable(
-			void
-			) const
+		const std::vector<unsigned int> & GetPolygonVertexCountTable( void ) const
 		{
 			return PolygonVertexCountTable;
 		}
 
 		// ~~
 
-		void SetPolygonVertexCountTable(
-			const std::vector<unsigned int> & polygon_vertex_count_table
-			)
+		void SetPolygonVertexCountTable( const std::vector<unsigned int> & polygon_vertex_count_table )
 		{
 			PolygonVertexCountTable = polygon_vertex_count_table;
 		}
@@ -167,16 +153,11 @@
 
 		// .. OPERATIONS
 	
-		void Reset(
-			void
-			);
+		void Reset( void );
 
 		// ~~
 
-		void Initialise(
-			const float width,
-			const float height
-			);
+		void Initialise( const float width, const float height );
 
 		// ~~
 
@@ -209,9 +190,7 @@
 		// is been stored in IsInssideSurface to realise which point
 		// is in and which one is not.
 
-		void GeneratePoints(
-			void
-			);
+		void GeneratePoints( void );
 
 		// -- PUBLIC
 
@@ -219,17 +198,12 @@
 
 		// .. ATTRIBUTES
 
-		int
-			**IsInsideSurface;
-		float 
-			**SurfaceValueTable,
-			Width,
-			Height;
-		std::vector<MATH_POINT_2D>
-			PointTable2;
-		std::vector < std::vector<MATH_POINT_2D>>
-			PointTable1;
-		std::vector<unsigned int>
-			PolygonVertexCountTable;
+		int											**IsInsideSurface;
+		float										**SurfaceValueTable;
+		float										Width;
+		float										Height;
+		std::vector<MATH_POINT_2D>					MainTable;
+		std::vector < std::vector<MATH_POINT_2D>>	PointTable1;
+		std::vector<unsigned int>					PolygonVertexCountTable;
 	};
 #endif

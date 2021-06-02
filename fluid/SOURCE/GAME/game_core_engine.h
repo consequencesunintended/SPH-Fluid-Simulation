@@ -34,8 +34,7 @@ class GAME_CORE_ENGINE
 
 public:
 
-    std::vector<PHYSICS_FLUID_PARTICLE> 
-        ParticleTable;
+    std::vector<PHYSICS_FLUID_PARTICLE> ParticleTable;
 
 	// .. CONSTRUCTORS
 

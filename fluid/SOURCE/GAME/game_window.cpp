@@ -172,7 +172,9 @@ void idle( GLFWwindow* window )
 	{
 		particle_index = 0;
 
-		for ( auto& p_tb : GameCoreEngine.ParticleTable )
+		std::vector<PHYSICS_FLUID_PARTICLE> particles = GameCoreEngine.ParticleTable;
+
+		for ( auto& p_tb : particles )
 		{
 			if ( p_tb.GetPosition().X < 0.0f )
 			{

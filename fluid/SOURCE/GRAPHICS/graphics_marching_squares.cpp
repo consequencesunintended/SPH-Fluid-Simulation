@@ -103,21 +103,16 @@ void GRAPHICS_MARCHING_SQUARES::CalculatePoint(
 	float value;
 	float h;
 	
-	h = ( point 
-		- PointTable1[ square_starting_index_x_value ][ square_starting_index_y_value ] 
-		).GetSquareLength();
+	h = ( point - PointTable1[ square_starting_index_x_value ][ square_starting_index_y_value ] ).GetSquareLength();
 
 	if ( h != 0.0f )
 	{
+		constexpr float SMOOTHNESS_threshold = 0.20f;
 		value = 1.0f / h;
-		if ( value < 0.16f )
+			
+		if ( value > SMOOTHNESS_threshold )
 		{
-			value = 0;
-		} 
-		else
-		{
-			SurfaceValueTable[ square_starting_index_x_value ][ square_starting_index_y_value ] 
-				+= value;
+			SurfaceValueTable[ square_starting_index_x_value ][ square_starting_index_y_value ] += value;
 		}
 	}
 }
@@ -213,7 +208,7 @@ void GRAPHICS_MARCHING_SQUARES::Reset(
 		}
 	}
 
-	PointTable2.clear();
+	MainTable.clear();
 	PolygonVertexCountTable.clear();
 }
 
@@ -310,32 +305,23 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 			case 15 :
 				{
 					PolygonVertexCountTable.push_back( 4 );
-					PointTable2.push_back( 
-						PointTable1[ LOCAL_square_point_1 ] 
-						);
-					PointTable2.push_back( 
-						PointTable1[ LOCAL_square_point_2 ] 
-						);
-					PointTable2.push_back( 
-						PointTable1[ LOCAL_square_point_3 ] 
-						);
-					PointTable2.push_back( 
-						PointTable1[ LOCAL_square_point_4 ] 
-						);
+					MainTable.push_back( PointTable1[ LOCAL_square_point_1 ] );
+					MainTable.push_back( PointTable1[ LOCAL_square_point_2 ] );
+					MainTable.push_back( PointTable1[ LOCAL_square_point_3 ] );
+					MainTable.push_back( PointTable1[ LOCAL_square_point_4 ] );
 					break;
 				}
 
 			case 14:
 				{
 					PolygonVertexCountTable.push_back( 5 );
-					InterpolateBetweenPoints( 
-						result,
+					InterpolateBetweenPoints( result,
 						PointTable1[ LOCAL_square_point_1 ], 
 						PointTable1[ LOCAL_square_point_4 ],
 						SurfaceValueTable[ LOCAL_square_point_1 ], 
 						SurfaceValueTable[ LOCAL_square_point_4 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -345,18 +331,10 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_1 ], 
 						SurfaceValueTable[ LOCAL_square_point_2 ]
 						);
-					PointTable2.push_back(
-						result
-						);
-					PointTable2.push_back(
-						PointTable1[ LOCAL_square_point_2 ]
-						);
-					PointTable2.push_back(
-						PointTable1[ LOCAL_square_point_3 ]
-						);
-					PointTable2.push_back(
-						PointTable1[LOCAL_square_point_4 ]
-						);
+					MainTable.push_back( result );
+					MainTable.push_back( PointTable1[ LOCAL_square_point_2 ] );
+					MainTable.push_back( PointTable1[ LOCAL_square_point_3 ] );
+					MainTable.push_back( PointTable1[LOCAL_square_point_4 ] );
 						break;
 				}
 
@@ -370,7 +348,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_2 ], 
 						SurfaceValueTable[ LOCAL_square_point_1 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -380,18 +358,10 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_2 ], 
 						SurfaceValueTable[ LOCAL_square_point_3 ]
 						);
-					PointTable2.push_back(
-						result
-						);
-					PointTable2.push_back(
-						PointTable1[ LOCAL_square_point_3 ]
-						);
-					PointTable2.push_back(
-						PointTable1[ LOCAL_square_point_4 ]
-						);
-					PointTable2.push_back(
-						PointTable1[ LOCAL_square_point_1 ]
-						);
+					MainTable.push_back( result );
+					MainTable.push_back( PointTable1[ LOCAL_square_point_3 ] );
+					MainTable.push_back( PointTable1[ LOCAL_square_point_4 ] );
+					MainTable.push_back( PointTable1[ LOCAL_square_point_1 ] );
 						break;
 				}
 
@@ -405,7 +375,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_1 ], 
 						SurfaceValueTable[LOCAL_square_point_4 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -415,15 +385,9 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_2 ], 
 						SurfaceValueTable[ LOCAL_square_point_3 ]
 						);
-					PointTable2.push_back(
-						result
-						);
-					PointTable2.push_back(
-						PointTable1[ LOCAL_square_point_3 ]
-						);
-					PointTable2.push_back(
-						PointTable1[ LOCAL_square_point_4 ]
-						);
+					MainTable.push_back( result );
+					MainTable.push_back( PointTable1[ LOCAL_square_point_3 ] );
+					MainTable.push_back( PointTable1[ LOCAL_square_point_4 ] );
 						break;
 				}
 
@@ -437,7 +401,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_3 ], 
 						SurfaceValueTable[ LOCAL_square_point_2 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -447,16 +411,16 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_3 ], 
 						SurfaceValueTable[ LOCAL_square_point_4 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_4 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_1 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_2 ]
 						);
 					break;
@@ -472,7 +436,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_1 ], 
 						SurfaceValueTable[ LOCAL_square_point_4 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -482,10 +446,10 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_1 ], 
 						SurfaceValueTable[ LOCAL_square_point_2 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_2 ]
 						);
 
@@ -496,7 +460,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_3 ], 
 						SurfaceValueTable[ LOCAL_square_point_2 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -506,10 +470,10 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_3 ], 
 						SurfaceValueTable[ LOCAL_square_point_4 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_4 ]
 						);
 					break;
@@ -525,7 +489,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_2 ], 
 						SurfaceValueTable[ LOCAL_square_point_1 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -535,13 +499,13 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_3 ], 
 						SurfaceValueTable[ LOCAL_square_point_4 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_4 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_1 ]
 						);
 						break;
@@ -557,7 +521,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_1 ], 
 						SurfaceValueTable[ LOCAL_square_point_4 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -567,10 +531,10 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_3 ], 
 						SurfaceValueTable[ LOCAL_square_point_4 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_4 ]
 						);
 					break;
@@ -586,7 +550,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_4 ], 
 						SurfaceValueTable[ LOCAL_square_point_3 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -596,16 +560,16 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_4 ], 
 						SurfaceValueTable[ LOCAL_square_point_1 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_1 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_2 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_3 ]
 						);
 					break;
@@ -621,7 +585,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_1 ], 
 						SurfaceValueTable[ LOCAL_square_point_2 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -631,13 +595,13 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_4 ], 
 						SurfaceValueTable[ LOCAL_square_point_3 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_3 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_2 ]
 					);
 					break;
@@ -653,7 +617,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_4 ], 
 						SurfaceValueTable[ LOCAL_square_point_3 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -663,10 +627,10 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_4 ], 
 						SurfaceValueTable[ LOCAL_square_point_1 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_1 ]
 						);
 
@@ -677,7 +641,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_2 ], 
 						SurfaceValueTable[ LOCAL_square_point_1 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -687,10 +651,10 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_2 ], 
 						SurfaceValueTable[ LOCAL_square_point_3 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_3 ]
 						);
 					break;
@@ -705,7 +669,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_4 ], 
 						SurfaceValueTable[ LOCAL_square_point_3 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -715,10 +679,10 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_2 ], 
 						SurfaceValueTable[ LOCAL_square_point_3 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_3 ]
 						);
 					break;
@@ -734,7 +698,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_3 ], 
 						SurfaceValueTable[ LOCAL_square_point_2 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -744,13 +708,13 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_4 ], 
 						SurfaceValueTable[ LOCAL_square_point_1 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_1 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_2 ]
 						);
 					break;
@@ -766,7 +730,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_3 ], 
 						SurfaceValueTable[ LOCAL_square_point_2 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -776,10 +740,10 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_1 ], 
 						SurfaceValueTable[ LOCAL_square_point_2 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_2 ]
 						);
 					break;
@@ -795,7 +759,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_2 ], 
 						SurfaceValueTable[ LOCAL_square_point_1 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
 					InterpolateBetweenPoints( 
@@ -805,10 +769,10 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 						SurfaceValueTable[ LOCAL_square_point_4 ], 
 						SurfaceValueTable[ LOCAL_square_point_1 ]
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						result
 						);
-					PointTable2.push_back(
+					MainTable.push_back(
 						PointTable1[ LOCAL_square_point_1 ]
 						);
 					break;

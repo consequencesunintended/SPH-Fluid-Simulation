@@ -70,20 +70,31 @@ void GAME_CORE_ENGINE::Update(
     const bool is_plastic
     )
 {
-	int		counter;
-	int		counter2;
+	int			delta_count;
+	bool		ignore_delta_time;
+
+#ifdef NDEBUG
+	ignore_delta_time = false;
+#else
+	ignore_delta_time = true;
+#endif
 
 	DeltaValue += delta_time;
-	counter = 0;
+	delta_count = 0;
 
 	if ( delta_time / GAME_CORE_ENGINE_delta_time_cap > 5.0f )
 	{
-		counter = int( delta_time / GAME_CORE_ENGINE_delta_time_cap - 5.0f );
+		delta_count = int( delta_time / GAME_CORE_ENGINE_delta_time_cap - 5.0f );
+	}
+
+	if ( ignore_delta_time )
+	{
+		delta_count = 1;
 	}
 
 	if ( DeltaValue > GAME_CORE_ENGINE_delta_time_cap )
 	{
-		for ( counter2 = 0; counter2 <= counter; counter2++ )
+		for ( int i = 0; i <= delta_count; i++ )
 		{
 			if ( is_viscoelastic )
 			{
