@@ -14,6 +14,8 @@
 #include <sstream>
 #include <string>
 #include <cstdlib>
+#include <thread>
+#include <mutex>
 
 using namespace std;
 
@@ -23,6 +25,7 @@ constexpr int	LOCAL_width = 600;
 constexpr int   LOCAL_height = 600;				           					
 constexpr int   LOCAL_number_of_pixels_width = 50;
 constexpr int   LOCAL_number_of_pixels_height = 50;
+
 
 // .. ATTRIBUTES
 
@@ -81,11 +84,10 @@ void ShowInfo( void )
 
 void render( GLFWwindow* window )
 {
-	unsigned int
-		temp_index_1,
-		temp_index_2,
-		start_position,
-		end_position;
+	unsigned int temp_index_1;
+	unsigned int temp_index_2;
+	unsigned int start_position;
+	unsigned int end_position;
 
 	glClearColor( GRAPHICS_COLOR::Black().GetRGBA()[0], GRAPHICS_COLOR::Black().GetRGBA()[1], GRAPHICS_COLOR::Black().GetRGBA()[2], 1.0f );
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -108,6 +110,8 @@ void render( GLFWwindow* window )
 
 	glColor4fv( GRAPHICS_COLOR::Green().GetRGBA() );
 
+	std::vector<PHYSICS_FLUID_PARTICLE> c_particles = GameCoreEngine.ParticleTable;
+
 	switch( GraphicalMode )
 	{
 		case LargeParticleMode:
@@ -116,7 +120,7 @@ void render( GLFWwindow* window )
 			temp_index_2 = 0;
 
 			glBegin(GL_POINTS);
-			for ( auto& p_tb : GameCoreEngine.ParticleTable )
+			for ( auto& p_tb : c_particles )
 			{
 				glColor4fv( GRAPHICS_COLOR::Red().GetRGBA() );
 				glVertex2f( p_tb.GetPosition().X / ratio_w, p_tb.GetPosition().Y / ratio_h );
@@ -130,6 +134,7 @@ void render( GLFWwindow* window )
 			temp_index_2 = 0;
 			start_position = 0;
 			end_position = 0;
+
 			glColor4fv( GRAPHICS_COLOR::Green().GetRGBA() );
 
 			for ( auto& p_tb : GraphicsMarchingSquares.GetPolygonVertexCountTable() )
@@ -154,53 +159,51 @@ void render( GLFWwindow* window )
 
 // ~~
 
+
 void idle( GLFWwindow* window )
 {
-	int				index_1;
-	int				index_2;
-	unsigned int	particle_index;
+
 	float			delta_time;
+	bool			threaded = true;
 
 	delta_time = FUNDAMENTAL_DELTA_TIME::GetDeltaTime();
 
+	vector<std::thread> threads;
+
 	if ( !PauseSimulation )
 	{
-		GameCoreEngine.Update( delta_time, Viscosity, Viscoelasticity, Plasticity );
+		GameCoreEngine.Update( GameCoreEngine.ParticleTable, delta_time, Viscosity, Viscoelasticity, Plasticity );
 	}
 
-	if ( GraphicalMode == MarchingSquareMode )
+	unsigned int	particle_index = 0;
+	int				index_1 = 0;
+	int				index_2 = 0;
+
+	for ( auto& p_tb : GameCoreEngine.ParticleTable )
 	{
-		particle_index = 0;
-
-		std::vector<PHYSICS_FLUID_PARTICLE> particles = GameCoreEngine.ParticleTable;
-
-		for ( auto& p_tb : particles )
+		if ( p_tb.GetPosition().X < 0.0f )
 		{
-			if ( p_tb.GetPosition().X < 0.0f )
-			{
-				index_1 = int( p_tb.GetPosition().X ) - 1 + LOCAL_number_of_pixels_width;
-			}
-			else
-			{
-				index_1 = int( p_tb.GetPosition().X ) + LOCAL_number_of_pixels_width;
-			}
-
-			if ( p_tb.GetPosition().Y < 0.0f )
-			{
-				index_2 = int( p_tb.GetPosition().Y ) - 1 - LOCAL_number_of_pixels_height;
-				index_2 *= -1;
-			}
-			else
-			{
-				index_2 = int( p_tb.GetPosition().Y ) - LOCAL_number_of_pixels_height;
-				index_2 *= -1;
-			}
-
-			GraphicsMarchingSquares.CalculatePoints( p_tb.GetPosition(), unsigned int( index_1 ), unsigned int( index_2 ), 4 );
+			index_1 = int( p_tb.GetPosition().X ) - 1 + LOCAL_number_of_pixels_width;
 		}
-		GraphicsMarchingSquares.GeneratePoints();
-	}	
-	render( window );
+		else
+		{
+			index_1 = int( p_tb.GetPosition().X ) + LOCAL_number_of_pixels_width;
+		}
+
+		if ( p_tb.GetPosition().Y < 0.0f )
+		{
+			index_2 = int( p_tb.GetPosition().Y ) - 1 - LOCAL_number_of_pixels_height;
+			index_2 *= -1;
+		}
+		else
+		{
+			index_2 = int( p_tb.GetPosition().Y ) - LOCAL_number_of_pixels_height;
+			index_2 *= -1;
+		}
+
+		GraphicsMarchingSquares.CalculatePoints( p_tb.GetPosition(), unsigned int( index_1 ), unsigned int( index_2 ), 4 );
+	}
+	GraphicsMarchingSquares.GeneratePoints();
 }
 
 // ~~
@@ -290,9 +293,7 @@ void init(
 	glLoadIdentity();
     glEnable(GL_POINT_SMOOTH);
 
-	GameCoreEngine.Initialize(
-		LOCAL_number_of_pixels_width,
-		LOCAL_number_of_pixels_height);
+	GameCoreEngine.Initialize( GameCoreEngine.ParticleTable, LOCAL_number_of_pixels_width, LOCAL_number_of_pixels_height);
 
 	if ( Plasticity )
 	{
@@ -327,7 +328,11 @@ int main(int argc, char **argv)
 
 	while ( !glfwWindowShouldClose( window ) )
 	{
+
 		idle( window );
+
+		render( window );
+
 		glfwPollEvents();
 	}
 

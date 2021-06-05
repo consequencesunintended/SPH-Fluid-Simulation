@@ -38,9 +38,7 @@ public:
 
 	// .. CONSTRUCTORS
 
-	GAME_CORE_ENGINE(
-		void
-		):
+	GAME_CORE_ENGINE( void ):
 		FluidPositionLoader( PHYSICS_FLUID_PARTICLE_POSITION_LOADER() ),
 		PhysicsCollision2DEngine( PHYSICS_COLLISION_2D() ), 
 		PhysicsFluidEngine( PHSYICS_FLUID_SPH_VISCOELASTIC() ),
@@ -54,18 +52,14 @@ public:
 
 	// ~~
 
-	virtual ~GAME_CORE_ENGINE(
-		void
-		)
+	virtual ~GAME_CORE_ENGINE( void )
 	{
 		delete PhysicsIntegrationEngine;
 	}
 
 	// ~~
 
-	GAME_CORE_ENGINE(
-		const GAME_CORE_ENGINE & other
-		) :
+	GAME_CORE_ENGINE( const GAME_CORE_ENGINE & other ) :
 		FluidPositionLoader( other.FluidPositionLoader ),
 		PhysicsCollision2DEngine( other.PhysicsCollision2DEngine ), 
 		PhysicsFluidEngine( other.PhysicsFluidEngine ),
@@ -79,9 +73,7 @@ public:
 
 	// .. OPERATORS
 
-	GAME_CORE_ENGINE & operator=(
-		const GAME_CORE_ENGINE & other
-		)
+	GAME_CORE_ENGINE & operator=( const GAME_CORE_ENGINE & other )
 	{
 		FluidPositionLoader = other.FluidPositionLoader;
 		PhysicsCollision2DEngine = other.PhysicsCollision2DEngine; 
@@ -95,34 +87,27 @@ public:
 
     // ~~
 
-	void SetMouse( 
-        const bool attract, 
-        const bool repel 
-		)
+	void SetMouse( const bool attract, const bool repel )
 	{
 		PhysicsMouseInteraction.SetMouse( attract, repel );
 	}
 
     // ~~
 
-	void SetAttractor( 
-        const MATH_VECTOR_2D &attractor 
-        )
+	void SetAttractor( const MATH_VECTOR_2D &attractor )
 	{
 		PhysicsMouseInteraction.SetAttractor( attractor );
 	}
 
     // .. OPERATIONS
 
-	void Initialize(
-		const float fluid_max_width, 
-        const float fluid_max_height  
-        );
+	void Initialize( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable, const float fluid_max_width, const float fluid_max_height );
 
 
     // ~~
 
     void Update(
+		std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable,
         const float delta_time,
         const bool do_viscosity,
         const bool is_viscoelastic,
@@ -131,15 +116,11 @@ public:
 
     // ~~
 
-    void ResetViscoelasticity(
-        void
-        );
+    void ResetViscoelasticity( void );
 
 	// ~~
 
-	void InitialisePlasticity(
-		void
-		);
+	void InitialisePlasticity( void );
 
     // -- PRIVATE
 
@@ -147,69 +128,46 @@ private:
 
     // .. OPERATIONS
 
-	void InitialiseParticles( 
-        void 
-        );
+	void InitialiseParticles( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable );
 
     // ~~
 
-	void CalculateDensity( 
-        const float delta_time 
-        );
+	void CalculateDensity( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable, const float delta_time );
 
     // ~~
 
-	void CalculatePressureForce( 
-        const float delta_time  
-        );
+	void CalculatePressureForce( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable, const float delta_time );
 
         // ~~
 
-	void UpdateParticlesVelocityAndPosition( 
-        const float delta_time  
-        );
+	void UpdateParticlesVelocityAndPosition( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable, const float delta_time  );
 
         // ~~
 
-	void DetectCollision( 
-        const float width, float height 
-        );
+	void DetectCollision( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable, const float width, float height );
 
         // ~~
 
-	void CalculateViscosity( 
-        const float delta_time  
-        );
+	void CalculateViscosity( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable, const float delta_time );
 
         // ~~
 
-	void CalculateSpringsForViscoelasticity( 
-        const float delta_time  
-        );
+	void CalculateSpringsForViscoelasticity( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable, const float delta_time );
 
 	// ~~
 
-	void CalculatePlasticity(
-		const float delta_time
-		);
+	void CalculatePlasticity( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable, const float delta_time );
 
     // .. ATTRIBUTES
 
-	PHYSICS_FLUID_PARTICLE_POSITION_LOADER
-		FluidPositionLoader;
-	PHYSICS_COLLISION_2D 
-		PhysicsCollision2DEngine;
-	PHSYICS_FLUID_SPH_VISCOELASTIC 
-		PhysicsFluidEngine;
-	PHYSICS_INTEGRATION 
-		* PhysicsIntegrationEngine;
-	PHYSICS_SPRING_ARRAY 
-		SpringTable;
-	PHYSICS_MOUSE_INTERACTION
-		PhysicsMouseInteraction;
-	float
-		FluidMaxWidth,
-		FluidMaxHeight,
-		DeltaValue;
+	PHYSICS_FLUID_PARTICLE_POSITION_LOADER	FluidPositionLoader;
+	PHYSICS_COLLISION_2D					PhysicsCollision2DEngine;
+	PHSYICS_FLUID_SPH_VISCOELASTIC			PhysicsFluidEngine;
+	PHYSICS_INTEGRATION*					PhysicsIntegrationEngine;
+	PHYSICS_SPRING_ARRAY					SpringTable;
+	PHYSICS_MOUSE_INTERACTION				PhysicsMouseInteraction;	
+	float									FluidMaxWidth;
+	float									FluidMaxHeight;
+	float									DeltaValue;
 };
 #endif

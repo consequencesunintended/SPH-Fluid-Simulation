@@ -246,10 +246,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 		{
 			index_y = temp_index_2;
 
-			if ( 
-				SurfaceValueTable[ LOCAL_square_point_1 ]  
-				> GRAPHICS_MARCHING_SQUARE_threshold 
-				)
+			if ( SurfaceValueTable[ LOCAL_square_point_1 ]  > GRAPHICS_MARCHING_SQUARE_threshold )
 			{
 				// Operator OR with 0001 is been used to show 
 				// that the first point of the square is inside 
@@ -257,10 +254,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 
 				IsInsideSurface[ index_x ][ index_y ] |= 1;
 			}
-			if ( 
-				SurfaceValueTable[ LOCAL_square_point_2 ]  
-				> GRAPHICS_MARCHING_SQUARE_threshold 
-				)
+			if ( SurfaceValueTable[ LOCAL_square_point_2 ]  > GRAPHICS_MARCHING_SQUARE_threshold )
 			{
 				// Operator OR with 0010 is been used to show 
 				// that the second point of the square is inside 
@@ -268,9 +262,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 
 				IsInsideSurface[ index_x ][ index_y ] |= 2;
 			}
-			if ( 
-				SurfaceValueTable[ LOCAL_square_point_3 ]  
-				> GRAPHICS_MARCHING_SQUARE_threshold 
+			if ( SurfaceValueTable[ LOCAL_square_point_3 ]  > GRAPHICS_MARCHING_SQUARE_threshold 
 				)
 			{
 				// Operator OR with 0100 is been used to show 
@@ -279,10 +271,7 @@ void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
 
 				IsInsideSurface[ index_x ][ index_y ] |= 4;
 			}
-			if ( 
-				SurfaceValueTable[LOCAL_square_point_4 ]  
-				> GRAPHICS_MARCHING_SQUARE_threshold
-				)
+			if ( SurfaceValueTable[LOCAL_square_point_4 ]  > GRAPHICS_MARCHING_SQUARE_threshold )
 			{
 				// Operator OR with 0100 is been used to show 
 				// that the fourth point of the square is inside 

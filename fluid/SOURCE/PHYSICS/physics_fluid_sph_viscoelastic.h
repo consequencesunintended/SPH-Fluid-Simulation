@@ -19,6 +19,8 @@
 #include "physics_fluid_particle.h"
 #include "physics_spring.h"
 #include "physics_spring_array.h"
+#include <thread>
+#include <mutex>
 
 // -- GLOBAL
 
@@ -40,35 +42,30 @@ public:
 
 	// .. CONSTRUCTORS
 
-	PHSYICS_FLUID_SPH_VISCOELASTIC(
-		void
-		) :
-		SpringTable()
+	PHSYICS_FLUID_SPH_VISCOELASTIC( void ) : SpringTable()
 	{
+
 	}
 
 	// ~~
 
-	PHSYICS_FLUID_SPH_VISCOELASTIC(
-		const PHSYICS_FLUID_SPH_VISCOELASTIC & other
-		) :
-		SpringTable( other.SpringTable )
+	PHSYICS_FLUID_SPH_VISCOELASTIC( const PHSYICS_FLUID_SPH_VISCOELASTIC & other ) : SpringTable( other.SpringTable )
 	{
 	}
 
+	void PHSYICS_FLUID_SPH_VISCOELASTIC::worker_thread( std::vector<PHYSICS_FLUID_PARTICLE>& particles_table,
+														const float smoothing_radius,
+														unsigned int start_range,
+														unsigned int end_range,
+														unsigned int t );
+										
 	// ~~
 
-	virtual ~PHSYICS_FLUID_SPH_VISCOELASTIC(
-		void
-		)
-	{
-	}
+	virtual ~PHSYICS_FLUID_SPH_VISCOELASTIC( void );
 
 	// .. OPERATORS
 
-	PHSYICS_FLUID_SPH_VISCOELASTIC & operator=(
-		const PHSYICS_FLUID_SPH_VISCOELASTIC & other
-		)
+	PHSYICS_FLUID_SPH_VISCOELASTIC & operator=( const PHSYICS_FLUID_SPH_VISCOELASTIC & other )
 	{
 		assert( this != &other );
 
@@ -79,34 +76,32 @@ public:
 
 	// .. ACCESSORS
 
-	const PHYSICS_SPRING_ARRAY GetSpringsTable(
-		void
-		) const
+	const PHYSICS_SPRING_ARRAY GetSpringsTable( void ) const
 	{
 		return SpringTable;
 	}
 
 	// ~~
 
-	void SetSpringsTable(
-		const PHYSICS_SPRING_ARRAY & spring_table
-		)
+	void SetSpringsTable( const PHYSICS_SPRING_ARRAY & spring_table )
 	{
 		SpringTable = spring_table;
 	}
 
 	// .. OPERATIONS
 
-	void InitialiseSpringTable(
-		const int number_of_particles
-		);
+	void InitialiseSpringTable( const int number_of_particle );
 
 	// ~~
 
-	void CalculateDensity(
-		std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable,
-		const float smoothing_radius
-		);
+	void CalculateDensityT( std::vector<PHYSICS_FLUID_PARTICLE>& particles_table,
+							const float smoothing_radius,
+							unsigned int start_range,
+							unsigned int end_range );
+
+	// ~~
+
+	void CalculateDensity( std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable, const float smoothing_radius );
 
 	// ~~
 
@@ -120,11 +115,7 @@ public:
 
 	// ~~
 
-	void CalculateViscosity(
-		std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable,
-		const float smoothing_radius,
-		const float delta_time
-		);
+	void CalculateViscosity( std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable, const float smoothing_radius, const float delta_time );
 
 	// ~~
 
@@ -139,24 +130,15 @@ public:
 
 	// ~~
 
-	void InitialisePlasticity(
-		std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable,
-		const float smoothing_radius,
-		const float coefficient_spring
-		);
+	void InitialisePlasticity( std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable, const float smoothing_radius, const float coefficient_spring );
 
 	// ~~
 
-	void CalculatePlasticity(
-		std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable,
-		const float delta_time
-		);
+	void CalculatePlasticity( std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable, const float delta_time );
 
 	// ~~
 
-	void ResetSprings(
-		void
-		);
+	void ResetSprings( void );
 
 	// -- PRIVATE
 
@@ -164,7 +146,12 @@ private:
 
 	// .. ATTRIBUTES
 
-	PHYSICS_SPRING_ARRAY 
-		SpringTable;
+	PHYSICS_SPRING_ARRAY SpringTable;
+
+
+	std::mutex						mutex_lock;	
+	std::vector<bool>				ready_list;
+	std::vector<bool>				processed_list;
+	std::vector<std::thread>		workers;
 };
 #endif

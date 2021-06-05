@@ -15,6 +15,7 @@ constexpr float LOCAL_Margin_with_bottom_of_the_window = 1.0f;
 // .. OPERATIONS
 
 void GAME_CORE_ENGINE::Initialize( 
+	std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable,
     const float fluid_max_width,
     const float fluid_max_height
     )
@@ -22,25 +23,18 @@ void GAME_CORE_ENGINE::Initialize(
 	PhysicsIntegrationEngine = new PHSYICS_INTEGRATION_PREDICTION_RELAXATION();
 	FluidMaxHeight = fluid_max_height;
 	FluidMaxWidth = fluid_max_width;
-	InitialiseParticles();
+	InitialiseParticles( ParticleTable );
 }
 
 // ~~
 
-void GAME_CORE_ENGINE::InitialiseParticles(
-	void
-    )
+void GAME_CORE_ENGINE::InitialiseParticles( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable )
 {
-    MATH_VECTOR_2D 
-        position;
-    PHYSICS_FLUID_PARTICLE 
-        particle;
-    unsigned int
-        particle_index;
+    MATH_VECTOR_2D			position;
+    PHYSICS_FLUID_PARTICLE	particle;
+    unsigned int			particle_index;
 
-	FluidPositionLoader.LoadPositions(
-		"./DATA/position_map.bmp"
-		);
+	FluidPositionLoader.LoadPositions( "./DATA/position_map.bmp" );
 
     particle_index = 0;
 
@@ -64,6 +58,7 @@ void GAME_CORE_ENGINE::InitialiseParticles(
 // ~~
 
 void GAME_CORE_ENGINE::Update(
+	std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable,
     const float delta_time,
     const bool do_viscosity,
     const bool is_viscoelastic,
@@ -90,6 +85,7 @@ void GAME_CORE_ENGINE::Update(
 	if ( ignore_delta_time )
 	{
 		delta_count = 1;
+		delta_count = 0;
 	}
 
 	if ( DeltaValue > GAME_CORE_ENGINE_delta_time_cap )
@@ -98,15 +94,15 @@ void GAME_CORE_ENGINE::Update(
 		{
 			if ( is_viscoelastic )
 			{
-				CalculateSpringsForViscoelasticity( GAME_CORE_ENGINE_delta_time_cap );
+				CalculateSpringsForViscoelasticity( ParticleTable, GAME_CORE_ENGINE_delta_time_cap );
 			}
 			if ( is_plastic )
 			{
-				CalculatePlasticity( GAME_CORE_ENGINE_delta_time_cap );
+				CalculatePlasticity( ParticleTable, GAME_CORE_ENGINE_delta_time_cap );
 			}
-			CalculateDensity( GAME_CORE_ENGINE_delta_time_cap );
-			CalculatePressureForce( GAME_CORE_ENGINE_delta_time_cap );
-			UpdateParticlesVelocityAndPosition( GAME_CORE_ENGINE_delta_time_cap );
+			CalculateDensity( ParticleTable, GAME_CORE_ENGINE_delta_time_cap );
+			CalculatePressureForce( ParticleTable, GAME_CORE_ENGINE_delta_time_cap );
+			UpdateParticlesVelocityAndPosition( ParticleTable, GAME_CORE_ENGINE_delta_time_cap );
 		}
 		DeltaValue = 0.0f;
 	}
@@ -114,44 +110,29 @@ void GAME_CORE_ENGINE::Update(
 
 // ~~
 
-void GAME_CORE_ENGINE::ResetViscoelasticity(
-    void
-    )
+void GAME_CORE_ENGINE::ResetViscoelasticity( void )
 {
     PhysicsFluidEngine.ResetSprings();
 }
 
-void GAME_CORE_ENGINE::InitialisePlasticity(
-	void
-	)
+void GAME_CORE_ENGINE::InitialisePlasticity( void )
 {
-	PhysicsFluidEngine.InitialisePlasticity(
-		ParticleTable,
-		PHSYICS_LEVEL_FLUID_CONSTANTS_Smoothing_Radius,
-		0.09f
-		);
+	PhysicsFluidEngine.InitialisePlasticity( ParticleTable, PHSYICS_LEVEL_FLUID_CONSTANTS_Smoothing_Radius, 0.09f );
 }
 
 // -- PRIVATE
 
 // .. OPERATIONS
 
-void GAME_CORE_ENGINE::CalculateDensity( 
-	const float delta_time  
-	)
+void GAME_CORE_ENGINE::CalculateDensity( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable, const float delta_time )
 {
 
-	PhysicsFluidEngine.CalculateDensity(
-		ParticleTable,
-		PHSYICS_LEVEL_FLUID_CONSTANTS_Smoothing_Radius
-		);
+	PhysicsFluidEngine.CalculateDensity( ParticleTable, PHSYICS_LEVEL_FLUID_CONSTANTS_Smoothing_Radius );
 }
 
 // ~~
 
-void GAME_CORE_ENGINE::CalculatePressureForce( 
-    const float delta_time  
-    )
+void GAME_CORE_ENGINE::CalculatePressureForce( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable, const float delta_time  )
 {
 	PhysicsFluidEngine.CalculatePressure(
 		ParticleTable,
@@ -164,7 +145,7 @@ void GAME_CORE_ENGINE::CalculatePressureForce(
 
 // ~~
 
-void GAME_CORE_ENGINE::UpdateParticlesVelocityAndPosition( const float delta_time )
+void GAME_CORE_ENGINE::UpdateParticlesVelocityAndPosition( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable, const float delta_time )
 {
 	unsigned int	particle_index;
 	float			attraction_radius;
@@ -176,7 +157,7 @@ void GAME_CORE_ENGINE::UpdateParticlesVelocityAndPosition( const float delta_tim
 		PhysicsIntegrationEngine->UpdateVelocity( p_tb, delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor );
 	}
 
-	CalculateViscosity( delta_time );
+	CalculateViscosity( ParticleTable, delta_time );
 
 	particle_index = 0;
 
@@ -186,7 +167,7 @@ void GAME_CORE_ENGINE::UpdateParticlesVelocityAndPosition( const float delta_tim
 
 		p_tb.SetForce( PHYSICS_LEVEL_CONSTANTS_Gravity );
 	}
-	DetectCollision( FluidMaxWidth, FluidMaxHeight );
+	DetectCollision( ParticleTable, FluidMaxWidth, FluidMaxHeight );
 
 	particle_index = 0;
 	attraction_radius = FluidMaxWidth / 4.0f;
@@ -199,7 +180,7 @@ void GAME_CORE_ENGINE::UpdateParticlesVelocityAndPosition( const float delta_tim
 
 // ~~
 
-void GAME_CORE_ENGINE::DetectCollision( const float widht, const float height )
+void GAME_CORE_ENGINE::DetectCollision( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable, const float widht, const float height )
 {
 	unsigned int
 		particle_index;
@@ -225,16 +206,14 @@ void GAME_CORE_ENGINE::DetectCollision( const float widht, const float height )
 
 // ~~
 
-void GAME_CORE_ENGINE::CalculateViscosity( 
-    const float delta_time  
-	)
+void GAME_CORE_ENGINE::CalculateViscosity( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable, const float delta_time  )
 {
 	PhysicsFluidEngine.CalculateViscosity(ParticleTable, PHSYICS_LEVEL_FLUID_CONSTANTS_Smoothing_Radius, delta_time );
 }
 
 // ~~
 
-void GAME_CORE_ENGINE::CalculateSpringsForViscoelasticity( const float delta_time )
+void GAME_CORE_ENGINE::CalculateSpringsForViscoelasticity( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable, const float delta_time )
 {
 	PhysicsFluidEngine.CalculateViscoElasticity( ParticleTable,
 		PHSYICS_LEVEL_FLUID_CONSTANTS_Smoothing_Radius,
@@ -247,7 +226,7 @@ void GAME_CORE_ENGINE::CalculateSpringsForViscoelasticity( const float delta_tim
 
 // ~~
 
-void GAME_CORE_ENGINE::CalculatePlasticity( const float delta_time )
+void GAME_CORE_ENGINE::CalculatePlasticity( std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable, const float delta_time )
 {
 	PhysicsFluidEngine.CalculatePlasticity( ParticleTable, delta_time );
 }

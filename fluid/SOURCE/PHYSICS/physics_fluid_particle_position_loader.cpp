@@ -15,15 +15,12 @@ void PHYSICS_FLUID_PARTICLE_POSITION_LOADER::LoadPositions(
 	const char *bitmap
 	)
 {
-	unsigned int
-		width,
-		height,
-		colour;
-	GRAPHICS_IMAGE_PIXEL_LOADER 
-		image;
-	unsigned int
-		index_x,
-		index_y;
+	unsigned int				width;
+	unsigned int				height;
+	unsigned int				colour;
+	GRAPHICS_IMAGE_PIXEL_LOADER	image;
+	unsigned int				index_x;
+	unsigned int				index_y;
 
 	GRAPHICS_IMAGE_PIXEL_LOADER::LoadBMP( image, bitmap );
 	width = image.GetWidth();
@@ -37,12 +34,7 @@ void PHYSICS_FLUID_PARTICLE_POSITION_LOADER::LoadPositions(
 
 			if ( colour != -1 )
 			{
-				PointTable.push_back( 
-					MATH_POINT_2D( 
-						float( int(index_x - width / 2 ) ), 
-						float( int(index_y - height / 2 ) )
-						) 
-					);
+				PointTable.push_back( MATH_POINT_2D( float( int(index_x - width / 2 ) ), float( int(index_y - height / 2 ) ) ) );
 			}
 		}
 	}
