@@ -84,7 +84,6 @@ void GAME_CORE_ENGINE::Update(
 
 	if ( ignore_delta_time )
 	{
-		delta_count = 1;
 		delta_count = 0;
 	}
 
