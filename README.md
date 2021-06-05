@@ -2,11 +2,11 @@
 <h3 style="text-align: center;"><strong>SPH Fluid Simulation</strong></h3>
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://alexnasser.files.wordpress.com/2013/12/fluid1.gif?w=517" alt="" width="412" height="319" /></p>
 <p>&nbsp;</p>
-<p>The application uses a particle-based solver (Smoothed-particle hydrodynamics) for the Navier-Stokes equation and marching square for rendering purposes. I've written it all in C++. The code was optimised in various stages giving the ability to simulate up to 1000 particles with 110 fps on an AMD Turion X2 Dual-Core Mobile 2.20 GHz.</p>
+<p>The application uses a particle-based solver (Smoothed-particle hydrodynamics) for the Navier-Stokes equation and marching square for rendering purposes. I've written it all in C++ with some C++11 parallelism support.</p>
 <p>Particle-based solver:</p>
-<p><a href="https://github1s.com/consequencesunintended/SPH-Fluid-Simulation/blob/6d972bd943482c8a7e6ed55718f805b5f91c8068/fluid/SOURCE/PHYSICS/physics_fluid_sph_viscoelastic.cpp">SPH-Fluid-Simulation/fluid/SOURCE/PHYSICS/physics_fluid_sph_viscoelastic.cpp</a></p>
+<p><a href="https://github1s.com/consequencesunintended/SPH-Fluid-Simulation/blob/291ff83b3e97945008da062ea958497f4f152aee/fluid/SOURCE/PHYSICS/physics_fluid_sph_viscoelastic.cpp">SPH-Fluid-Simulation/fluid/SOURCE/PHYSICS/physics_fluid_sph_viscoelastic.cpp</a></p>
 <p>Marching Squares:</p>
-<p><a href="https://github.com/consequencesunintended/SPH-Fluid-Simulation/blob/c680f1ca79718f53554135dc2fba68ca263c03e5/fluid/SOURCE/GRAPHICS/graphics_marching_squares.cpp">SPH-Fluid-Simulation/fluid/SOURCE/GRAPHICS/graphics_marching_squares.cpp</a></p>
+<p><a href="https://github1s.com/consequencesunintended/SPH-Fluid-Simulation/blob/291ff83b3e97945008da062ea958497f4f152aee/fluid/SOURCE/GRAPHICS/graphics_marching_squares.cpp">SPH-Fluid-Simulation/fluid/SOURCE/GRAPHICS/graphics_marching_squares.cpp</a></p>
 <p>&nbsp;</p>
 <h2>Prerequisites</h2>
 <ul>
