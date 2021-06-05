@@ -4,9 +4,9 @@
 <p>&nbsp;</p>
 <p>The application uses a particle-based solver (Smoothed-particle hydrodynamics) for the Navier-Stokes equation and marching square for rendering purposes. I've written it all in C++ with some C++11 parallelism support.</p>
 <p>Particle-based solver:</p>
-<p><a href="https://github1s.com/consequencesunintended/SPH-Fluid-Simulation/blob/6d972bd943482c8a7e6ed55718f805b5f91c8068/fluid/SOURCE/PHYSICS/physics_fluid_sph_viscoelastic.cpp">SPH-Fluid-Simulation/fluid/SOURCE/PHYSICS/physics_fluid_sph_viscoelastic.cpp</a></p>
+<p><a href="https://github1s.com/consequencesunintended/SPH-Fluid-Simulation/blob/291ff83b3e97945008da062ea958497f4f152aee/fluid/SOURCE/PHYSICS/physics_fluid_sph_viscoelastic.cpp">SPH-Fluid-Simulation/fluid/SOURCE/PHYSICS/physics_fluid_sph_viscoelastic.cpp</a></p>
 <p>Marching Squares:</p>
-<p><a href="https://github.com/consequencesunintended/SPH-Fluid-Simulation/blob/c680f1ca79718f53554135dc2fba68ca263c03e5/fluid/SOURCE/GRAPHICS/graphics_marching_squares.cpp">SPH-Fluid-Simulation/fluid/SOURCE/GRAPHICS/graphics_marching_squares.cpp</a></p>
+<p><a href="https://github1s.com/consequencesunintended/SPH-Fluid-Simulation/blob/291ff83b3e97945008da062ea958497f4f152aee/fluid/SOURCE/GRAPHICS/graphics_marching_squares.cpp">SPH-Fluid-Simulation/fluid/SOURCE/GRAPHICS/graphics_marching_squares.cpp</a></p>
 <p>&nbsp;</p>
 <h2>Prerequisites</h2>
 <ul>
