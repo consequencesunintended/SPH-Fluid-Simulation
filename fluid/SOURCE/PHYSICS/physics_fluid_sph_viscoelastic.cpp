@@ -133,7 +133,7 @@ PHSYICS_FLUID_SPH_VISCOELASTIC::~PHSYICS_FLUID_SPH_VISCOELASTIC( void )
 
 void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID_PARTICLE> & particles_table, const float smoothing_radius )
 {
-	bool		threaded = false;
+	bool		threaded = true;
 	static bool thread_created = false;
 	int			num_particles = particles_table.size();
 
@@ -141,16 +141,14 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID
 
 	if ( threaded )
 	{
-		int nthreads = 1;
+		int num_threads = std::thread::hardware_concurrency();
 
 		if ( !thread_created )
-		{
-			int num_threads = std::thread::hardware_concurrency();
+		{			
+			ready_list.resize( num_threads );
+			processed_list.resize( num_threads );
 
-			ready_list.resize( nthreads );
-			processed_list.resize( nthreads );
-
-			for ( int t = 0; t < nthreads; t++ )
+			for ( int t = 0; t < num_threads; t++ )
 			{
 				workers.push_back( std::thread( &PHSYICS_FLUID_SPH_VISCOELASTIC::worker_thread, this, 
 										std::ref( particles_table ), 
@@ -162,7 +160,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID
 			}
 			thread_created = true;
 		}
-		for ( int t = 0; t < nthreads; t++ )
+		for ( int t = 0; t < num_threads; t++ )
 		{
 			mutex_lock.lock();
 			ready_list[t] = true;
@@ -175,7 +173,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID
 		{
 			bool done = true;
 
-			for ( int t = 0; t < nthreads; t++ )
+			for ( int t = 0; t < num_threads; t++ )
 			{
 				bool v;
 				
@@ -194,7 +192,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID
 				processed = true;
 			}
 		}
-		for ( int t = 0; t < nthreads; t++ )
+		for ( int t = 0; t < num_threads; t++ )
 		{
 			mutex_lock.lock();
 			processed_list[t] = false;
