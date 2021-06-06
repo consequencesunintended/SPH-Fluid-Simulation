@@ -21,6 +21,7 @@
 #include "physics_spring_array.h"
 #include <thread>
 #include <mutex>
+#include <deque>
 
 // -- GLOBAL
 
@@ -150,8 +151,8 @@ private:
 
 
 	std::mutex						mutex_lock;	
-	std::vector<bool>				ready_list;
-	std::vector<bool>				processed_list;
+	std::deque<bool>				ready_list;
+	std::deque<bool>				processed_list;
 	std::vector<std::thread>		workers;
 };
 #endif

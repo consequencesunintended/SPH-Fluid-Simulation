@@ -56,7 +56,6 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensityT( std::vector<PHYSICS_FLUI
 	float								powered_two_smoothing_kernel;
 	float								powered_three_smoothing_kernel;
 	MATH_VECTOR_2D						vector_between_particle_and_neighbour;
-	PHYSICS_FLUID_NEIGHBOUR_PARTICLE	neighbour_particle;
 
 	for ( size_t particle_index = start_range; particle_index < end_range; particle_index++ )
 	{
@@ -68,6 +67,8 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensityT( std::vector<PHYSICS_FLUI
 
 		for ( size_t neighbour_index = particle_index + 1; neighbour_index < particles_table.size(); neighbour_index++ )
 		{
+			PHYSICS_FLUID_NEIGHBOUR_PARTICLE	neighbour_particle;
+
 			vector_between_particle_and_neighbour.SetDifference( particles_table[particle_index].GetPosition(), particles_table[neighbour_index].GetPosition() );
 
 			squared_distance_between_particle_and_neighbour = vector_between_particle_and_neighbour.GetSquareLength();
@@ -94,8 +95,8 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensityT( std::vector<PHYSICS_FLUI
 				particles_table[particle_index].GetNeighbours().push_back( neighbour_particle );
 			}
 		}
-		particles_table[particle_index].SetDensity( particles_table[particle_index].GetDensity() + density );
-		particles_table[particle_index].SetNearDensity( particles_table[particle_index].GetNearDensity() + near_density );
+		particles_table[particle_index].SetDensity( density );
+		particles_table[particle_index].SetNearDensity( near_density );
 	}
 }
 // ~~
@@ -137,7 +138,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID
 	static bool thread_created = false;
 	int			num_particles = particles_table.size();
 
-	auto start = high_resolution_clock::now();
+	//auto start = high_resolution_clock::now();
 
 	if ( threaded )
 	{
@@ -203,6 +204,11 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID
 	{
 		CalculateDensityT( particles_table, smoothing_radius, 0, particles_table.size() );
 	}
+
+	//auto end = high_resolution_clock::now();
+	//std::chrono::microseconds duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+	//std::cout << duration.count() << std::endl;
 }
 
 // ~~
@@ -422,7 +428,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialisePlasticity(
 	
 	for ( particle_index_1 = 0; particle_index_1 < particlesTable.size(); particle_index_1++ )
 	{		
-		for ( particle_index_2 = 0; particle_index_2 < particlesTable.size(); particle_index_2++ )
+		for ( particle_index_2 = particle_index_1 + 1; particle_index_2 < particlesTable.size(); particle_index_2++ )
 		{
   			vector_between_particle_and_neighbour.SetDifference( particlesTable[ particle_index_1 ].GetPosition(), particlesTable[ particle_index_2 ].GetPosition() );
 			distance_between_particle_and_neighbour = vector_between_particle_and_neighbour.GetLength();
@@ -441,10 +447,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialisePlasticity(
 
 // ~~
 
-void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePlasticity(
-	std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable,
-	const float delta_time
-	)
+void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePlasticity( std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable, const float delta_time )
 {
 	PHYSICS_SPRING	spring;
 	unsigned int	spring_index;
