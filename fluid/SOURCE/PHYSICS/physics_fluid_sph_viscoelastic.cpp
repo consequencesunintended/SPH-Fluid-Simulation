@@ -59,8 +59,6 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensityT( std::vector<PHYSICS_FLUI
 
 	for ( size_t particle_index = start_range; particle_index < end_range; particle_index++ )
 	{
-		particles_table[particle_index].SetDensity( 0.0f );
-		particles_table[particle_index].SetNearDensity( 0.0f );
 		particles_table[particle_index].GetNeighbours().clear();
 		density = 0;
 		near_density = 0;
@@ -221,8 +219,6 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePressure(
 	const float delta_time
 	)
 {	
-	unsigned int						prticle_index;
-	unsigned int						neighbour_table_index;
 	unsigned int						neighbour_index;	 
 	MATH_VECTOR_2D						particle_pressure_force;
 	MATH_VECTOR_2D						vector_between_particle_and_neighbour;
@@ -234,13 +230,13 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePressure(
 	float								powered_two_smoothing_kernel;
 	float								pressure_scalar_value;
 
-	for ( prticle_index = 0; prticle_index < particlesTable.size(); prticle_index++ )
+	for ( unsigned int prticle_index = 0; prticle_index < particlesTable.size(); prticle_index++ )
 	{
 		pressure = stifness_parameter * (particlesTable[prticle_index].GetDensity() - rest_density);
 		near_pressure =  near_stifness_parameter * particlesTable[prticle_index].GetNearDensity();
 		particle_pressure_force.Reset();		
 
-		for ( neighbour_table_index = 0; neighbour_table_index < particlesTable[prticle_index].GetNeighbours().size(); neighbour_table_index++ )
+		for ( unsigned int neighbour_table_index = 0; neighbour_table_index < particlesTable[prticle_index].GetNeighbours().size(); neighbour_table_index++ )
 		{
 			neigbour_particle = particlesTable[prticle_index].GetNeighbours()[neighbour_table_index];
 			neighbour_index = neigbour_particle.GetParticleIndex();     
@@ -401,9 +397,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 
 // ~~
 
-void PHSYICS_FLUID_SPH_VISCOELASTIC::ResetSprings(
-	void
-	)
+void PHSYICS_FLUID_SPH_VISCOELASTIC::ResetSprings( void )
 {
 	SpringTable.clear();
 }
@@ -428,7 +422,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialisePlasticity(
 	
 	for ( particle_index_1 = 0; particle_index_1 < particlesTable.size(); particle_index_1++ )
 	{		
-		for ( particle_index_2 = particle_index_1 + 1; particle_index_2 < particlesTable.size(); particle_index_2++ )
+		for ( particle_index_2 = 0; particle_index_2 < particlesTable.size(); particle_index_2++ )
 		{
   			vector_between_particle_and_neighbour.SetDifference( particlesTable[ particle_index_1 ].GetPosition(), particlesTable[ particle_index_2 ].GetPosition() );
 			distance_between_particle_and_neighbour = vector_between_particle_and_neighbour.GetLength();

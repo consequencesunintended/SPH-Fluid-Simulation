@@ -116,7 +116,7 @@ void GAME_CORE_ENGINE::ResetViscoelasticity( void )
 
 void GAME_CORE_ENGINE::InitialisePlasticity( void )
 {
-	PhysicsFluidEngine.InitialisePlasticity( ParticleTable, PHSYICS_LEVEL_FLUID_CONSTANTS_Smoothing_Radius, 0.09f );
+	PhysicsFluidEngine.InitialisePlasticity( ParticleTable, PHSYICS_LEVEL_FLUID_CONSTANTS_Smoothing_Radius, PHSYICS_LEVEL_FLUID_CONSTANTS_Spring_Coefficient );
 }
 
 // -- PRIVATE
