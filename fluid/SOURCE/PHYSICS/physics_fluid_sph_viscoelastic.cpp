@@ -317,7 +317,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 	std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable,
 	const float smoothing_radius,
 	const float coefficient_spring,
-	const float yeild_ratio,
+	const float yield_ratio,
 	const float plasticity_constant,
 	const float delta_time
 	)
@@ -329,7 +329,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 	unsigned int						spring_index;
 	unsigned int						spring_point1_index;
 	unsigned int						spring_point2_index;
-	float								restLength;
+	float								rest_length;
 	float								tolerable_deformation;
 	float								distance_between_particle_and_neighbour;
 	MATH_VECTOR_2D 						spring_force;
@@ -358,17 +358,17 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 	{
 		spring_point1_index = SpringTable[spring_index].GetPoint1Index();
 		spring_point2_index = SpringTable[spring_index].GetPoint2Index();
-		restLength = SpringTable[spring_index].GetRestLength();
-		tolerable_deformation = yeild_ratio * restLength;
+		rest_length = SpringTable[spring_index].GetRestLength();
+		tolerable_deformation = yield_ratio * rest_length;
 		distance_between_particle_and_neighbour = (particlesTable[spring_point2_index].GetPosition() - particlesTable[spring_point1_index].GetPosition()).GetLength();
 
-		if ( distance_between_particle_and_neighbour > ( restLength + tolerable_deformation) )
+		if ( distance_between_particle_and_neighbour > ( rest_length + tolerable_deformation) )
 		{
-			SpringTable[spring_index].SetRestLength( SpringTable[spring_index].GetRestLength() + ( delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor ) * plasticity_constant * ( distance_between_particle_and_neighbour - restLength - tolerable_deformation ) ); 
+			SpringTable[spring_index].SetRestLength( SpringTable[spring_index].GetRestLength() + ( delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor ) * plasticity_constant * ( distance_between_particle_and_neighbour - rest_length - tolerable_deformation ) );
 		} 
-		else if ( distance_between_particle_and_neighbour < (  restLength - tolerable_deformation ))
+		else if ( distance_between_particle_and_neighbour < (rest_length - tolerable_deformation ))
 		{
-			SpringTable[spring_index].SetRestLength( SpringTable[spring_index].GetRestLength() - ( delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor ) * plasticity_constant * (restLength - tolerable_deformation - distance_between_particle_and_neighbour ) ); 
+			SpringTable[spring_index].SetRestLength( SpringTable[spring_index].GetRestLength() - ( delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor ) * plasticity_constant * (rest_length - tolerable_deformation - distance_between_particle_and_neighbour ) );
 		}
 
 		if ( SpringTable[spring_index].GetRestLength() > smoothing_radius )
@@ -383,10 +383,10 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 	{
 		spring_point1_index = SpringTable[spring_index].GetPoint1Index();
 		spring_point2_index = SpringTable[spring_index].GetPoint2Index();
-		restLength = SpringTable[spring_index].GetRestLength();
+		rest_length = SpringTable[spring_index].GetRestLength();
 		PHYSICS_SPRING::CalculateForce( spring_force, SpringTable[spring_index], particlesTable[spring_point1_index], particlesTable[spring_point2_index] );
 		spring_displacement = spring_force 
-			* ( 1.0f - restLength / smoothing_radius ) 
+			* ( 1.0f - rest_length / smoothing_radius )
 			* delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor 
 			* delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor;
 

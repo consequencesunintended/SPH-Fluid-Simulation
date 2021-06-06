@@ -124,7 +124,7 @@ public:
 		std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable,
 		const float smoothing_radius,
 		const float coefficient_spring,
-		const float yeild_ratio,
+		const float yield_ratio,
 		const float plasticity_constant,
 		const float delta_time
 		);
