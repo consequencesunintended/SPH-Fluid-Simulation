@@ -149,5 +149,8 @@
     <ClInclude Include="SOURCE\PLATFORM\platform_file_reader.h">
       <Filter>Header Files\PLATFORM</Filter>
     </ClInclude>
+    <ClInclude Include="SOURCE\GAME\game_thread_pool.h">
+      <Filter>Header Files\GAME</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -99,35 +99,8 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensityT( std::vector<PHYSICS_FLUI
 }
 // ~~
 
-void PHSYICS_FLUID_SPH_VISCOELASTIC::worker_thread( std::vector<PHYSICS_FLUID_PARTICLE>& particles_table,
-													const float smoothing_radius,
-													unsigned int start_range,
-													unsigned int end_range,
-													unsigned int t )
-{
-	while ( true )
-	{
-		mutex_lock.lock();
-		bool is_ready = ready_list[t];
-		mutex_lock.unlock();
-
-		if ( is_ready )
-		{
-			CalculateDensityT( particles_table, smoothing_radius, start_range, end_range );
-
-			mutex_lock.lock();
-			processed_list[t] =  true ;
-			ready_list[t] = false;
-			mutex_lock.unlock();
-		}
-	}
-}
 PHSYICS_FLUID_SPH_VISCOELASTIC::~PHSYICS_FLUID_SPH_VISCOELASTIC( void )
 {
-	for ( auto& w : workers )
-	{
-		w.join();
-	}
 }
 
 void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID_PARTICLE> & particles_table, const float smoothing_radius )
@@ -140,67 +113,23 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID
 
 	if ( threaded )
 	{
-		int num_threads = std::thread::hardware_concurrency();
+		int			num_threads = std::thread::hardware_concurrency();
 
-		if ( !thread_created )
-		{			
-			ready_list.resize( num_threads );
-			processed_list.resize( num_threads );
-
-			for ( int t = 0; t < num_threads; t++ )
-			{
-				workers.push_back( std::thread( &PHSYICS_FLUID_SPH_VISCOELASTIC::worker_thread, this, 
-										std::ref( particles_table ), 
-										smoothing_radius,
-										t * num_particles / num_threads,
-										(t + 1) == num_threads ? num_particles : (t + 1) * num_particles / num_threads,
-										t
-										));
-			}
-			thread_created = true;
-		}
 		for ( int t = 0; t < num_threads; t++ )
 		{
-			mutex_lock.lock();
-			ready_list[t] = true;
-			mutex_lock.unlock();
-		}
-
-		bool processed = false;
-
-		while ( !processed )
-		{
-			bool done = true;
-
-			for ( int t = 0; t < num_threads; t++ )
+			auto CalcDen = [&, smoothing_radius, t, num_threads, num_particles]()
 			{
-				bool v;
-				
-				mutex_lock.lock();
-				v = processed_list[t];
-				mutex_lock.unlock();
-
-				if ( v == false )
-				{
-					done = false;
-				}
-			}
-
-			if ( done )
-			{
-				processed = true;
-			}
+				CalculateDensityT( particles_table, smoothing_radius, t * num_particles / num_threads, (t + 1) == num_threads ? num_particles : (t + 1) * num_particles / num_threads );
+			};
+			ThreadPool.push_task( CalcDen );
 		}
-		for ( int t = 0; t < num_threads; t++ )
-		{
-			mutex_lock.lock();
-			processed_list[t] = false;
-			mutex_lock.unlock();
-		}
+
+		ThreadPool.run();
+
 	}
 	else
 	{
-		CalculateDensityT( particles_table, smoothing_radius, 0, particles_table.size() );
+		CalculateDensityT( particles_table, smoothing_radius, 0, particles_table.size() );		
 	}
 
 	//auto end = high_resolution_clock::now();

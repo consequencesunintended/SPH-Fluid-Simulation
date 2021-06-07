@@ -19,9 +19,8 @@
 #include "physics_fluid_particle.h"
 #include "physics_spring.h"
 #include "physics_spring_array.h"
-#include <thread>
-#include <mutex>
-#include <deque>
+#include "game_thread_pool.h"
+
 
 // -- GLOBAL
 
@@ -54,11 +53,7 @@ public:
 	{
 	}
 
-	void PHSYICS_FLUID_SPH_VISCOELASTIC::worker_thread( std::vector<PHYSICS_FLUID_PARTICLE>& particles_table,
-														const float smoothing_radius,
-														unsigned int start_range,
-														unsigned int end_range,
-														unsigned int t );
+	void PHSYICS_FLUID_SPH_VISCOELASTIC::worker_thread( unsigned int t );
 										
 	// ~~
 
@@ -147,12 +142,10 @@ private:
 
 	// .. ATTRIBUTES
 
-	PHYSICS_SPRING_ARRAY SpringTable;
+	PHYSICS_SPRING_ARRAY	SpringTable;
+	GAME_THREAD_POOL		ThreadPool;
 
-
-	std::mutex						mutex_lock;	
-	std::deque<bool>				ready_list;
-	std::deque<bool>				processed_list;
-	std::vector<std::thread>		workers;
 };
+
+
 #endif
