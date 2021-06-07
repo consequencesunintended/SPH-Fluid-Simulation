@@ -180,7 +180,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_delta_time.h" />
+    <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_singleton.h" />
     <ClInclude Include="SOURCE\GAME\game_core_engine.h" />
+    <ClInclude Include="SOURCE\GAME\game_thread_manager.h" />
     <ClInclude Include="SOURCE\GAME\game_window.h" />
     <ClInclude Include="SOURCE\GAME\game_thread_pool.h" />
     <ClInclude Include="SOURCE\GRAPHICS\graphics_color.h" />

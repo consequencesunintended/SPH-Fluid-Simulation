@@ -19,7 +19,6 @@
 #include "physics_fluid_particle.h"
 #include "physics_spring.h"
 #include "physics_spring_array.h"
-#include "game_thread_pool.h"
 
 
 // -- GLOBAL
@@ -143,7 +142,6 @@ private:
 	// .. ATTRIBUTES
 
 	PHYSICS_SPRING_ARRAY	SpringTable;
-	GAME_THREAD_POOL		ThreadPool;
 
 };
 

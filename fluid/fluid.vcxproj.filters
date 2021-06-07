@@ -152,5 +152,11 @@
     <ClInclude Include="SOURCE\GAME\game_thread_pool.h">
       <Filter>Header Files\GAME</Filter>
     </ClInclude>
+    <ClInclude Include="SOURCE\FUNDAMENTAL\fundamental_singleton.h">
+      <Filter>Header Files\FUNDAMENTAL</Filter>
+    </ClInclude>
+    <ClInclude Include="SOURCE\GAME\game_thread_manager.h">
+      <Filter>Header Files\GAME</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

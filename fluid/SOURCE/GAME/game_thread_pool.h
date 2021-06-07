@@ -7,6 +7,7 @@
 #include <deque>
 #include <vector>
 #include <queue>
+#include <memory>
 
 class GAME_THREAD_POOL
 {
@@ -128,5 +129,4 @@ private:
 	std::vector<std::function<void()>>		Tasks;
 	std::queue<std::function<void()>>		Jobs;
 };
-
 #endif

@@ -12,12 +12,13 @@
 
 #include "physics_fluid_sph_viscoelastic.h"
 
-#include "physics_fluid_particle.h"
-#include "physics_fluid_neighbour_particle.h"
+#include "game_thread_manager.h"
+#include "math_square_root.h"
 #include "math_vector_2d.h"
+#include "physics_fluid_neighbour_particle.h"
+#include "physics_fluid_particle.h"
 #include "physics_spring.h"
 #include "physics_spring_array.h"
-#include "math_square_root.h"
 #include <iostream>
 #include <chrono>
 
@@ -121,9 +122,9 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID
 			{
 				CalculateDensityT( particles_table, smoothing_radius, t * num_particles / num_threads, (t + 1) == num_threads ? num_particles : (t + 1) * num_particles / num_threads );
 			};
-			ThreadPool.add_job( CalcDen );
+			GAME_THREAD_MANAGER::instance().add_job( CalcDen );
 		}
-		ThreadPool.run();
+		GAME_THREAD_MANAGER::instance().run();
 	}
 	else
 	{
