@@ -121,11 +121,9 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID
 			{
 				CalculateDensityT( particles_table, smoothing_radius, t * num_particles / num_threads, (t + 1) == num_threads ? num_particles : (t + 1) * num_particles / num_threads );
 			};
-			ThreadPool.push_task( CalcDen );
+			ThreadPool.add_job( CalcDen );
 		}
-
 		ThreadPool.run();
-
 	}
 	else
 	{
