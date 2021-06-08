@@ -16,13 +16,11 @@ class PHYSICS_FLUID_NEIGHBOUR_PARTICLE
 {
 	// -- PUBLIC
 
-public:
+	public:
 
 	// .. CONSTRUCTORS
 
-	PHYSICS_FLUID_NEIGHBOUR_PARTICLE(
-		void
-		) : 
+	PHYSICS_FLUID_NEIGHBOUR_PARTICLE( void ) :
 		ParticleIndex( 0 ),
 		SmoothingKernel( 0.0f ),
 		PoweredTwoSmoothingKernel( 0.0f ),
@@ -32,9 +30,7 @@ public:
 
 	// ~~
 
-	PHYSICS_FLUID_NEIGHBOUR_PARTICLE(
-		const PHYSICS_FLUID_NEIGHBOUR_PARTICLE & other
-		) : 
+	PHYSICS_FLUID_NEIGHBOUR_PARTICLE( const PHYSICS_FLUID_NEIGHBOUR_PARTICLE& other ) :
 		ParticleIndex( other.ParticleIndex ),
 		SmoothingKernel( other.SmoothingKernel ),
 		PoweredTwoSmoothingKernel( other.PoweredTwoSmoothingKernel ),
@@ -44,17 +40,13 @@ public:
 
 	// ~~
 
-	virtual ~PHYSICS_FLUID_NEIGHBOUR_PARTICLE(
-		void
-		)
+	virtual ~PHYSICS_FLUID_NEIGHBOUR_PARTICLE( void )
 	{
 	}
 
 	// .. OPERATORS
 
-	PHYSICS_FLUID_NEIGHBOUR_PARTICLE & operator=(
-		const PHYSICS_FLUID_NEIGHBOUR_PARTICLE & other
-		)
+	PHYSICS_FLUID_NEIGHBOUR_PARTICLE& operator=( const PHYSICS_FLUID_NEIGHBOUR_PARTICLE& other )
 	{
 		assert( this != &other );
 
@@ -68,87 +60,71 @@ public:
 
 	// .. ACCESSORS
 
-	unsigned int GetParticleIndex(
-		void
-		) const
+	unsigned int GetParticleIndex( void ) const
 	{
 		return ParticleIndex;
 	}
 
 	// ~~
 
-	void SetParticleIndex(
-		const unsigned int particle_index
-		)
+	void SetParticleIndex( const unsigned int particle_index )
 	{
 		ParticleIndex = particle_index;
 	}
 
 	// ~~
 
-	float GetSmoothingKernel(
-		void
-		) const
+	float GetSmoothingKernel( void ) const
 	{
 		return SmoothingKernel;
 	}
 
 	// ~~
 
-	void SetSmoothingKernel(
-		const float smooething_kernel_value
-		)
+	void SetSmoothingKernel( const float smooething_kernel_value )
 	{
 		SmoothingKernel = smooething_kernel_value;
 	}
 
 	// ~~
 
-	float GetPoweredTwoSmoothingKernel(
-		void
-		) const
+	float GetPoweredTwoSmoothingKernel( void ) const
 	{
 		return PoweredTwoSmoothingKernel;
 	}
 
 	// ~~
 
-	void SetPoweredTwoSmoothingKernel(
-		const float powered_two_smooething_kernel_value
-		)
+	void SetPoweredTwoSmoothingKernel( const float powered_two_smooething_kernel_value )
 	{
 		PoweredTwoSmoothingKernel = powered_two_smooething_kernel_value;
 	}
 
 	// ~~
 
-	float GetDistance(
-		void
-		) const
+	float GetDistance( void ) const
 	{
 		return Distance;
 	}
 
 	// ~~
 
-	void SetDistance(
-		const float distance_value
-		)
+	void SetDistance( const float distance_value )
 	{
 		Distance = distance_value;
 	}
 
 	// -- PRIVATE
-		
-private:
+
+	private:
 
 	// .. ATTRIBUTES
-			
-	float 
+
+	float
 		SmoothingKernel,
-		PoweredTwoSmoothingKernel, 
-		Distance; 
-	unsigned int 
+		PoweredTwoSmoothingKernel,
+		Distance;
+	unsigned int
 		ParticleIndex;
 };
 #endif

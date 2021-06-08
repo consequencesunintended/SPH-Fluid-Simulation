@@ -212,7 +212,7 @@ void idle( GLFWwindow* window )
 
 	bool threaded = true;
 
- 	if ( threaded )
+	if ( threaded )
 	{
 		GAME_THREAD_MANAGER::instance().add_job( task1 );
 		GAME_THREAD_MANAGER::instance().add_job( task2 );

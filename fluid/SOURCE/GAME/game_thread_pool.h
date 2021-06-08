@@ -85,6 +85,9 @@ public:
 
 	void add_job( std::function<void()> f )
 	{
+		//nested threads not supported
+		assert( !ThreadRunning );
+		
 		Jobs.push( f );
 	}
 
@@ -92,6 +95,8 @@ public:
 
 	void run( void )
 	{
+		ThreadRunning = true;
+
 		while ( !Jobs.empty() )
 		{
 			for ( size_t i = 0; i < NumOfThreads; i++ )
@@ -137,6 +142,8 @@ public:
 			}
 
 			Tasks.clear();
+
+			ThreadRunning = false;
 		}
 	}
 
@@ -154,5 +161,6 @@ private:
 	std::vector<std::function<void()>>		Tasks;
 	std::queue<std::function<void()>>		Jobs;
 	std::deque<std::condition_variable>	    ConditionVariables;
+	bool									ThreadRunning{ false };
 };
 #endif
