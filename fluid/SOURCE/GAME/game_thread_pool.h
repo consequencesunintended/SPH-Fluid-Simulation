@@ -1,5 +1,21 @@
+// This class is to simplify creating and executing all thread concurrenty
+// Particulary useful for, FOR loops. The simplest form of creating a job
+// for the pool is to wrap the desired function around a lambda function:
+// 
+// auto job1 = []() { your function(parameters needed) };
+// auto job2 = []() { your function(parameters needed) };
+// game_thread_pool.add_job( job1 );
+// game_thread_pool.add_job( job2 );
+// game_thread_pool.run();
+//
+//
+
 #ifndef __GAME_THREAD_POOL__
 #define __GAME_THREAD_POOL__
+
+// -- LOCAL
+
+// .. REFERENCES
 
 #include <functional>
 #include <thread>
@@ -10,10 +26,18 @@
 #include <memory>
 #include <iostream>
 
+// -- GLOBAL
+
+// .. CONSTANTS
+
+// .. TYPES
+
 class GAME_THREAD_POOL
 {
-
+	// -- PUBLIC
 public:
+
+	// .. CONSTRUCTORS
 
 	GAME_THREAD_POOL()
 	{
@@ -29,6 +53,8 @@ public:
 		}
 	}
 
+	// .. DESTRUCTORS
+
 	~GAME_THREAD_POOL()
 	{
 		for ( auto& w : Workers )
@@ -37,6 +63,7 @@ public:
 		}
 	}
 
+	// ~~
 
 	void worker_thread( unsigned int t )
 	{
@@ -56,10 +83,14 @@ public:
 		}
 	}
 
+	// ~~
+
 	void add_job( std::function<void()> f )
 	{
 		Jobs.push( f );
 	}
+
+	// ~~
 
 	void run( void )
 	{
@@ -111,7 +142,11 @@ public:
 		}
 	}
 
+	// -- PRIVATE
+
 private:
+
+	// .. ATTRIBUTES
 
 	int										NumOfThreads;
 	std::mutex								MutexLock;
