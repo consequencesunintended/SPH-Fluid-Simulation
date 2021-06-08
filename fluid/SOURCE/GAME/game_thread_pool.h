@@ -8,6 +8,7 @@
 #include <vector>
 #include <queue>
 #include <memory>
+#include <iostream>
 
 class GAME_THREAD_POOL
 {
@@ -18,8 +19,9 @@ public:
 	{
 		NumOfThreads = std::thread::hardware_concurrency();
 
-		ReadyList.resize( NumOfThreads );
-		ProcessedList.resize( NumOfThreads );
+		ReadyList.resize( NumOfThreads, false );
+		ProcessedList.resize( NumOfThreads, false );
+		ConditionVariables.resize( NumOfThreads);
 
 		for ( int t = 0; t < NumOfThreads; t++ )
 		{
@@ -40,19 +42,17 @@ public:
 	{
 		while ( true )
 		{
-			MutexLock.lock();
-			bool is_ready = ReadyList[t];
-			MutexLock.unlock();
+			std::unique_lock<std::mutex> lk( MutexLock );
+			ConditionVariables[t].wait( lk, [&] {return ReadyList[t]; } );
+			lk.unlock();
 
-			if ( is_ready )
-			{
-				Tasks[t]();
+			Tasks[t]();
 
-				MutexLock.lock();
-				ProcessedList[t] = true;
-				ReadyList[t] = false;
-				MutexLock.unlock();
-			}
+			lk.lock();
+			ProcessedList[t] = true;
+			ReadyList[t] = false;
+			lk.unlock();
+			ConditionVariables[t].notify_one();
 		}
 	}
 
@@ -75,45 +75,37 @@ public:
 			}
 			const size_t num_of_tasks = Tasks.size();
 
-			MutexLock.lock();
-			for ( size_t t = 0; t < num_of_tasks; t++ )
 			{
-				ReadyList[t] = true;
-			}
-			MutexLock.unlock();
+				std::unique_lock<std::mutex> lk( MutexLock );
 
-			bool processed = false;
-
-			while ( !processed )
-			{
-				bool done = true;
-
-				MutexLock.lock();
-				for ( size_t t = 0; t < num_of_tasks; t++ )
+				for ( size_t i = 0; i < num_of_tasks; i++ )
 				{
-					bool v;
 
-					v = ProcessedList[t];
-
-					if ( v == false )
-					{
-						done = false;
-					}
-				}
-				MutexLock.unlock();
-
-				if ( done )
-				{
-					processed = true;
+					ReadyList[i] = true;
 				}
 			}
 
-			MutexLock.lock();
-			for ( size_t t = 0; t < num_of_tasks; t++ )
+			for ( size_t i = 0; i < num_of_tasks; i++ )
 			{
-				ProcessedList[t] = false;
+				ConditionVariables[i].notify_one();
+
 			}
-			MutexLock.unlock();
+
+			{
+				std::unique_lock<std::mutex> lk( MutexLock );
+				for ( size_t i = 0; i < num_of_tasks; i++ )
+				{
+					ConditionVariables[i].wait( lk, [&] {return ProcessedList[i]; } );
+				}
+			}
+
+			{
+				std::unique_lock<std::mutex> lk( MutexLock );
+				for ( size_t i = 0; i < num_of_tasks; i++ )
+				{
+					ProcessedList[i] = false;
+				}
+			}
 
 			Tasks.clear();
 		}
@@ -128,5 +120,6 @@ private:
 	std::vector<std::thread>				Workers;
 	std::vector<std::function<void()>>		Tasks;
 	std::queue<std::function<void()>>		Jobs;
+	std::deque<std::condition_variable>	    ConditionVariables;
 };
 #endif

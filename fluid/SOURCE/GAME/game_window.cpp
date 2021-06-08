@@ -14,8 +14,6 @@
 #include <sstream>
 #include <string>
 #include <cstdlib>
-#include <thread>
-#include <mutex>
 
 using namespace std;
 
@@ -167,8 +165,6 @@ void idle( GLFWwindow* window )
 	bool			threaded = true;
 
 	delta_time = FUNDAMENTAL_DELTA_TIME::GetDeltaTime();
-
-	vector<std::thread> threads;
 
 	if ( !PauseSimulation )
 	{

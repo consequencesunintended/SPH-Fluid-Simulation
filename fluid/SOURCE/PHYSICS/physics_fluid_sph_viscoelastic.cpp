@@ -20,7 +20,12 @@
 #include "physics_spring.h"
 #include "physics_spring_array.h"
 #include <iostream>
+
+#ifdef SHOW_THREAD_TIME
+
 #include <chrono>
+
+#endif
 
 using namespace std::chrono;
 
@@ -110,7 +115,10 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID
 	static bool thread_created = false;
 	int			num_particles = particles_table.size();
 
-	//auto start = high_resolution_clock::now();
+#ifdef SHOW_THREAD_TIME
+	auto start = high_resolution_clock::now();
+#endif
+
 
 	if ( threaded )
 	{
@@ -131,10 +139,12 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID
 		CalculateDensityT( particles_table, smoothing_radius, 0, particles_table.size() );		
 	}
 
-	//auto end = high_resolution_clock::now();
-	//std::chrono::microseconds duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+#ifdef SHOW_THREAD_TIME
+	auto end = high_resolution_clock::now();
+	std::chrono::microseconds duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 
-	//std::cout << duration.count() << std::endl;
+	std::cout << duration.count() << std::endl;
+#endif
 }
 
 // ~~

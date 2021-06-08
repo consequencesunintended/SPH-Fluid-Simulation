@@ -46,10 +46,7 @@ void GRAPHICS_MARCHING_SQUARES::InterpolateBetweenPoints(
 
 // .. OPERATIONS
 
-void GRAPHICS_MARCHING_SQUARES::Initialise(
-	const float width,
-	const float height
-	)
+void GRAPHICS_MARCHING_SQUARES::Initialise( const float width, const float height )
 {
 	unsigned int	temp_index_1;
 	unsigned int	temp_index_2;
@@ -226,17 +223,13 @@ void GRAPHICS_MARCHING_SQUARES::Reset(
 // is been stored in IsInssideSurface to realise which point
 // is in and which one is not.
 
-void GRAPHICS_MARCHING_SQUARES::GeneratePoints(
-	void
-	)
-{
-	unsigned int
-		temp_index_1,
-		temp_index_2,
-		index_x,
-		index_y;
-	MATH_VECTOR_2D 
-		result;
+void GRAPHICS_MARCHING_SQUARES::GeneratePoints( void )
+{	
+	unsigned int	temp_index_1;
+	unsigned int	temp_index_2;
+	unsigned int	index_x;
+	unsigned int	index_y;	 
+	MATH_VECTOR_2D	result;
 
 	for ( temp_index_1 = 0; temp_index_1 <= unsigned int( Width ) * 2 - 1; temp_index_1++ )
 	{
