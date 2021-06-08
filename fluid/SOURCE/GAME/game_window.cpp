@@ -10,6 +10,7 @@
 #include "graphics_marching_squares.h"
 #include "graphics_color.h"
 #include "fundamental_delta_time.h"
+#include "game_thread_manager.h"
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -162,7 +163,6 @@ void idle( GLFWwindow* window )
 {
 
 	float			delta_time;
-	bool			threaded = true;
 
 	delta_time = FUNDAMENTAL_DELTA_TIME::GetDeltaTime();
 
@@ -200,6 +200,7 @@ void idle( GLFWwindow* window )
 		GraphicsMarchingSquares.CalculatePoints( p_tb.GetPosition(), unsigned int( index_1 ), unsigned int( index_2 ), 4 );
 	}
 	GraphicsMarchingSquares.GeneratePoints();
+
 }
 
 // ~~
