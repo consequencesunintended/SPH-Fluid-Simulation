@@ -23,7 +23,9 @@ public:
 	{
 		return thread_pool.get_num_avaialable_threads();
 	}
+
 private:
+
 	GAME_THREAD_POOL thread_pool;
 };
 #endif

@@ -37,7 +37,7 @@ constexpr float PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor = 100.0
 class PHSYICS_FLUID_SPH_VISCOELASTIC
 {
 	// -- PUBLIC
-public:
+	public:
 
 	// .. CONSTRUCTORS
 
@@ -48,19 +48,19 @@ public:
 
 	// ~~
 
-	PHSYICS_FLUID_SPH_VISCOELASTIC( const PHSYICS_FLUID_SPH_VISCOELASTIC & other ) : SpringTable( other.SpringTable )
+	PHSYICS_FLUID_SPH_VISCOELASTIC( const PHSYICS_FLUID_SPH_VISCOELASTIC& other ) : SpringTable( other.SpringTable )
 	{
 	}
 
 	void PHSYICS_FLUID_SPH_VISCOELASTIC::worker_thread( unsigned int t );
-										
+
 	// ~~
 
 	virtual ~PHSYICS_FLUID_SPH_VISCOELASTIC( void );
 
 	// .. OPERATORS
 
-	PHSYICS_FLUID_SPH_VISCOELASTIC & operator=( const PHSYICS_FLUID_SPH_VISCOELASTIC & other )
+	PHSYICS_FLUID_SPH_VISCOELASTIC& operator=( const PHSYICS_FLUID_SPH_VISCOELASTIC& other )
 	{
 		assert( this != &other );
 
@@ -78,7 +78,7 @@ public:
 
 	// ~~
 
-	void SetSpringsTable( const PHYSICS_SPRING_ARRAY & spring_table )
+	void SetSpringsTable( const PHYSICS_SPRING_ARRAY& spring_table )
 	{
 		SpringTable = spring_table;
 	}
@@ -92,45 +92,44 @@ public:
 	void CalculateDensityT( std::vector<PHYSICS_FLUID_PARTICLE>& particles_table,
 							const float smoothing_radius,
 							unsigned int start_range,
-							unsigned int end_range,
-							bool use_opemp = false );
+							unsigned int end_range );
 
 	// ~~
 
-	void CalculateDensity( std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable, const float smoothing_radius );
+	void CalculateDensity( std::vector<PHYSICS_FLUID_PARTICLE>& particlesTable, const float smoothing_radius );
 
 	// ~~
 
 	void CalculatePressure(
-		std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable,
+		std::vector<PHYSICS_FLUID_PARTICLE>& particlesTable,
 		const float stifness_parameter,
 		const float near_stifness_parameter,
 		const float rest_density,
 		const float delta_time
-		);
+	);
 
 	// ~~
 
-	void CalculateViscosity( std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable, const float smoothing_radius, const float delta_time );
+	void CalculateViscosity( std::vector<PHYSICS_FLUID_PARTICLE>& particlesTable, const float smoothing_radius, const float delta_time );
 
 	// ~~
 
 	void CalculateViscoElasticity(
-		std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable,
+		std::vector<PHYSICS_FLUID_PARTICLE>& particlesTable,
 		const float smoothing_radius,
 		const float coefficient_spring,
 		const float yield_ratio,
 		const float plasticity_constant,
 		const float delta_time
-		);
+	);
 
 	// ~~
 
-	void InitialisePlasticity( std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable, const float smoothing_radius, const float coefficient_spring );
+	void InitialisePlasticity( std::vector<PHYSICS_FLUID_PARTICLE>& particlesTable, const float smoothing_radius, const float coefficient_spring );
 
 	// ~~
 
-	void CalculatePlasticity( std::vector<PHYSICS_FLUID_PARTICLE> & particlesTable, const float delta_time );
+	void CalculatePlasticity( std::vector<PHYSICS_FLUID_PARTICLE>& particlesTable, const float delta_time );
 
 	// ~~
 
@@ -138,7 +137,7 @@ public:
 
 	// -- PRIVATE
 
-private:
+	private:
 
 	// .. ATTRIBUTES
 

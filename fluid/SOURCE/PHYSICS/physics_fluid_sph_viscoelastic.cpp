@@ -51,61 +51,56 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialiseSpringTable(
 void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensityT( std::vector<PHYSICS_FLUID_PARTICLE>& particles_table,
 														const float		smoothing_radius,
 														unsigned int	start_range,
-														unsigned int	end_range,
-														bool			use_openmp
+														unsigned int	end_range
 )
 {
-#pragma omp parallel if(use_openmp)
+	float								density;
+	float								near_density;
+	float								squared_distance_between_particle_and_neighbour;
+	float								distance_between_particle_and_neighbour;
+	float								smoothing_kernel;
+	float								powered_two_smoothing_kernel;
+	float								powered_three_smoothing_kernel;
+	MATH_VECTOR_2D						vector_between_particle_and_neighbour;
+
+	for ( int particle_index = start_range; particle_index < end_range; particle_index++ )
 	{
-		float								density;
-		float								near_density;
-		float								squared_distance_between_particle_and_neighbour;
-		float								distance_between_particle_and_neighbour;
-		float								smoothing_kernel;
-		float								powered_two_smoothing_kernel;
-		float								powered_three_smoothing_kernel;
-		MATH_VECTOR_2D						vector_between_particle_and_neighbour;
+		particles_table[particle_index].GetNeighbours().clear();
+		density = 0;
+		near_density = 0;
 
-#pragma omp for
-		for ( int particle_index = start_range; particle_index < end_range; particle_index++ )
+		for ( int neighbour_index = particle_index + 1; neighbour_index < particles_table.size(); neighbour_index++ )
 		{
-			particles_table[particle_index].GetNeighbours().clear();
-			density = 0;
-			near_density = 0;
+			PHYSICS_FLUID_NEIGHBOUR_PARTICLE	neighbour_particle;
 
-			for ( int neighbour_index = particle_index + 1; neighbour_index < particles_table.size(); neighbour_index++ )
+			vector_between_particle_and_neighbour.SetDifference( particles_table[particle_index].GetPosition(), particles_table[neighbour_index].GetPosition() );
+
+			squared_distance_between_particle_and_neighbour = vector_between_particle_and_neighbour.GetSquareLength();
+
+			if ( squared_distance_between_particle_and_neighbour < smoothing_radius * smoothing_radius )
 			{
-				PHYSICS_FLUID_NEIGHBOUR_PARTICLE	neighbour_particle;
+				distance_between_particle_and_neighbour = MATH_SQUARE_ROOT::GetSquareRoot( squared_distance_between_particle_and_neighbour );
+				smoothing_kernel = 1 - distance_between_particle_and_neighbour / smoothing_radius;
+				powered_two_smoothing_kernel = smoothing_kernel * smoothing_kernel;
+				powered_three_smoothing_kernel = powered_two_smoothing_kernel * smoothing_kernel;
+				density += powered_two_smoothing_kernel;
+				near_density += powered_three_smoothing_kernel;
 
-				vector_between_particle_and_neighbour.SetDifference( particles_table[particle_index].GetPosition(), particles_table[neighbour_index].GetPosition() );
+				// deviating from the original equation for the sake of multithreading and commenting these two lines out
+				// doesn't seem to visually affect the simulation
 
-				squared_distance_between_particle_and_neighbour = vector_between_particle_and_neighbour.GetSquareLength();
+				//particles_table[neighbour_index].SetDensity( particles_table[neighbour_index].GetDensity() + powered_two_smoothing_kernel );
+				//particles_table[neighbour_index].SetNearDensity( particles_table[neighbour_index].GetNearDensity() + powered_three_smoothing_kernel );	
 
-				if ( squared_distance_between_particle_and_neighbour < smoothing_radius * smoothing_radius )
-				{
-					distance_between_particle_and_neighbour = MATH_SQUARE_ROOT::GetSquareRoot( squared_distance_between_particle_and_neighbour );
-					smoothing_kernel = 1 - distance_between_particle_and_neighbour / smoothing_radius;
-					powered_two_smoothing_kernel = smoothing_kernel * smoothing_kernel;
-					powered_three_smoothing_kernel = powered_two_smoothing_kernel * smoothing_kernel;
-					density += powered_two_smoothing_kernel;
-					near_density += powered_three_smoothing_kernel;
-
-					// deviating from the original equation for the sake of multithreading and commenting these two lines out
-					// doesn't seem to visually affect the simulation
-
-					//particles_table[neighbour_index].SetDensity( particles_table[neighbour_index].GetDensity() + powered_two_smoothing_kernel );
-					//particles_table[neighbour_index].SetNearDensity( particles_table[neighbour_index].GetNearDensity() + powered_three_smoothing_kernel );	
-
-					neighbour_particle.SetParticleIndex( neighbour_index );
-					neighbour_particle.SetSmoothingKernel( smoothing_kernel );
-					neighbour_particle.SetPoweredTwoSmoothingKernel( powered_two_smoothing_kernel );
-					neighbour_particle.SetDistance( distance_between_particle_and_neighbour );
-					particles_table[particle_index].GetNeighbours().push_back( neighbour_particle );
-				}
+				neighbour_particle.SetParticleIndex( neighbour_index );
+				neighbour_particle.SetSmoothingKernel( smoothing_kernel );
+				neighbour_particle.SetPoweredTwoSmoothingKernel( powered_two_smoothing_kernel );
+				neighbour_particle.SetDistance( distance_between_particle_and_neighbour );
+				particles_table[particle_index].GetNeighbours().push_back( neighbour_particle );
 			}
-			particles_table[particle_index].SetDensity( density );
-			particles_table[particle_index].SetNearDensity( near_density );
 		}
+		particles_table[particle_index].SetDensity( density );
+		particles_table[particle_index].SetNearDensity( near_density );
 	}
 }
 // ~~
@@ -140,7 +135,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID
 	}
 	else
 	{
-		CalculateDensityT( particles_table, smoothing_radius, 0, particles_table.size(), false );
+		CalculateDensityT( particles_table, smoothing_radius, 0, particles_table.size() );
 	}
 
 #ifdef SHOW_THREAD_TIME
