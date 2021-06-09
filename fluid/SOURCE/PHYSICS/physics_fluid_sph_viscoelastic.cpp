@@ -116,7 +116,8 @@ PHSYICS_FLUID_SPH_VISCOELASTIC::~PHSYICS_FLUID_SPH_VISCOELASTIC( void )
 
 void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID_PARTICLE>& particles_table, const float smoothing_radius )
 {
-	const bool		threaded = false;
+	int				num_threads = GAME_THREAD_MANAGER::instance().get_num_avaialable_threads();
+	const bool		threaded = (num_threads > 0);
 	static bool		thread_created = false;
 	int				num_particles = particles_table.size();
 
@@ -127,8 +128,6 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID
 
 	if ( threaded )
 	{
-		int			num_threads = std::thread::hardware_concurrency();
-
 		for ( int t = 0; t < num_threads; t++ )
 		{
 			auto CalcDen = [&, smoothing_radius, t, num_threads, num_particles]()
@@ -141,9 +140,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID
 	}
 	else
 	{
-		const bool use_openMP_threading = true;
-
-		CalculateDensityT( particles_table, smoothing_radius, 0, particles_table.size(), use_openMP_threading );
+		CalculateDensityT( particles_table, smoothing_radius, 0, particles_table.size(), false );
 	}
 
 #ifdef SHOW_THREAD_TIME

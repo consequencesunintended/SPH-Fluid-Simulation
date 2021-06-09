@@ -7,7 +7,8 @@
 
 class GAME_THREAD_MANAGER : public FUNDAMENTAL_SINGLETON< GAME_THREAD_MANAGER >
 {
-	public:
+public:
+
 	void add_job( std::function<void()> f )
 	{
 		thread_pool.add_job( f );
@@ -17,7 +18,12 @@ class GAME_THREAD_MANAGER : public FUNDAMENTAL_SINGLETON< GAME_THREAD_MANAGER >
 	{
 		thread_pool.run();
 	}
-	private:
+
+	int get_num_avaialable_threads( void )
+	{
+		return thread_pool.get_num_avaialable_threads();
+	}
+private:
 	GAME_THREAD_POOL thread_pool;
 };
 #endif

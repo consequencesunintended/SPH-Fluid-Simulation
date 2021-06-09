@@ -84,21 +84,23 @@ public:
 	// ~~
 
 	void add_job( std::function<void()> f )
-	{
-		//nested threads not supported
-		assert( !ThreadRunning );
-		
+	{		
 		Jobs.push( f );
+	}
+
+	int get_num_avaialable_threads()
+	{
+		return  std::thread::hardware_concurrency() - Tasks.size();
 	}
 
 	// ~~
 
 	void run( void )
 	{
-		ThreadRunning = true;
-
 		while ( !Jobs.empty() )
 		{
+			size_t starting_index = Tasks.size();
+
 			for ( size_t i = 0; i < NumOfThreads; i++ )
 			{
 				if ( !Jobs.empty() )
@@ -112,14 +114,14 @@ public:
 			{
 				std::unique_lock<std::mutex> lk( MutexLock );
 
-				for ( size_t i = 0; i < num_of_tasks; i++ )
+				for ( size_t i = starting_index; i < num_of_tasks; i++ )
 				{
 
 					ReadyList[i] = true;
 				}
 			}
 
-			for ( size_t i = 0; i < num_of_tasks; i++ )
+			for ( size_t i = starting_index; i < num_of_tasks; i++ )
 			{
 				ConditionVariables[i].notify_one();
 
@@ -127,7 +129,7 @@ public:
 
 			{
 				std::unique_lock<std::mutex> lk( MutexLock );
-				for ( size_t i = 0; i < num_of_tasks; i++ )
+				for ( size_t i = starting_index; i < num_of_tasks; i++ )
 				{
 					ConditionVariables[i].wait( lk, [&] {return ProcessedList[i]; } );
 				}
@@ -135,15 +137,16 @@ public:
 
 			{
 				std::unique_lock<std::mutex> lk( MutexLock );
-				for ( size_t i = 0; i < num_of_tasks; i++ )
+				for ( size_t i = starting_index; i < num_of_tasks; i++ )
 				{
 					ProcessedList[i] = false;
 				}
 			}
 
-			Tasks.clear();
-
-			ThreadRunning = false;
+			for ( size_t i = starting_index; i < num_of_tasks; i++ )
+			{
+				Tasks.pop_back();
+			}
 		}
 	}
 
@@ -161,6 +164,5 @@ private:
 	std::vector<std::function<void()>>		Tasks;
 	std::queue<std::function<void()>>		Jobs;
 	std::deque<std::condition_variable>	    ConditionVariables;
-	bool									ThreadRunning{ false };
 };
 #endif

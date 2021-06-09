@@ -210,7 +210,8 @@ void idle( GLFWwindow* window )
 		}
 	};
 
-	bool threaded = true;
+	int				num_threads = GAME_THREAD_MANAGER::instance().get_num_avaialable_threads();
+	const bool		threaded = (num_threads > 0);
 
 	if ( threaded )
 	{
