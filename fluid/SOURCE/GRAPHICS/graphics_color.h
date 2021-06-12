@@ -102,9 +102,7 @@ public:
 
 	// .. ACCESSORS
 
-	const float* GetRGBA(
-		void
-		) const 
+	const float* GetRGBA( void ) const 
 	{
 		return RGBA;
 	}

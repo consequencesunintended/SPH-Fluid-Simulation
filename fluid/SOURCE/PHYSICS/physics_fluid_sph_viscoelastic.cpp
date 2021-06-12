@@ -48,6 +48,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialiseSpringTable(
 }
 // ~~
 
+
 void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensityT( std::vector<PHYSICS_FLUID_PARTICLE>& particles_table,
 														const float		smoothing_radius,
 														unsigned int	start_range,
@@ -381,18 +382,15 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialisePlasticity(
 void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePlasticity( std::vector<PHYSICS_FLUID_PARTICLE>& particlesTable, const float delta_time )
 {
 	PHYSICS_SPRING	spring;
-	unsigned int	spring_index;
 	unsigned int	spring_point1_index;
 	unsigned int	spring_point2_index;
-	float			restLength;
 	MATH_VECTOR_2D 	spring_force;
 	MATH_VECTOR_2D	spring_displacement;
 
-	for ( spring_index = 0; spring_index < SpringTable.size(); spring_index++ )
+	for ( unsigned int	spring_index = 0; spring_index < SpringTable.size(); spring_index++ )
 	{
 		spring_point1_index = SpringTable[spring_index].GetPoint1Index();
 		spring_point2_index = SpringTable[spring_index].GetPoint2Index();
-		restLength = SpringTable[spring_index].GetRestLength();
 
 		PHYSICS_SPRING::CalculateForce( spring_force, SpringTable[spring_index], particlesTable[spring_point1_index], particlesTable[spring_point2_index] );
 

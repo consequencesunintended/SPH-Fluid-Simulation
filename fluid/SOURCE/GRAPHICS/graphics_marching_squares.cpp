@@ -48,25 +48,22 @@ void GRAPHICS_MARCHING_SQUARES::InterpolateBetweenPoints(
 
 void GRAPHICS_MARCHING_SQUARES::Initialise( const float width, const float height )
 {
-	unsigned int	temp_index_1;
-	unsigned int	temp_index_2;
 	MATH_POINT_2D	point;
-	float			initial_position_x;
-	float			initial_position_y;
+	float			initial_position_x = -width;
+	float			initial_position_y = height;
 
 	Width = width;
 	Height = height;
-	initial_position_x = -width;
-	initial_position_y = height;
 	PointTable1.resize( int( width * 2 + 1 ) );
 
-	for ( temp_index_2 = 0; temp_index_2 <= unsigned int( height * 2 ); temp_index_2++ )
+	for ( unsigned int	height_index = 0; height_index <= unsigned int( height * 2 ); height_index++ )
 	{
-		for ( temp_index_1 = 0; temp_index_1 <= unsigned int( width * 2 ); temp_index_1++ )
+		for ( unsigned int	width_index = 0; width_index <= unsigned int( width * 2 ); width_index++ )
 		{
 			point.Assign( initial_position_x , initial_position_y ); 
-			PointTable1[ temp_index_1 ].push_back( point );
+			PointTable1[width_index].push_back( point );
 			initial_position_x += 1.0f;
+
 			if ( initial_position_x > width )
 			{
 				initial_position_x = -width;
@@ -74,17 +71,17 @@ void GRAPHICS_MARCHING_SQUARES::Initialise( const float width, const float heigh
 			}
 		}
 	}
-	IsInsideSurface = new int*[ unsigned int( width ) * 2 ] ;
-	SurfaceValueTable = new float*[ unsigned int( width ) * 2 + 1 ];
+	IsInsideSurface = new int * [ unsigned int( width ) * 2 ] ;
+	SurfaceValueTable = new float * [ unsigned int( width ) * 2 + 1 ];
 
-	for ( temp_index_1 = 0; temp_index_1 <= unsigned int( width ) * 2 - 1; temp_index_1++ )
+	for ( unsigned int	width_index = 0; width_index <= unsigned int( width ) * 2 - 1; width_index++ )
 	{
-		IsInsideSurface[ temp_index_1 ] = new int[ unsigned int( width ) * 2 ];
+		IsInsideSurface[width_index] = new int[ unsigned int( width ) * 2 ];
 	}
 
-	for ( temp_index_1 = 0; temp_index_1 <= unsigned int( width ) * 2; temp_index_1++ )
+	for ( unsigned int	width_index = 0; width_index <= unsigned int( width ) * 2; width_index++ )
 	{
-		SurfaceValueTable[ temp_index_1 ] = new float[ unsigned int( width ) * 2 + 1 ];
+		SurfaceValueTable[width_index] = new float[ unsigned int( width ) * 2 + 1 ];
 	}
 	Reset();
 }
