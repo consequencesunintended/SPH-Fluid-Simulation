@@ -11,9 +11,7 @@
 
 // .. OPERATIONS
 
-void PHYSICS_FLUID_PARTICLE_POSITION_LOADER::LoadPositions(
-	const char *bitmap
-	)
+void PHYSICS_FLUID_PARTICLE_POSITION_LOADER::LoadPositions( const char *bitmap )
 {
 	unsigned int				width;
 	unsigned int				height;

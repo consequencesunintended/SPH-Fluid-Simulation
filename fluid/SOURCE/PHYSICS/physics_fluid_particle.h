@@ -15,8 +15,7 @@
 
 // TYPES
 
-class PHYSICS_FLUID_PARTICLE :
-	public PHYSICS_ENTITY
+class PHYSICS_FLUID_PARTICLE : public PHYSICS_ENTITY
 {
 public:
 

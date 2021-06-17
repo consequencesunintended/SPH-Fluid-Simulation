@@ -179,13 +179,10 @@ void GRAPHICS_MARCHING_SQUARES::CalculatePoints(
 
 // ~~
 
-void GRAPHICS_MARCHING_SQUARES::Reset(
-	void
-	)
+void GRAPHICS_MARCHING_SQUARES::Reset( void )
 {
-	unsigned int
-		temp_index_1,
-		temp_index_2;
+	unsigned int temp_index_1;
+	unsigned int temp_index_2;
 
 	for ( temp_index_1 = 0; temp_index_1 <= unsigned int( Width ) * 2; temp_index_1++ )
 	{
