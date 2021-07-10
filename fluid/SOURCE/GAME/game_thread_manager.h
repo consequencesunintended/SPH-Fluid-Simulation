@@ -21,7 +21,11 @@ public:
 
 	int get_num_avaialable_threads( void )
 	{
+#ifndef DISABLE_THREADING
 		return thread_pool.get_num_avaialable_threads();
+#else
+		return 1;
+#endif
 	}
 
 private:

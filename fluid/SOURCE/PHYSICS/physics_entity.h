@@ -127,10 +127,9 @@ protected:
 
 	// .. ATTRIBUTES
 
-	MATH_VECTOR_2D
-		Velocity,
-		Position,
-		Force,
-		OldPosition;
+	MATH_VECTOR_2D Velocity;
+	MATH_VECTOR_2D Position;
+	MATH_VECTOR_2D Force;
+	MATH_VECTOR_2D OldPosition;
 };
 #endif
