@@ -1,5 +1,5 @@
-#ifndef __GRAPHICS_IMAGE_PIXEL_LOADER__
-#define __GRAPHICS_IMAGE_PIXEL_LOADER__
+#pragma once
+
 
 // -- LOCAL
 
@@ -11,163 +11,132 @@
 
 // .. TYPES
 
-class GRAPHICS_IMAGE_PIXEL_LOADER 
+class GRAPHICS_IMAGE_PIXEL_LOADER
 {
-		// -- PUBLIC
+	// -- PUBLIC
 	public:
 
-		// .. CONSTRUCTORS
+	// .. CONSTRUCTORS
 
-		GRAPHICS_IMAGE_PIXEL_LOADER(
-			void
-			) :
-			pixels( 0 ),
-			width( 0 ),
-			height( 0 )
+	GRAPHICS_IMAGE_PIXEL_LOADER( void ) :
+		pixels( 0 ),
+		width( 0 ),
+		height( 0 )
+	{
+	}
+
+	// ~~
+
+	virtual ~GRAPHICS_IMAGE_PIXEL_LOADER( void )
+	{
+		delete[] pixels;
+	}
+
+	// ~~
+
+	GRAPHICS_IMAGE_PIXEL_LOADER( const GRAPHICS_IMAGE_PIXEL_LOADER& other ) : width( other.width ), height( other.height )
+	{
+		int index_x;
+		int index_y;
+		int index_c;
+
+		pixels = new char[ width * height * 3 ];
+
+		for ( index_y = 0; index_y <= height - 1; index_y++ )
 		{
-		}
-
-		// ~~
-
-		virtual ~GRAPHICS_IMAGE_PIXEL_LOADER(
-			void
-			)
-		{
-			delete[] pixels;
-		}
-
-		// ~~
-
-		GRAPHICS_IMAGE_PIXEL_LOADER( 
-			const GRAPHICS_IMAGE_PIXEL_LOADER & other 
-			)
-			:
-			width( other.width ),
-			height( other.height )
-		{
-			int
-				index_x,
-				index_y,
-				index_c;
-
-			pixels = new char[width * height * 3];
-
-			for ( index_y = 0; index_y <= height - 1; index_y++ )
+			for ( index_x = 0; index_x <= width - 1; index_x++ )
 			{
-				for ( index_x = 0; index_x <= width - 1; index_x++ )
+				for ( index_c = 0; index_c <= 2; index_c++ )
 				{
-					for ( index_c = 0; index_c <= 2; index_c++ )
-					{
-						pixels[3 * (width * index_y + index_x) + index_c ] =
-							other.pixels[ 3 * (width * index_y + index_x) + index_c ];
-					}
+					pixels[ 3 * (width * index_y + index_x) + index_c ] =
+						other.pixels[ 3 * (width * index_y + index_x) + index_c ];
+				}
+			}
+		}
+	}
+
+	// ~~
+
+	GRAPHICS_IMAGE_PIXEL_LOADER( const char* other_pixels, const int w, const int h ) : width( w ), height( h )
+	{
+		int index_x;
+		int index_y;
+		int index_c;
+
+		pixels = new char[ width * height * 3 ];
+
+		for ( index_y = 0; index_y <= height - 1; index_y++ )
+		{
+			for ( index_x = 0; index_x <= width - 1; index_x++ )
+			{
+				for ( index_c = 0; index_c <= 2; index_c++ )
+				{
+					pixels[ 3 * (width * index_y + index_x) + index_c ] =
+						other_pixels[ 3 * (width * index_y + index_x) + index_c ];
+				}
+			}
+		}
+	}
+
+	// .. OPERATORS
+
+	GRAPHICS_IMAGE_PIXEL_LOADER& operator=( const GRAPHICS_IMAGE_PIXEL_LOADER& other )
+	{
+		int index_x;
+		int index_y;
+		int index_c;
+
+		width = other.width;
+		height = other.height;
+		pixels = new char[ width * height * 3 ];
+
+		for ( index_y = 0; index_y <= height - 1; index_y++ )
+		{
+			for ( index_x = 0; index_x <= width - 1; index_x++ )
+			{
+				for ( index_c = 0; index_c <= 2; index_c++ )
+				{
+					pixels[ 3 * (width * index_y + index_x) + index_c ] =
+						other.pixels[ 3 * (width * index_y + index_x) + index_c ];
 				}
 			}
 		}
 
-		// ~~
+		return *this;
+	}
 
-		GRAPHICS_IMAGE_PIXEL_LOADER(
-			const char * other_pixels, 
-			const int w, 
-			const int h
-			) : 
-			width(w), 
-			height(h) 
-		{
-			int
-				index_x,
-				index_y,
-				index_c;
+	// .. ACCESSORS
 
-			pixels = new char[width * height * 3];
+	int GetHeight( void )
+	{
+		return height;
+	}
 
-			for ( index_y = 0; index_y <= height - 1; index_y++ )
-			{
-				for ( index_x = 0; index_x <= width - 1; index_x++ )
-				{
-					for ( index_c = 0; index_c <= 2; index_c++ )
-					{
-						pixels[3 * (width * index_y + index_x) + index_c ] =
-							other_pixels[ 3 * (width * index_y + index_x) + index_c ];
-					}
-				}
-			}				
-		}
+	// ~~
 
-		// .. OPERATORS
+	int GetWidth( void )
+	{
+		return width;
+	}
 
-		GRAPHICS_IMAGE_PIXEL_LOADER & operator=(
-			const GRAPHICS_IMAGE_PIXEL_LOADER & other
-			)
-		{
-			int
-				index_x,
-				index_y,
-				index_c;
+	// ~~
 
-			width = other.width;
-			height = other.height;
-			pixels = new char[width * height * 3];
+	const char* GetPixels( void )
+	{
+		return pixels;
+	}
 
-			for ( index_y = 0; index_y <= height - 1; index_y++ )
-			{
-				for ( index_x = 0; index_x <= width - 1; index_x++ )
-				{
-					for ( index_c = 0; index_c <= 2; index_c++ )
-					{
-						pixels[ 3 * ( width * index_y + index_x ) + index_c ] =
-							other.pixels[ 3 * ( width * index_y + index_x ) + index_c ];
-					}
-				}
-			}
+	// .. FUNCTIONS
 
-			return *this;
-		}
+	static void LoadBMP( GRAPHICS_IMAGE_PIXEL_LOADER& image, const char* filename );
 
-		// .. ACCESSORS
-
-		int GetHeight(
-			void
-			)
-		{
-			return height;
-		}
-
-		// ~~
-
-		int GetWidth(
-			void
-			)
-		{
-			return width;
-		}
-
-		// ~~
-
-		const char *GetPixels(
-			void
-			)
-		{
-			return pixels;
-		}
-
-		// .. FUNCTIONS
-
-		static void LoadBMP(
-			GRAPHICS_IMAGE_PIXEL_LOADER & image,
-			const char * filename
-			);
-
-		// -- PRIVATE
+	// -- PRIVATE
 
 	private:
 
-		// .. ATTRIBUTES
+	// .. ATTRIBUTES
 
-		char * pixels;
-		int 
-			width,
-			height;
+	char* pixels;
+	int  width;
+	int  height;
 };
-#endif
