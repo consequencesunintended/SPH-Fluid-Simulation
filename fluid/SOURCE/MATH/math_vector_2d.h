@@ -220,8 +220,11 @@ public:
 	{
 		if ( GetLength() != 0.0f )
 		{
-			X = X / GetLength(); 
-			Y = Y / GetLength();
+			auto x = X / GetLength(); 
+			auto y = Y / GetLength();
+
+			X = x;
+			Y = y;
 
 			return true;
 		}
