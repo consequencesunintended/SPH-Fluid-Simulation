@@ -45,16 +45,10 @@ enum RenderModes { LargeParticleMode = 1, SmallParticleMode = 2, MarchingSquareM
 
 void CalculateFrameRate( void )
 {
-	static float
-		frame_per_second = 0.0f,
-		lastTime = 0.0f;
-	static ostringstream
-		convert,
-		convert2;
-	string
-		strFrameRate;
-	float
-		currentTime;
+	static float frame_per_second = 0.0f, lastTime = 0.0f;
+	static ostringstream convert, convert2;
+	string strFrameRate;
+	float currentTime = 0.0f;
 
 	//currentTime = GetTickCount() * 0.001f;
 	++frame_per_second;

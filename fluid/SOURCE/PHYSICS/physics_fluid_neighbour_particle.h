@@ -60,14 +60,14 @@ class PHYSICS_FLUID_NEIGHBOUR_PARTICLE
 
 	// .. ACCESSORS
 
-	unsigned int GetParticleIndex( void ) const
+	size_t GetParticleIndex( void ) const
 	{
 		return ParticleIndex;
 	}
 
 	// ~~
 
-	void SetParticleIndex( const unsigned int particle_index )
+	void SetParticleIndex( const size_t particle_index )
 	{
 		ParticleIndex = particle_index;
 	}
@@ -120,11 +120,9 @@ class PHYSICS_FLUID_NEIGHBOUR_PARTICLE
 
 	// .. ATTRIBUTES
 
-	float
-		SmoothingKernel,
-		PoweredTwoSmoothingKernel,
-		Distance;
-	unsigned int
-		ParticleIndex;
+	float SmoothingKernel;
+	float PoweredTwoSmoothingKernel;
+	float Distance;
+	size_t ParticleIndex;
 };
 #endif

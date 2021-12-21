@@ -68,36 +68,28 @@ public:
 
 	// .. ACCESSORS
 
-	int GetPoint1Index(
-		void
-		) const
+	size_t GetPoint1Index( void ) const
 	{
 		return Point1Index;
 	}
 
 	// ~~
 
-	void SetPoint1Index(
-		int point1_index
-		)
+	void SetPoint1Index( size_t point1_index )
 	{
 		Point1Index = point1_index;
 	}
 
 	// ~~
 
-	int GetPoint2Index(
-		void
-		) const
+	size_t GetPoint2Index( void ) const
 	{
 		return Point2Index;
 	}
 
 	// ~~
 
-	void SetPoint2Index(
-		int point2_index
-		)
+	void SetPoint2Index( size_t point2_index )
 	{
 		Point2Index = point2_index;
 	}
@@ -170,9 +162,8 @@ public:
 private:
 
 	// .. ATTRIBUTES
-	int
-		Point1Index,
-		Point2Index;
+	size_t Point1Index;
+	size_t Point2Index;
 	float
 		RestLength,
 		Coefficient,

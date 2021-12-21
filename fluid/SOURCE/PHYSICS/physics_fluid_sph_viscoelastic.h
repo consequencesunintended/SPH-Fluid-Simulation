@@ -91,8 +91,8 @@ class PHSYICS_FLUID_SPH_VISCOELASTIC
 
 	void CalculateDensityT( std::vector<PHYSICS_FLUID_PARTICLE>& particles_table,
 							const float smoothing_radius,
-							unsigned int start_range,
-							unsigned int end_range );
+							size_t start_range,
+							size_t end_range );
 
 	// ~~
 

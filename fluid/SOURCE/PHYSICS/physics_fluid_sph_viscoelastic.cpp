@@ -51,8 +51,8 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialiseSpringTable(
 
 void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensityT( std::vector<PHYSICS_FLUID_PARTICLE>& particles_table,
 														const float		smoothing_radius,
-														unsigned int	start_range,
-														unsigned int	end_range
+														size_t	start_range,
+														size_t	end_range
 )
 {
 	float								density;
@@ -64,13 +64,13 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensityT( std::vector<PHYSICS_FLUI
 	float								powered_three_smoothing_kernel;
 	MATH_VECTOR_2D						vector_between_particle_and_neighbour;
 
-	for ( int particle_index = start_range; particle_index < end_range; particle_index++ )
+	for ( size_t particle_index = start_range; particle_index < end_range; particle_index++ )
 	{
 		particles_table[particle_index].GetNeighbours().clear();
 		density = 0;
 		near_density = 0;
 
-		for ( int neighbour_index = particle_index + 1; neighbour_index < particles_table.size(); neighbour_index++ )
+		for ( size_t neighbour_index = particle_index + 1; neighbour_index < particles_table.size(); neighbour_index++ )
 		{
 			PHYSICS_FLUID_NEIGHBOUR_PARTICLE	neighbour_particle;
 
@@ -80,7 +80,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensityT( std::vector<PHYSICS_FLUI
 
 			if ( squared_distance_between_particle_and_neighbour < smoothing_radius * smoothing_radius )
 			{
-				distance_between_particle_and_neighbour = MATH_SQUARE_ROOT::GetSquareRoot( squared_distance_between_particle_and_neighbour );
+				distance_between_particle_and_neighbour = std::sqrt( squared_distance_between_particle_and_neighbour );
 				smoothing_kernel = 1 - distance_between_particle_and_neighbour / smoothing_radius;
 				powered_two_smoothing_kernel = smoothing_kernel * smoothing_kernel;
 				powered_three_smoothing_kernel = powered_two_smoothing_kernel * smoothing_kernel;
@@ -115,7 +115,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensity( std::vector<PHYSICS_FLUID
 	int				num_threads = GAME_THREAD_MANAGER::instance().get_num_avaialable_threads();
 	const bool		threaded = (num_threads > 0);
 	static bool		thread_created = false;
-	int				num_particles = particles_table.size();
+	int				num_particles = int( particles_table.size() );
 
 #ifdef SHOW_THREAD_TIME
 	auto start = high_resolution_clock::now();
@@ -157,7 +157,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePressure(
 	const float delta_time
 )
 {
-	unsigned int						neighbour_index;
+	size_t								neighbour_index;
 	MATH_VECTOR_2D						particle_pressure_force;
 	MATH_VECTOR_2D						vector_between_particle_and_neighbour;
 	MATH_VECTOR_2D						neighbour_pressure_force;
@@ -207,9 +207,9 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscosity(
 	const float delta_time
 )
 {
-	unsigned int						prticle_index;
-	unsigned int						neighbour_table_index;
-	unsigned int						neighbour_index;
+	size_t								prticle_index;
+	size_t								neighbour_table_index;
+	size_t								neighbour_index;
 	PHYSICS_FLUID_NEIGHBOUR_PARTICLE	neighbour_particle;
 	float								length;
 	float								q;
@@ -262,11 +262,11 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 {
 	PHYSICS_FLUID_NEIGHBOUR_PARTICLE	neighbour_particle;
 	PHYSICS_SPRING						spring;
-	unsigned int						particle_index;
-	unsigned int						neighbour_index;
-	unsigned int						spring_index;
-	unsigned int						spring_point1_index;
-	unsigned int						spring_point2_index;
+	size_t								particle_index;
+	size_t								neighbour_index;
+	size_t								spring_index;
+	size_t								spring_point1_index;
+	size_t								spring_point2_index;
 	float								rest_length;
 	float								tolerable_deformation;
 	float								distance_between_particle_and_neighbour;
@@ -382,8 +382,8 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::InitialisePlasticity(
 void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePlasticity( std::vector<PHYSICS_FLUID_PARTICLE>& particlesTable, const float delta_time )
 {
 	PHYSICS_SPRING	spring;
-	unsigned int	spring_point1_index;
-	unsigned int	spring_point2_index;
+	size_t			spring_point1_index;
+	size_t			spring_point2_index;
 	MATH_VECTOR_2D 	spring_force;
 	MATH_VECTOR_2D	spring_displacement;
 

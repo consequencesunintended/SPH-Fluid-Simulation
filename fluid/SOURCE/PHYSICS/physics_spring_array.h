@@ -64,7 +64,7 @@ public:
 
 	// .. OPERATIONS
 
-	void SetItemInExistenceTable( const unsigned int index_x, const unsigned int index_y, bool item )
+	void SetItemInExistenceTable( const size_t index_x, const size_t index_y, bool item )
 	{
 		ExistenceTable[ index_x ][ index_y ] = item;
 	}

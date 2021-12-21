@@ -5,8 +5,8 @@
 
 // .. REFERENCES
 
-#include "math_square_root.h"
 #include <assert.h>
+#include <math.h>
 
 // .. TYPES
 
@@ -170,7 +170,7 @@ public:
 		void
 		) const
 	{ 
-		return MATH_SQUARE_ROOT::GetSquareRoot( X * X + Y * Y ); 
+		return float( sqrt( X * X + Y * Y ) );
 	}
 
 	// ~~
@@ -250,9 +250,8 @@ public:
 
 	// .. ATTRIBUTES
 
-	float 
-		X,
-		Y;
+	float X;
+	float Y;
 };
 #endif
 

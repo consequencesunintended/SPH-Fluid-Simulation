@@ -90,7 +90,7 @@ public:
 
 	int get_num_avaialable_threads()
 	{
-		return  std::thread::hardware_concurrency() - Tasks.size();
+		return  int( std::thread::hardware_concurrency() - Tasks.size() );
 	}
 
 	// ~~
