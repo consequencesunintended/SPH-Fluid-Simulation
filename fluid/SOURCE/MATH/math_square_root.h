@@ -58,9 +58,7 @@ public:
 	// this method is faster than the normal square root
 	// used in the standard library.
 
-	static float GetSquareRoot(
-		const float value
-		)
+	static float GetSquareRoot( const float value )
 	{
 		union
 		{

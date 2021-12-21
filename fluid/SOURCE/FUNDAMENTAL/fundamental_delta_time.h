@@ -1,8 +1,7 @@
-#ifndef __FUNDAMENTAL_DELTA_TIME__
-#define __FUNDAMENTAL_DELTA_TIME__
+#pragma once
 
 
-#include <Windows.h>
+#include <chrono>
 // -- LOCAL
 
 // .. REFERENCES
@@ -13,51 +12,43 @@
 
 class FUNDAMENTAL_DELTA_TIME
 {
-		// -- PUBLIC
+	// -- PUBLIC
 
-	public:
+public:
 
-		// .. CONSTRUCTORS
+	// .. CONSTRUCTORS
 
-		FUNDAMENTAL_DELTA_TIME( void )
-		{
-		}
+	FUNDAMENTAL_DELTA_TIME(void)
+	{
+	}
 
-		// ~~
+	// ~~
 
-		virtual ~FUNDAMENTAL_DELTA_TIME( void )
-		{
-		}
+	virtual ~FUNDAMENTAL_DELTA_TIME(void)
+	{
+	}
 
-		// .. FUNCTIONS
+	// .. FUNCTIONS
 
-		static const float GetDeltaTime( void )
-		{
-			QueryPerformanceCounter( &EndTime );
-			DeltaTime = float( EndTime.QuadPart - StartTime.QuadPart ) 
-				/ float( Frequency.QuadPart );
-			QueryPerformanceFrequency( &Frequency );
-			QueryPerformanceCounter( &StartTime );
+	static const float GetDeltaTime(void)
+	{
+		static std::chrono::steady_clock::time_point t_start = std::chrono::high_resolution_clock::now();
+		static std::chrono::steady_clock::time_point t_end = std::chrono::high_resolution_clock::now();
 
-			return DeltaTime;
-		}
+		t_end = std::chrono::high_resolution_clock::now();
+		float elapsed_time_ms = float(std::chrono::duration_cast<std::chrono::milliseconds>(t_end - t_start).count());
+		t_start = std::chrono::high_resolution_clock::now();
 
-		// -- PRIVATE
-		
-	private:
+		return elapsed_time_ms * 0.001f;
+	}
 
-		// .. VARIABLES
+	// -- PRIVATE
 
-		static float DeltaTime;
-		static LARGE_INTEGER Frequency ;
-		static LARGE_INTEGER StartTime;
-		static LARGE_INTEGER EndTime;
+private:
+
+	// .. VARIABLES
+
 };
-#endif
 
 // .. VARIABLES
 
-float FUNDAMENTAL_DELTA_TIME::DeltaTime = 0.0f;
-LARGE_INTEGER FUNDAMENTAL_DELTA_TIME::Frequency = LARGE_INTEGER();
-LARGE_INTEGER FUNDAMENTAL_DELTA_TIME::StartTime = LARGE_INTEGER();
-LARGE_INTEGER FUNDAMENTAL_DELTA_TIME::EndTime = LARGE_INTEGER();
