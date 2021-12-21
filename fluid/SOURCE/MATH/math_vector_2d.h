@@ -220,8 +220,9 @@ public:
 	{
 		if ( GetLength() != 0.0f )
 		{
-			auto x = X / GetLength(); 
-			auto y = Y / GetLength();
+			const float	inv_length = 1.0f / GetLength();
+			const float	x = X * inv_length;
+			const float	y = Y * inv_length;
 
 			X = x;
 			Y = y;
