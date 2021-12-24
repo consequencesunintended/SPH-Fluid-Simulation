@@ -4,6 +4,7 @@
 // -- LOCAL
 
 // .. REFERENCES
+#include "math_square_root.h"
 
 #include <assert.h>
 #include <math.h>
@@ -173,6 +174,13 @@ public:
 		return float( sqrt( X * X + Y * Y ) );
 	}
 
+	float GetReciprocalLength(
+		void
+	) const
+	{
+		return float(MATH_SQUARE_ROOT::invSquareRoot(X * X + Y * Y));
+	}
+
 	// ~~
 
 	float GetSquareLength(
@@ -220,7 +228,7 @@ public:
 	{
 		if ( GetLength() != 0.0f )
 		{
-			const float	inv_length = 1.0f / GetLength();
+			const float	inv_length = GetReciprocalLength();
 			const float	x = X * inv_length;
 			const float	y = Y * inv_length;
 
