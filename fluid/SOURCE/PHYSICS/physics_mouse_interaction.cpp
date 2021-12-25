@@ -25,17 +25,13 @@ void PHYSICS_MOUSE_INTERACTION::ApplyMouseBehaviour(
 	float
 		attractor_distance_from_particle_squared;
 
-	attractor_distance_from_particle_squared = ( game_entity.GetPosition() - MouseAttractorVector).GetSquareLength();
+	attractor_distance_from_particle_squared = ( game_entity.Position - MouseAttractorVector ).GetSquareLength();
 
 	if( IsAttracting )
 	{
 		if( attractor_distance_from_particle_squared < max_dis_attractor * max_dis_attractor )
 		{
-			game_entity.SetForce( 
-				game_entity.GetForce() 
-				- ( game_entity.GetPosition()
-				- MouseAttractorVector ) / LOCAL_Descaling_factor
-				);
+			game_entity.Force = game_entity.Force - ( game_entity.Position - MouseAttractorVector ) / LOCAL_Descaling_factor;
 		}
 	}
 
@@ -43,11 +39,7 @@ void PHYSICS_MOUSE_INTERACTION::ApplyMouseBehaviour(
 	{
 		if( attractor_distance_from_particle_squared < max_dis_attractor * max_dis_attractor )
 		{
-			game_entity.SetForce( 
-				game_entity.GetForce() 
-				+ ( game_entity.GetPosition() 
-				- MouseAttractorVector ) / LOCAL_Descaling_factor
-				);
+			game_entity.Force = game_entity.Force + ( game_entity.Position - MouseAttractorVector ) / LOCAL_Descaling_factor;
 		}
 	}
 }

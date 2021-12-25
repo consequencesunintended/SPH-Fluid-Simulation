@@ -40,8 +40,8 @@ void GAME_CORE_ENGINE::InitialiseParticles( std::vector<PHYSICS_FLUID_PARTICLE>&
 
 	for ( auto& p_tb : FluidPositionLoader.GetPointTable() )
 	{
-		particle.SetPosition( p_tb );
-		particle.SetOldPosition( particle.GetPosition() );
+		particle.Position = p_tb;
+		particle.OldPosition = particle.Position;
 		ParticleTable.push_back( particle );
 	}
 
@@ -164,7 +164,7 @@ void GAME_CORE_ENGINE::UpdateParticlesVelocityAndPosition( std::vector<PHYSICS_F
 	{
 		PhysicsIntegrationEngine->UpdatePosition( p_tb, delta_time * PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor );
 
-		p_tb.SetForce( PHYSICS_LEVEL_CONSTANTS_Gravity );
+		p_tb.Force = PHYSICS_LEVEL_CONSTANTS_Gravity;
 	}
 	DetectCollision( ParticleTable, FluidMaxWidth, FluidMaxHeight );
 

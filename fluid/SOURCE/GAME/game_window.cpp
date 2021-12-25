@@ -116,7 +116,7 @@ void render( GLFWwindow* window )
 			for ( auto& p_tb : c_particles )
 			{
 				glColor4fv( GRAPHICS_COLOR::Red().GetRGBA() );
-				glVertex2f( p_tb.GetPosition().X / ratio_w, p_tb.GetPosition().Y / ratio_h );
+				glVertex2f( p_tb.Position.X / ratio_w, p_tb.Position.Y / ratio_h );
 			}
 			glEnd();
 			break;
@@ -171,27 +171,27 @@ void idle( GLFWwindow* window )
 	{
 		for ( auto& p_tb : particles )
 		{
-			if ( p_tb.GetPosition().X < 0.0f )
+			if ( p_tb.Position.X < 0.0f )
 			{
-				index_1 = int( p_tb.GetPosition().X ) - 1 + LOCAL_number_of_pixels_width;
+				index_1 = int( p_tb.Position.X ) - 1 + LOCAL_number_of_pixels_width;
 			}
 			else
 			{
-				index_1 = int( p_tb.GetPosition().X ) + LOCAL_number_of_pixels_width;
+				index_1 = int( p_tb.Position.X ) + LOCAL_number_of_pixels_width;
 			}
 
-			if ( p_tb.GetPosition().Y < 0.0f )
+			if ( p_tb.Position.Y < 0.0f )
 			{
-				index_2 = int( p_tb.GetPosition().Y ) - 1 - LOCAL_number_of_pixels_height;
+				index_2 = int( p_tb.Position.Y ) - 1 - LOCAL_number_of_pixels_height;
 				index_2 *= -1;
 			}
 			else
 			{
-				index_2 = int( p_tb.GetPosition().Y ) - LOCAL_number_of_pixels_height;
+				index_2 = int( p_tb.Position.Y ) - LOCAL_number_of_pixels_height;
 				index_2 *= -1;
 			}
 
-			GraphicsMarchingSquares.CalculatePoints( p_tb.GetPosition(), unsigned int( index_1 ), unsigned int( index_2 ), 4 );
+			GraphicsMarchingSquares.CalculatePoints( p_tb.Position, unsigned int( index_1 ), unsigned int( index_2 ), 4 );
 		}
 		GraphicsMarchingSquares.GeneratePoints();
 	};
