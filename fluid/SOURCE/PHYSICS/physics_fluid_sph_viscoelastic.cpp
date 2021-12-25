@@ -90,8 +90,8 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensityT( std::vector<PHYSICS_FLUI
 				// deviating from the original equation for the sake of multithreading and commenting these two lines out
 				// doesn't seem to visually affect the simulation
 
-				//particles_table[neighbour_index].SetDensity( particles_table[neighbour_index].GetDensity() + powered_two_smoothing_kernel );
-				//particles_table[neighbour_index].SetNearDensity( particles_table[neighbour_index].GetNearDensity() + powered_three_smoothing_kernel );	
+				//particles_table[neighbour_index].Density = particles_table[neighbour_index].Density + powered_two_smoothing_kernel );
+				//particles_table[neighbour_index].NearDensity = particles_table[neighbour_index].NearDensity + powered_three_smoothing_kernel );	
 
 				neighbour_particle.ParticleIndex = neighbour_index;
 				neighbour_particle.SmoothingKernel = smoothing_kernel;
