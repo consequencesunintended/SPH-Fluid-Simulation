@@ -6,7 +6,6 @@
 // .. REFERENCES
 
 #include "physics_entity.h"
-#include "math_point_2d.h"
 	
 // -- GLOBAL
 

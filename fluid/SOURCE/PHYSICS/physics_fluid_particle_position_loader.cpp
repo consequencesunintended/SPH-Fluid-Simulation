@@ -1,15 +1,6 @@
 #include "physics_fluid_particle_position_loader.h"
 
-// -- LOCAL
-
-// .. REFERENCES
-
-#include "math_point_2d.h"
 #include "graphics_image_pixel_loader.h"
-
-// -- PUBLIC
-
-// .. OPERATIONS
 
 void PHYSICS_FLUID_PARTICLE_POSITION_LOADER::LoadPositions( const char *bitmap )
 {

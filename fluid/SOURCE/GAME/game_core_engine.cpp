@@ -1,18 +1,9 @@
-// -- LOCAL
-
-// .. REFERENCES
-
 #include "game_core_engine.h"
+
 #include "physics_level_constants.h"
 #include "physics_level_fluid_constants.h"
 
-// -- CONSTANTS
-
 constexpr float LOCAL_Margin_with_bottom_of_the_window = 1.0f;
-
-// -- PUBLIC
-
-// .. OPERATIONS
 
 void GAME_CORE_ENGINE::Initialize(
 	std::vector<PHYSICS_FLUID_PARTICLE>& ParticleTable,

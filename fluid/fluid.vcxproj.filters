@@ -77,9 +77,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SOURCE\MATH\math_point_2d.h">
-      <Filter>Header Files\MATH</Filter>
-    </ClInclude>
     <ClInclude Include="SOURCE\MATH\math_square_root.h">
       <Filter>Header Files\MATH</Filter>
     </ClInclude>

@@ -6,7 +6,6 @@
 // .. REFERENCES
 
 #include "graphics_image_pixel_loader.h"
-#include "math_point_2d.h"
 #include "math_vector_2d.h"
 #include <assert.h>
 #include <vector>
