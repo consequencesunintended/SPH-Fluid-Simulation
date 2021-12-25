@@ -235,12 +235,13 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscosity(
 
 			if ( inward_radial_velocity > 0.0f )
 			{
-				impulses = (normalised_vector_between_particle_and_neighbour
-							 * (particlesTable[neighbour_index].GetViscositySigma()
-								 * inward_radial_velocity + particlesTable[neighbour_index].GetViscosityBeta()
-								 * inward_radial_velocity * inward_radial_velocity))
+				const auto sigma_inward_radial_velocity = particlesTable[neighbour_index].GetViscositySigma() * inward_radial_velocity;
+				const auto beta_square_inward_radial_velocity = particlesTable[neighbour_index].GetViscosityBeta() * inward_radial_velocity * inward_radial_velocity;
+				impulses = (normalised_vector_between_particle_and_neighbour 
+					* (sigma_inward_radial_velocity + beta_square_inward_radial_velocity))
 					* (1 - q);
-				impulses *= delta_time
+				impulses = impulses
+					* delta_time
 					* PHSYICS_FLUID_SPH_VISCOELASTIC_delta_time_scaling_factor;
 				particlesTable[prticle_index].SetVelocity( particlesTable[prticle_index].GetVelocity() - impulses );
 				particlesTable[neighbour_index].SetVelocity( particlesTable[neighbour_index].GetVelocity() + impulses );
