@@ -14,10 +14,10 @@ struct PHYSICS_SPRING
 		const PHYSICS_ENTITY & point2
 		);
 
-	size_t	Point1Index;
-	size_t	Point2Index;
-	float	RestLength;
-	float	Coefficient;
-	float	CoefficientOfDamping;
+	size_t	Point1Index{ 0 };
+	size_t	Point2Index{ 0 };
+	float	RestLength{ 0.0f };
+	float	Coefficient{ 0.0f };
+	float	CoefficientOfDamping{ 0.0f };
 };
 #endif

@@ -66,7 +66,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensityT( std::vector<PHYSICS_FLUI
 
 	for ( size_t particle_index = start_range; particle_index < end_range; particle_index++ )
 	{
-		particles_table[particle_index].GetNeighbours().clear();
+		particles_table[particle_index].NeighboursTable.clear();
 		density = 0;
 		near_density = 0;
 
@@ -97,11 +97,11 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateDensityT( std::vector<PHYSICS_FLUI
 				neighbour_particle.SmoothingKernel = smoothing_kernel;
 				neighbour_particle.PoweredTwoSmoothingKernel = powered_two_smoothing_kernel;
 				neighbour_particle.Distance = distance_between_particle_and_neighbour;
-				particles_table[particle_index].GetNeighbours().push_back( neighbour_particle );
+				particles_table[particle_index].NeighboursTable.push_back( neighbour_particle );
 			}
 		}
-		particles_table[particle_index].SetDensity( density );
-		particles_table[particle_index].SetNearDensity( near_density );
+		particles_table[particle_index].Density = density;
+		particles_table[particle_index].NearDensity = near_density;
 	}
 }
 // ~~
@@ -170,13 +170,13 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculatePressure(
 
 	for ( unsigned int prticle_index = 0; prticle_index < particlesTable.size(); prticle_index++ )
 	{
-		pressure = stifness_parameter * (particlesTable[prticle_index].GetDensity() - rest_density);
-		near_pressure = near_stifness_parameter * particlesTable[prticle_index].GetNearDensity();
+		pressure = stifness_parameter * (particlesTable[prticle_index].Density - rest_density);
+		near_pressure = near_stifness_parameter * particlesTable[prticle_index].NearDensity;
 		particle_pressure_force.Reset();
 
-		for ( unsigned int neighbour_table_index = 0; neighbour_table_index < particlesTable[prticle_index].GetNeighbours().size(); neighbour_table_index++ )
+		for ( unsigned int neighbour_table_index = 0; neighbour_table_index < particlesTable[prticle_index].NeighboursTable.size(); neighbour_table_index++ )
 		{
-			neigbour_particle = particlesTable[prticle_index].GetNeighbours()[neighbour_table_index];
+			neigbour_particle = particlesTable[prticle_index].NeighboursTable[neighbour_table_index];
 			neighbour_index = neigbour_particle.ParticleIndex;
 			smoothing_kernel = neigbour_particle.SmoothingKernel;
 			powered_two_smoothing_kernel = neigbour_particle.PoweredTwoSmoothingKernel;
@@ -221,9 +221,9 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscosity(
 
 	for ( prticle_index = 0; prticle_index < particlesTable.size(); prticle_index++ )
 	{
-		for ( neighbour_table_index = 0; neighbour_table_index < particlesTable[prticle_index].GetNeighbours().size(); neighbour_table_index++ )
+		for ( neighbour_table_index = 0; neighbour_table_index < particlesTable[prticle_index].NeighboursTable.size(); neighbour_table_index++ )
 		{
-			neighbour_particle = particlesTable[prticle_index].GetNeighbours()[neighbour_table_index];
+			neighbour_particle = particlesTable[prticle_index].NeighboursTable[neighbour_table_index];
 			neighbour_index = neighbour_particle.ParticleIndex;
 			vector_between_particle_and_neighbour = particlesTable[neighbour_index].Position - particlesTable[prticle_index].Position;
 			length = neighbour_particle.Distance;
@@ -235,8 +235,8 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscosity(
 
 			if ( inward_radial_velocity > 0.0f )
 			{
-				const auto sigma_inward_radial_velocity = particlesTable[neighbour_index].GetViscositySigma() * inward_radial_velocity;
-				const auto beta_square_inward_radial_velocity = particlesTable[neighbour_index].GetViscosityBeta() * inward_radial_velocity * inward_radial_velocity;
+				const auto sigma_inward_radial_velocity = particlesTable[neighbour_index].ViscositySigma * inward_radial_velocity;
+				const auto beta_square_inward_radial_velocity = particlesTable[neighbour_index].ViscosityBeta * inward_radial_velocity * inward_radial_velocity;
 				impulses = (normalised_vector_between_particle_and_neighbour 
 					* (sigma_inward_radial_velocity + beta_square_inward_radial_velocity))
 					* (1 - q);
@@ -277,9 +277,9 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 
 	for ( particle_index = 0; particle_index < particlesTable.size(); particle_index++ )
 	{
-		for ( neighbour_index = 0; neighbour_index < particlesTable[particle_index].GetNeighbours().size(); neighbour_index++ )
+		for ( neighbour_index = 0; neighbour_index < particlesTable[particle_index].NeighboursTable.size(); neighbour_index++ )
 		{
-			neighbour_particle = particlesTable[particle_index].GetNeighbours()[neighbour_index];
+			neighbour_particle = particlesTable[particle_index].NeighboursTable[neighbour_index];
 
 			if ( !SpringTable.GetExistenceTable()[particle_index][neighbour_particle.ParticleIndex] )
 			{

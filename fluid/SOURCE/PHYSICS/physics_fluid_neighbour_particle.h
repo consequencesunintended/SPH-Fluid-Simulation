@@ -6,9 +6,9 @@
 
 struct PHYSICS_FLUID_NEIGHBOUR_PARTICLE
 {
-	float SmoothingKernel;
-	float PoweredTwoSmoothingKernel;
-	float Distance;
-	size_t ParticleIndex;
+	float SmoothingKernel{ 0.0f };
+	float PoweredTwoSmoothingKernel{ 0.0f };
+	float Distance{ 0.0f };
+	size_t ParticleIndex{ 0 };
 };
 #endif

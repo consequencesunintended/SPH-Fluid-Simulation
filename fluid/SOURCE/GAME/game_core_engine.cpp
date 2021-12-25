@@ -49,8 +49,8 @@ void GAME_CORE_ENGINE::InitialiseParticles( std::vector<PHYSICS_FLUID_PARTICLE>&
 
 	for ( auto& p_tb : ParticleTable )
 	{
-		ParticleTable[particle_index].SetViscosityBeta( GAME_CORE_ENGINE_visocity_beta );
-		ParticleTable[particle_index].SetViscositySigma( GAME_CORE_ENGINE_visocity_sigma );
+		ParticleTable[particle_index].ViscosityBeta = GAME_CORE_ENGINE_visocity_beta;
+		ParticleTable[particle_index].ViscositySigma = GAME_CORE_ENGINE_visocity_sigma;
 	}
 	PhysicsFluidEngine.InitialiseSpringTable( (int)ParticleTable.size() );
 }
