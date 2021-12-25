@@ -194,7 +194,6 @@
     <ClInclude Include="SOURCE\PHYSICS\physics_collision_2d.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_entity.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_fluid_neighbour_particle.h" />
-    <ClInclude Include="SOURCE\PHYSICS\physics_fluid_neighbour_particle_array.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_fluid_particle.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_fluid_particle_position_loader.h" />
     <ClInclude Include="SOURCE\PHYSICS\physics_fluid_sph_viscoelastic.h" />

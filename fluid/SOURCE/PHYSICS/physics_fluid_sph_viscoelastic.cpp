@@ -281,7 +281,7 @@ void PHSYICS_FLUID_SPH_VISCOELASTIC::CalculateViscoElasticity(
 		{
 			neighbour_particle = particlesTable[particle_index].NeighboursTable[neighbour_index];
 
-			if ( !SpringTable.GetExistenceTable()[particle_index][neighbour_particle.ParticleIndex] )
+			if ( !SpringTable.ExistenceTable[particle_index][neighbour_particle.ParticleIndex] )
 			{
 				SpringTable.SetItemInExistenceTable( particle_index, neighbour_particle.ParticleIndex, true );
 				spring.Point1Index = particle_index;

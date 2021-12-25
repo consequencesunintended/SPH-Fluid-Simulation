@@ -1,93 +1,28 @@
 #ifndef __PHYSICS_SPRING_ARRAY__
 #define __PHYSICS_SPRING_ARRAY__
 
-// --LOCAL
-
-// .. REFERENCES
-
 #include "physics_spring.h"
 #include "physics_entity.h"
 
-// -- GLOBAL
 
-// .. TYPES
-
-class PHYSICS_SPRING_ARRAY:
-	public std::vector<PHYSICS_SPRING>
+struct PHYSICS_SPRING_ARRAY : public std::vector<PHYSICS_SPRING>
 {
-	// -- PUBLIC
-
-public:
-
-	// .. CONSTRUCTORS
-
-	PHYSICS_SPRING_ARRAY( void ) :
-		ExistenceTable()
+	void SetItemInExistenceTable(const size_t index_x, const size_t index_y, bool item)
 	{
-
+		ExistenceTable[index_x][index_y] = item;
 	}
 
-	// ~~
-
-	PHYSICS_SPRING_ARRAY( const PHYSICS_SPRING_ARRAY & other ) :
-		ExistenceTable( other.ExistenceTable )
+	void SetMaxNumberOfPoints(const unsigned int size)
 	{
-
-	}
-
-	// ~~
-
-	virtual ~PHYSICS_SPRING_ARRAY( void )
-	{
-	}
-		
-	// .. OPERATORS
-
-	PHYSICS_SPRING_ARRAY & operator=( const PHYSICS_SPRING_ARRAY & other )
-	{
-		ExistenceTable = other.ExistenceTable;
-	}
-
-	// .. ACCESSORS
-
-	const std::vector<std::vector<bool>> & GetExistenceTable( void ) const
-	{
-		return ExistenceTable;
-	}
-
-	// ..
-
-	void SetExistenceTable( const std::vector<std::vector<bool>>&existence_table )
-	{
-		ExistenceTable = existence_table;
-	}
-
-	// .. OPERATIONS
-
-	void SetItemInExistenceTable( const size_t index_x, const size_t index_y, bool item )
-	{
-		ExistenceTable[ index_x ][ index_y ] = item;
-	}
-
-	// ~~
-
-    void SetMaxNumberOfPoints( const unsigned int size )
-    {
 		unsigned int counter;
 
-		ExistenceTable.resize( size );
+		ExistenceTable.resize(size);
 
-		for ( counter = 0; counter <= size - 1; counter++ )
-        {
-			ExistenceTable[ counter ].resize( size );
-        }
-    }
-	// -- PRIVATE
-
-private:
-
-	// .. ATTRIBUTES
-
-std::vector<std::vector<bool>> ExistenceTable;
+		for (counter = 0; counter <= size - 1; counter++)
+		{
+			ExistenceTable[counter].resize(size);
+		}
+	}
+	std::vector<std::vector<bool>> ExistenceTable;
 };
 #endif

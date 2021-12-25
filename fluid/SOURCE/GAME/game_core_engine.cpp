@@ -38,7 +38,7 @@ void GAME_CORE_ENGINE::InitialiseParticles( std::vector<PHYSICS_FLUID_PARTICLE>&
 
 	particle_index = 0;
 
-	for ( auto& p_tb : FluidPositionLoader.GetPointTable() )
+	for ( auto& p_tb : FluidPositionLoader.PointTable )
 	{
 		particle.Position = p_tb;
 		particle.OldPosition = particle.Position;
