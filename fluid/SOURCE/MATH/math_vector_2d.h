@@ -1,5 +1,6 @@
-
 #pragma once
+
+#include "math_square_root.h"
 
 #include <math.h>  
 #include <assert.h>
@@ -90,6 +91,13 @@ public:
 		return float(sqrt(X * X + Y * Y));
 	}
 
+	float GetReciprocalLength(
+		void
+	) const
+	{
+		return float(MATH_SQUARE_ROOT::invSquareRoot(X * X + Y * Y));
+	}
+
 	float GetSquareLength(void) const
 	{
 		return (X * X + Y * Y);
@@ -116,8 +124,12 @@ public:
 	{
 		if (GetLength() != 0.0f)
 		{
-			X = X / GetLength();
-			Y = Y / GetLength();
+			const float	inv_length = GetReciprocalLength();
+			const float	x = X * inv_length;
+			const float	y = Y * inv_length;
+
+			X = x;
+			Y = y;
 
 			return true;
 		}
