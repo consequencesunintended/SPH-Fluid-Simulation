@@ -10,7 +10,7 @@
 
 // .. TYPES
 
-class GRAPHICS_COLOR 
+class GRAPHICS_COLOUR 
 {
 	// -- PUBLIC
 
@@ -18,20 +18,20 @@ public:
 
 	// .. CONSTRCUTORS
 
-	GRAPHICS_COLOR( void ) 
+	GRAPHICS_COLOUR( void ) 
 	{ 
 		Assign(0.0, 0.0, 0.0, 0.0);
 	}
 
 	// ~~
 
-	virtual ~GRAPHICS_COLOR( void )
+	virtual ~GRAPHICS_COLOUR( void )
 	{
 	}
 
 	// ~~
 
-	GRAPHICS_COLOR(
+	GRAPHICS_COLOUR(
 		const float r, 
 		const float g,
 		const float b,
@@ -43,14 +43,14 @@ public:
 
 	// ~~
 
-	GRAPHICS_COLOR( const float* rgba ) 
+	GRAPHICS_COLOUR( const float* rgba ) 
 	{
 		Assign( rgba[0], rgba[1], rgba[2], rgba[3] );
 	}
 
 	// ~~
 
-	GRAPHICS_COLOR( const GRAPHICS_COLOR & other ) 
+	GRAPHICS_COLOUR( const GRAPHICS_COLOUR & other ) 
 	{
 		RGBA[ 0 ] = other.RGBA[ 0 ];
 		RGBA[ 1 ] = other.RGBA[ 1 ];
@@ -60,7 +60,7 @@ public:
 
 	// .. OPERATORS
 
-	GRAPHICS_COLOR & operator=( const GRAPHICS_COLOR & other )
+	GRAPHICS_COLOUR & operator=( const GRAPHICS_COLOUR & other )
 	{
 		assert( this != &other );
 
@@ -110,65 +110,65 @@ public:
 
 	// .. FUNCTIONS
 
-	static GRAPHICS_COLOR Black( void )
+	static GRAPHICS_COLOUR Black( void )
 	{
-		return GRAPHICS_COLOR( 0.0f, 0.0f, 0.0f, 1.0f );
+		return GRAPHICS_COLOUR( 0.0f, 0.0f, 0.0f, 1.0f );
 	}
 
 	// ~~
 
-	static GRAPHICS_COLOR Grey( void ) 
+	static GRAPHICS_COLOUR Grey( void ) 
 	{
-		return GRAPHICS_COLOR( 0.5f, 0.5f, 0.5f, 1.0f );
+		return GRAPHICS_COLOUR( 0.5f, 0.5f, 0.5f, 1.0f );
 	}
 
 	// ~~
 
-	static GRAPHICS_COLOR White( void )
+	static GRAPHICS_COLOUR White( void )
 	{
-		return GRAPHICS_COLOR( 1.0f, 1.0f, 1.0f, 1.0f );
+		return GRAPHICS_COLOUR( 1.0f, 1.0f, 1.0f, 1.0f );
 	}
 
 	// ~~
 
-	static GRAPHICS_COLOR Red( void ) 
+	static GRAPHICS_COLOUR Red( void ) 
 	{
-		return GRAPHICS_COLOR( 1.0f, 0.0f, 0.0f, 1.0f );
+		return GRAPHICS_COLOUR( 1.0f, 0.0f, 0.0f, 1.0f );
 	}
 
 	// ~~
 
-	static GRAPHICS_COLOR Green( void ) 
+	static GRAPHICS_COLOUR Green( void ) 
 	{
-		return GRAPHICS_COLOR( 0.0f, 1.0f, 0.0f, 1.0f );
+		return GRAPHICS_COLOUR( 0.0f, 1.0f, 0.0f, 1.0f );
 	}
 
 	// ~~
 
-	static GRAPHICS_COLOR Blue( void ) 
+	static GRAPHICS_COLOUR Blue( void ) 
 	{
-		return GRAPHICS_COLOR( 0.0f, 0.0f, 1.0f, 1.0f );
+		return GRAPHICS_COLOUR( 0.0f, 0.0f, 1.0f, 1.0f );
 	}
 
 	// ~~
 
-	static GRAPHICS_COLOR Yellow( void ) 
+	static GRAPHICS_COLOUR Yellow( void ) 
 	{
-		return GRAPHICS_COLOR( 1.0f, 1.0f, 0.0f, 1.0f );
+		return GRAPHICS_COLOUR( 1.0f, 1.0f, 0.0f, 1.0f );
 	}
 
 	// ~~
 
-	static GRAPHICS_COLOR Brown( void ) 
+	static GRAPHICS_COLOUR Brown( void ) 
 	{
-		return GRAPHICS_COLOR( 0.2f, 0.1f, 0.1f, 1.0f );
+		return GRAPHICS_COLOUR( 0.2f, 0.1f, 0.1f, 1.0f );
 	}
 
 	// ~~
 
-	static GRAPHICS_COLOR Null( void ) 
+	static GRAPHICS_COLOUR Null( void ) 
 	{
-		return GRAPHICS_COLOR( 0.0f, 0.0f, 0.0f, 0.0f );
+		return GRAPHICS_COLOUR( 0.0f, 0.0f, 0.0f, 0.0f );
 	}
 
 	// -- PRIVATE

@@ -185,7 +185,7 @@
     <ClInclude Include="SOURCE\GAME\game_thread_manager.h" />
     <ClInclude Include="SOURCE\GAME\game_window.h" />
     <ClInclude Include="SOURCE\GAME\game_thread_pool.h" />
-    <ClInclude Include="SOURCE\GRAPHICS\graphics_color.h" />
+    <ClInclude Include="SOURCE\GRAPHICS\graphics_colour.h" />
     <ClInclude Include="SOURCE\GRAPHICS\graphics_image_pixel_loader.h" />
     <ClInclude Include="SOURCE\GRAPHICS\graphics_marching_squares.h" />
     <ClInclude Include="SOURCE\MATH\math_square_root.h" />

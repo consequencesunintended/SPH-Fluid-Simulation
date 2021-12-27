@@ -8,7 +8,7 @@
 #include "physics_level_fluid_constants.h"
 #include "game_core_engine.h"
 #include "graphics_marching_squares.h"
-#include "graphics_color.h"
+#include "graphics_colour.h"
 #include "fundamental_delta_time.h"
 #include "game_thread_manager.h"
 #include <iostream>
@@ -82,7 +82,7 @@ void render( GLFWwindow* window )
 	unsigned int start_position;
 	unsigned int end_position;
 
-	glClearColor( GRAPHICS_COLOR::Black().GetRGBA()[0], GRAPHICS_COLOR::Black().GetRGBA()[1], GRAPHICS_COLOR::Black().GetRGBA()[2], 1.0f );
+	glClearColor( GRAPHICS_COLOUR::Black().GetRGBA()[0], GRAPHICS_COLOUR::Black().GetRGBA()[1], GRAPHICS_COLOUR::Black().GetRGBA()[2], 1.0f );
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	if ( GraphicalMode == LargeParticleMode )
@@ -101,7 +101,7 @@ void render( GLFWwindow* window )
 	start_position = 0;
 	end_position = 0;
 
-	glColor4fv( GRAPHICS_COLOR::Green().GetRGBA() );
+	glColor4fv( GRAPHICS_COLOUR::Green().GetRGBA() );
 
 	std::vector<PHYSICS_FLUID_PARTICLE> c_particles = GameCoreEngine.ParticleTable;
 
@@ -115,7 +115,7 @@ void render( GLFWwindow* window )
 			glBegin( GL_POINTS );
 			for ( auto& p_tb : c_particles )
 			{
-				glColor4fv( GRAPHICS_COLOR::Red().GetRGBA() );
+				glColor4fv( GRAPHICS_COLOUR::Red().GetRGBA() );
 				glVertex2f( p_tb.Position.X / ratio_w, p_tb.Position.Y / ratio_h );
 			}
 			glEnd();
@@ -128,7 +128,7 @@ void render( GLFWwindow* window )
 			start_position = 0;
 			end_position = 0;
 
-			glColor4fv( GRAPHICS_COLOR::Green().GetRGBA() );
+			glColor4fv( GRAPHICS_COLOUR::Green().GetRGBA() );
 
 			for ( auto& p_tb : GraphicsMarchingSquares.GetPolygonVertexCountTable() )
 			{
